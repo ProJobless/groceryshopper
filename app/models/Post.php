@@ -5,20 +5,20 @@ use Robbo\Presenter\PresentableInterface;
 
 class Post extends Eloquent implements PresentableInterface {
 
-	/**
-	 * Deletes a blog post and all
-	 * the associated comments.
-	 *
-	 * @return bool
-	 */
-	public function delete()
-	{
-		// Delete the comments
-		$this->comments()->delete();
+    /**
+     * Deletes a blog post and all
+     * the associated comments.
+     *
+     * @return bool
+     */
+    public function delete()
+    {
+        // Delete the comments
+        $this->comments()->delete();
 
-		// Delete the blog post
-		return parent::delete();
-	}
+        // Delete the blog post
+        return parent::delete();
+    }
 
 	/**
 	 * Returns a formatted post content entry,

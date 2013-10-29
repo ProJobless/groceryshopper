@@ -51,6 +51,19 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
         ->where('post', '[0-9]+');
     Route::controller('blogs', 'AdminBlogsController');
 
+    # Store Management
+    Route::get('stores/{store}/show', 'AdminStoresController@getShow')
+        ->where('store', '[0-9]+');
+    Route::get('stores/{store}/edit', 'AdminStoresController@getEdit')
+        ->where('store', '[0-9]+');
+    Route::post('stores/{store}/edit', 'AdminStoresController@postEdit')
+        ->where('store', '[0-9]+');
+    Route::get('stores/{store}/delete', 'AdminStoresController@getDelete')
+        ->where('store', '[0-9]+');
+    Route::post('stores/{store}/delete', 'AdminStoresController@postDelete')
+        ->where('store', '[0-9]+');
+    Route::controller('stores', 'AdminStoresController');
+
     # User Management
     Route::get('users/{user}/show', 'AdminUsersController@getShow')
         ->where('user', '[0-9]+');
@@ -118,6 +131,21 @@ Route::get('contact-us', function()
 # Posts - Second to last set, match slug
 Route::get('{postSlug}', 'BlogController@getView');
 Route::post('{postSlug}', 'BlogController@postView');
+
+
+Route::resource('stores', 'StoresController');
+
+Route::resource('products', 'ProductsController');
+
+Route::resource('store_addresses', 'Store_addressesController');
+
+Route::resource('categories', 'CategoriesController');
+
+Route::resource('tags', 'TagsController');
+
+Route::resource('store_brands', 'Store_brandsController');
+
+Route::resource('tweets', 'TweetsController');
 
 # Index Page - Last route, no matches
 Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));

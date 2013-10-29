@@ -28,7 +28,7 @@ $app->redirectIfTrailingSlash();
 
 $env = $app->detectEnvironment(array(
 
-    'local' => array('TugsMacBookPro.local'), // Change this to your local machine hostname.
+    'local' => array('TugsMacBookPro.local', '127.0.0.1', '*.local', '*.mcgill.ca', 'dev'), // Change this to your local machine hostname.
     'staging' => array('Mustard'),
     'production' => array('Web-01.safarivu.com'),
 

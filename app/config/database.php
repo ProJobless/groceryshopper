@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -53,11 +53,13 @@ return array(
 		),
 
 		'mysql' => array(
-			'driver'    => 'mysql',
+			'driver'    => 'mysqli',
 			'host'      => 'localhost',
-			'database'  => 'laravelbootstrapstarter',
-			'username'  => 'user',
-			'password'  => 'password',
+			'database'  => 'groceryshopper',
+			//'username'  => 'groceryshopper',
+			//'password'  => 'rzNmLv5Beac9jRUw',
+			'username'  => 'root',
+			'password'  => 'R66z5R4u',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

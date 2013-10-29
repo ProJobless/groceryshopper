@@ -19,7 +19,7 @@ class Permission extends EntrustPermission
         return $availablePermissions;
     }
 
-    /**
+    /*
      * Convert from input array to savable array.
      * @param $permissions
      * @return array

@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) {
+    if (Auth::guest()) {
         Session::put('loginRedirect', Request::url());
         return Redirect::to('user/login/');
     }
@@ -43,7 +43,7 @@ Route::filter('auth', function()
 
 Route::filter('auth.basic', function()
 {
-	return Auth::basic();
+    return Auth::basic();
 });
 
 /*
@@ -79,6 +79,7 @@ Entrust::routeNeedsPermission( 'admin/blogs*', 'manage_blogs', Redirect::to('/ad
 Entrust::routeNeedsPermission( 'admin/comments*', 'manage_comments', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/users*', 'manage_users', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/admin') );
+#Entrust::routeNeedsPermission( 'admin/stores*', 'manage_stores', Redirect::to('/admin') );
 
 /*
 |--------------------------------------------------------------------------
@@ -93,10 +94,10 @@ Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/ad
 
 Route::filter('csrf', function()
 {
-	if (Session::getToken() != Input::get('csrf_token') &&  Session::getToken() != Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+    if (Session::getToken() != Input::get('csrf_token') &&
+         Session::getToken() != Input::get('_token')) {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });
 
 /*
