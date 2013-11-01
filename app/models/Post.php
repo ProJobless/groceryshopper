@@ -20,36 +20,36 @@ class Post extends Eloquent implements PresentableInterface {
         return parent::delete();
     }
 
-	/**
-	 * Returns a formatted post content entry,
-	 * this ensures that line breaks are returned.
-	 *
-	 * @return string
-	 */
-	public function content()
-	{
-		return nl2br($this->content);
-	}
+    /**
+     * Returns a formatted post content entry,
+     * this ensures that line breaks are returned.
+     *
+     * @return string
+     */
+    public function content()
+    {
+        return nl2br($this->content);
+    }
 
-	/**
-	 * Get the post's author.
-	 *
-	 * @return User
-	 */
-	public function author()
-	{
-		return $this->belongsTo('User', 'user_id');
-	}
+    /**
+     * Get the post's author.
+     *
+     * @return User
+     */
+    public function author()
+    {
+        return $this->belongsTo('User', 'user_id');
+    }
 
-	/**
-	 * Get the post's comments.
-	 *
-	 * @return array
-	 */
-	public function comments()
-	{
-		return $this->hasMany('Comment');
-	}
+    /**
+     * Get the post's comments.
+     *
+     * @return array
+     */
+    public function comments()
+    {
+        return $this->hasMany('Comment');
+    }
 
     /**
      * Get the date the post was created.

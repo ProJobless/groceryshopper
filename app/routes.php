@@ -19,6 +19,32 @@ Route::model('user', 'User');
 Route::model('comment', 'Comment');
 Route::model('post', 'Post');
 Route::model('role', 'Role');
+Route::model('store', 'Store');
+
+Route::get('/store-new', function(){
+    $store = new Store(array(
+                    'title' => "Farmboy",
+                    'name' => 'farmboy',
+                    'phone_1' => '514-900-2345',
+                    'phone_2' => '514-900-6799',
+                    'fax' => '514-989-7890',
+                    'url' => 'http://www.google.com',
+                    'notes' => '',
+                    'searchable' => '1',
+
+        )
+    );
+    $store_address = new Store_address(array(
+                     ''
+        )
+    );
+    $store->save();
+    // Grab User 1
+    $user = User::find(1);
+    var_dump($user);
+
+
+});
 
 /** ------------------------------------------
  *  Admin Routes
