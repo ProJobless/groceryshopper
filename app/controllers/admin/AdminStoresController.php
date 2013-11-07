@@ -60,9 +60,7 @@ class AdminStoresController extends AdminController {
         // Declare the rules for the form validation
         $rules = array(
             'title'   => 'required|min:3',
-            'name' => 'required|min:3',
             'phone_1' => 'required',
-            'searchable' => 'required',
         );
 
         // Validate the inputs
@@ -77,11 +75,40 @@ class AdminStoresController extends AdminController {
             // Update the store post data
             $this->store->title            = Input::get('title');
             $this->store->name             = Str::slug(Input::get('title'));
-            $this->store->user_id          = $user->id;
+            $this->store->phone_1          = Input::get('phone_1');
+            $this->store->phone_2          = Input::get('phone_2');
+            $this->store->fax              = Input::get('fax');
+            $this->store->url              = Input::get('url');
+            $this->store->notes            = Input::get('notes');
+            $store->searchable       = (Input::get('searchable'))  ?  TRUE: FALSE;
+
 
             // Was the store created?
             if($this->store->save())
             {
+                //Fetch the latitude / longitude
+                // Store the addess to the database
+                // Save the address
+                $address = new Store_address(
+                    array(
+                        'city'  => Input::get('city'),
+                        'province_state' => Input::get('province_state'),
+                        'postal_zip' => Input::get('postal_zip'),
+                        'country' => Input::get('country'),
+                        'line_2' => Input::get('line_2'),
+                        'line_1' => Input::get('line_1'),
+                        'latitude' => floatval(1.000),
+                        'longitude' => floatval(1.000),
+                        'store_id' => $store->id,
+                    )
+                );
+
+                if($address->save()) {
+                    // Redirect to the new store page
+                    return Redirect::to('admin/stores/' . $store->id . '/edit')
+                                ->with('success', Lang::get('admin/stores/messages.update.success'));
+                }
+
                 // Redirect to the new blog post page
                 return Redirect::to('admin/stores/' . $this->store->id . '/edit')->with('success', Lang::get('admin/stores/messages.create.success'));
             }
@@ -100,8 +127,7 @@ class AdminStoresController extends AdminController {
      * @param $store
      * @return Response
      */
-	public function getShow($store)
-	{
+	public function getShow($store) {
         // redirect to the frontend
 	}
 
@@ -111,8 +137,7 @@ class AdminStoresController extends AdminController {
      * @param $store
      * @return Response
      */
-	public function getEdit($store)
-	{
+	public function getEdit($store){
         // Title
         $title = Lang::get('admin/stores/title.store_update');
 
@@ -126,13 +151,15 @@ class AdminStoresController extends AdminController {
      * @param $store
      * @return Response
      */
-	public function postEdit($store)
-	{
+	public function postEdit($store) {
 
         // Declare the rules for the form validation
         $rules = array(
             'title'   => 'required',
             'phone_1' => 'required',
+            'province_state' => 'required',
+            'line_1' =>'required',
+            'city' => 'required'
         );
 
         // Validate the inputs
@@ -142,9 +169,9 @@ class AdminStoresController extends AdminController {
         if ($validator->passes())
         {
             // Update the store data
-            $store->title            = Input::get('title');
+            $store->title   = Input::get('title');
             $name = Input::get('name');
-            if ($name){
+            if (isset($name)){
                 $store->name = Input::get('name') ;
             }else {
                 $store->name = Str::slug(Input::get('title'));
@@ -154,14 +181,36 @@ class AdminStoresController extends AdminController {
             $store->fax              = Input::get('fax');
             $store->url              = Input::get('url');
             $store->notes            = Input::get('notes');
-            $store->searchable       = Input::get('searchable');
+            $store->searchable       = (Input::get('searchable'))  ?  TRUE: FALSE;
 
             // Was the store updated?
             if($store->save())
             {
-                // Redirect to the new store page
-                return Redirect::to('admin/stores/' . $store->id . '/edit')
-                            ->with('success', Lang::get('admin/stores/messages.update.success'));
+                //Fetch the address of this store
+
+                //Fetch the latitude / longitude
+                // Store the addess to the database
+                // Save the address
+                $address = new Store_address(
+                    array(
+                        'city'  => Input::get('city'),
+                        'province_state' => Input::get('province_state'),
+                        'postal_zip' => Input::get('postal_zip'),
+                        'country' => Input::get('country'),
+                        'line_2' => Input::get('line_2'),
+                        'line_1' => Input::get('line_1'),
+                        'latitude' => floatval(1.000),
+                        'longitude' => floatval(1.000),
+                        'store_id' => $store->id,
+                    )
+                );
+
+                if($address->save()) {
+                    // Redirect to the new store page
+                    return Redirect::to('admin/stores/' . $store->id . '/edit')
+                                ->with('success', Lang::get('admin/stores/messages.update.success'));
+                }
+
             }
 
             // Redirect to the store management page

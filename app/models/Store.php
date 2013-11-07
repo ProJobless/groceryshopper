@@ -23,7 +23,8 @@ class Store extends Eloquent implements PresentableInterface {
         return new StorePresenter($this);
     }
 
-    public function delete() {
+    public function delete()
+    {
         // Delete the address
         $this->addresses()->delete();
 
@@ -35,6 +36,15 @@ class Store extends Eloquent implements PresentableInterface {
     {
         return $this->hasMany('Store_address');
     }
+    /**
+     * Get the store author.
+     *
+     * @return User
+     */
+    public function author()
+    {
+        return $this->belongsTo('User', 'user_id');
+    }
 
     /**
      * Get the URL to the post.
@@ -44,16 +54,6 @@ class Store extends Eloquent implements PresentableInterface {
     public function url()
     {
         return Url::to($this->name);
-    }
-
-    /**
-     * Get the post's author.
-     *
-     * @return User
-     */
-    public function author()
-    {
-        return $this->belongsTo('User', 'user_id');
     }
 
     /**
