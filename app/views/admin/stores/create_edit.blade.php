@@ -120,7 +120,8 @@
             <div class="form-group {{{ $errors->has('searchable') ? 'error' : '' }}}">
                 <div class="col-md-12">
                     <label class="control-label" for="content">Can this store be searched?
-                            <input type="checkbox" name="searchable" value="{{{ Input::old('searchable', isset($searchable) ? $store->searchable : null) }}}" id="searchable">
+                            <input type="checkbox" name="searchable" {{{ Input::old('searchable', isset($store) ? 'checked' : 0 ) }}}
+                                    value="{{{ Input::old('searchable', isset($store) ? $store->searchable : 0 ) }}}" id="searchable">
                     </label>
                     {{{ $errors->first('searchable', '<span class="help-inline">:message</span>') }}}
                 </div>

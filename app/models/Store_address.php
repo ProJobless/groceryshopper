@@ -5,8 +5,8 @@ use Robbo\Presenter\PresentableInterface;
 use Carbon\Carbon;
 
 class Store_address extends Eloquent implements PresentableInterface {
-    protected $guarded = array('id', 'store_id');
-    protected $fillable = array('line_1', 'line_2', 'city', 'province_state', 'country', 'postal_zip');
+    protected $guarded = array('id');
+    protected $fillable = array('line_1', 'store_id', 'line_2', 'city', 'province_state', 'country', 'postal_zip');
 
     public static $rules = array(
         'store_id' => 'required',
@@ -24,7 +24,7 @@ class Store_address extends Eloquent implements PresentableInterface {
         return new Store_addressPresenter($this);
     }
     public function store() {
-        return $this->belongsTo('Store');
+        return $this->belongsTo('Store', 'store_id');
     }
     /**
      * Get the post's author.

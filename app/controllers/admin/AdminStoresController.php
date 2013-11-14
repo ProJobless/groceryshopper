@@ -165,6 +165,7 @@ class AdminStoresController extends AdminController {
         // Validate the inputs
         $validator = Validator::make(Input::all(), $rules);
 
+
         // Check if the form validates with success
         if ($validator->passes())
         {
@@ -181,16 +182,19 @@ class AdminStoresController extends AdminController {
             $store->fax              = Input::get('fax');
             $store->url              = Input::get('url');
             $store->notes            = Input::get('notes');
-            $store->searchable       = (Input::get('searchable'))  ?  TRUE: FALSE;
+            $store->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
 
             // Was the store updated?
             if($store->save())
             {
                 //Fetch the address of this store
-
+                $store_id = $store->id;
                 //Fetch the latitude / longitude
                 // Store the addess to the database
                 // Save the address
+                //
+
+                // Get this post comments
                 $address = new Store_address(
                     array(
                         'city'  => Input::get('city'),
@@ -201,10 +205,11 @@ class AdminStoresController extends AdminController {
                         'line_1' => Input::get('line_1'),
                         'latitude' => floatval(1.000),
                         'longitude' => floatval(1.000),
-                        'store_id' => $store->id,
                     )
                 );
 
+                $address = $store->addresses()->save($address);
+                $store->save();
                 if($address->save()) {
                     // Redirect to the new store page
                     return Redirect::to('admin/stores/' . $store->id . '/edit')
@@ -260,6 +265,8 @@ class AdminStoresController extends AdminController {
         {
             $id = $store->id;
             $store->delete();
+
+            //Delete the associated addresses
 
             // Was the store deleted?
             $store = Store::find($id);
