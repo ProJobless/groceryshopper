@@ -74,7 +74,7 @@ class AdminStoresController extends AdminController {
 
             // Update the store post data
             $this->store->title            = Input::get('title');
-            $this->store->name             = Str::slug(Input::get('title'));
+            $this->store->slug             = Str::slug(Input::get('title'));
             $this->store->phone_1          = Input::get('phone_1');
             $this->store->phone_2          = Input::get('phone_2');
             $this->store->fax              = Input::get('fax');
@@ -173,9 +173,9 @@ class AdminStoresController extends AdminController {
             $store->title   = Input::get('title');
             $name = Input::get('name');
             if (isset($name)){
-                $store->name = Input::get('name') ;
+                $store->slug = Input::get('name') ;
             }else {
-                $store->name = Str::slug(Input::get('title'));
+                $store->slug = Str::slug(Input::get('title'));
             }
             $store->phone_1          = Input::get('phone_1');
             $store->phone_2          = Input::get('phone_2');
@@ -183,38 +183,22 @@ class AdminStoresController extends AdminController {
             $store->url              = Input::get('url');
             $store->notes            = Input::get('notes');
             $store->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
+            $store->city = Input::get('city');
+            $store->province_state = Input::get('province_state');
+            $store->postal_zip = Input::get('postal_zip');
+            $store->country = Input::get('country');
+            $store->line_2 = Input::get('line_2');
+            $store->line_1 = Input::get('line_1');
+            $store->latitude = floatval(1.000);
+            $store->longitude = floatval(1.000);
 
             // Was the store updated?
             if($store->save())
             {
-                //Fetch the address of this store
                 $store_id = $store->id;
-                //Fetch the latitude / longitude
-                // Store the addess to the database
-                // Save the address
-                //
-
-                // Get this post comments
-                $address = new Store_address(
-                    array(
-                        'city'  => Input::get('city'),
-                        'province_state' => Input::get('province_state'),
-                        'postal_zip' => Input::get('postal_zip'),
-                        'country' => Input::get('country'),
-                        'line_2' => Input::get('line_2'),
-                        'line_1' => Input::get('line_1'),
-                        'latitude' => floatval(1.000),
-                        'longitude' => floatval(1.000),
-                    )
-                );
-
-                $address = $store->addresses()->save($address);
-                $store->save();
-                if($address->save()) {
-                    // Redirect to the new store page
-                    return Redirect::to('admin/stores/' . $store->id . '/edit')
-                                ->with('success', Lang::get('admin/stores/messages.update.success'));
-                }
+                // Redirect to the new store page
+                return Redirect::to('admin/stores/' . $store->id . '/edit')
+                        ->with('success', Lang::get('admin/stores/messages.update.success'));
 
             }
 

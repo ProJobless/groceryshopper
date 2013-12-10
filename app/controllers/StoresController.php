@@ -67,6 +67,7 @@ class StoresController extends BaseController {
     public function show($id)
     {
         $store = $this->store->findOrFail($id);
+        print_r($store);
 
         return View::make('stores.show', compact('store'));
     }
