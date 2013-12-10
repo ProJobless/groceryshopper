@@ -289,18 +289,17 @@ class AdminStoresController extends AdminController {
      */
     public function getData()
     {
-        $stores = Store::select(array('stores.id', 'stores.title', 'stores.name',
-                         'stores.phone_1', 'stores.id as address','stores.url', 'stores.fax', 'stores.updated_at'));
-
-        // Fetch data from store addresses
+        $stores = Store::select(array('stores.id', 'stores.title', 'stores.slug',
+                         'stores.phone_1', 'stores.line_1','stores.city', 'stores.province_state', 'stores.updated_at'));
         return Datatables::of($stores)
-            ->edit_column('address', '{{ DB::table(\'store_addresses\')
-            ->where(\'store_id\', \'=\', $id)->count() }}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
                 <a href="{{{ URL::to(\'admin/stores/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
             ')
-             ->remove_column('id')
-             ->make();
+            ->add_column('address', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
+            ')
+            ->remove_column('id')
+            ->make();
+
     }
 
 }

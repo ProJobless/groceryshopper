@@ -7,8 +7,8 @@
 {{ Form::open(array('route' => 'stores.store')) }}
 	<ul>
         <li>
-            {{ Form::label('name', 'Name:') }}
-            {{ Form::text('name') }}
+            {{ Form::label('slug', 'Slug:') }}
+            {{ Form::text('slug') }}
         </li>
 
         <li>

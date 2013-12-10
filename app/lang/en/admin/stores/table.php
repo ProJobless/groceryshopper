@@ -3,7 +3,7 @@
 return array(
 
     'title'      => 'Store Title',
-    'name'   => 'Name',
+    'slug'   => 'Slug',
     'address'   => 'Address',
     'province'   => 'Province',
     'city'   => 'City',

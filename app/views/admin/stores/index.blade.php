@@ -25,13 +25,14 @@
     <thead>
       <tr>
         <th class="col-md-4">{{{ Lang::get('admin/stores/table.title') }}}</th>
-        <th class="col-md-2">{{{ Lang::get('admin/stores/table.name') }}}</th>
+        <th class="col-md-2">{{{ Lang::get('admin/stores/table.slug') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.phone_1') }}}</th>
-        <th class="col-md-2">{{{ Lang::get('admin/stores/table.address') }}}</th>
+        <!--<th class="col-md-2">{{{ Lang::get('admin/stores/table.address') }}}</th>-->
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.city') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.province') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.updated_at') }}}</th>
         <th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
+        <th class="col-md-2">{{{ Lang::get('admin/stores/table.address') }}}</th>
       </tr>
     </thead>
     <tbody>

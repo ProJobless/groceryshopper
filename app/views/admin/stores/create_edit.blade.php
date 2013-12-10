@@ -28,11 +28,11 @@
             </div>
             <!-- ./ store title -->
             <!-- Store Title -->
-            <div class="form-group {{{ $errors->has('name') ? 'error' : '' }}}">
+            <div class="form-group {{{ $errors->has('slug') ? 'error' : '' }}}">
                 <div class="col-md-12">
-                    <label class="control-label" for="name">Name (Slug)</label>
-                    <input class="form-control" type="text" name="name" id="name" value="{{{ Input::old('name', isset($store) ? $store->name : null) }}}" />
-                    {{{ $errors->first('name', '<span class="help-inline">:message</span>') }}}
+                    <label class="control-label" for="slug">Name (Slug)</label>
+                    <input class="form-control" type="text" name="slug" id="slug" value="{{{ Input::old('slug', isset($store) ? $store->slug : null) }}}" />
+                    {{{ $errors->first('slug', '<span class="help-inline">:message</span>') }}}
                 </div>
             </div>
             <!-- ./ store title -->
@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label class="control-label" for="postal_zip">Postal Code</label>
-                        <input class="form-control" type="text" name="postal_zip" id="postal_zip" value="{{{ Input::old('line_1', isset($store) ? $store->line_1 : null) }}}" />
+                        <input class="form-control" type="text" name="postal_zip" id="postal_zip" value="{{{ Input::old('postal_zip', isset($store) ? $store->postal_zip : null) }}}" />
                         {{{ $errors->first('postal_zip', '<span class="help-inline">:message</span>') }}}
                     </div>
                 </div>
@@ -120,7 +120,7 @@
             <div class="form-group {{{ $errors->has('searchable') ? 'error' : '' }}}">
                 <div class="col-md-12">
                     <label class="control-label" for="content">Can this store be searched?
-                            <input type="checkbox" name="searchable" {{{ Input::old('searchable', isset($store) ? 'checked' : 0 ) }}}
+                            <input type="checkbox" name="searchable" checked="{{{ Input::old('searchable', isset($store) ? $store->searchable : 0 ) }}}"
                                     value="{{{ Input::old('searchable', isset($store) ? $store->searchable : 0 ) }}}" id="searchable">
                     </label>
                     {{{ $errors->first('searchable', '<span class="help-inline">:message</span>') }}}
