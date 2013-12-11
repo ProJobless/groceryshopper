@@ -73,20 +73,31 @@
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label" for="province_state">Province</label>
-                        <select class="form-control" name="province_state" id="province_state" value="{{{ Input::old('province_state', isset($store) ? $store->province_state : null)}}}" >
-                          <option>ON</option>
-                          <option>QC</option>
-                        </select>
-                       <!--<input class="form-control" type="text" name="province_state" id="province_state" value="{{{ Input::old('province_state', isset($store) ? $store->province_state : null) }}}" />-->
+                        {{ Form::select('province_state',
+                                                 array('QC' => 'Quebec', 'ON' => 'Ontario'),
+                                                 Input::old('province_state', isset($store) ? $store->province_state : null),
+                                                 array (
+                                                        'class' => 'form-control',
+                                                        'name' => 'province_state',
+                                                        'id'    => 'province_state'
+                                                 )
+                                       )
+                         }}
                         {{{ $errors->first('province_state', '<span class="help-inline">:message</span>') }}}
                     </div>
                     <div class="col-lg-3">
                         <label class="control-label" for="country">Country</label>
-                        <select class="form-control" name="country" id="country" value="{{{ Input::old('country', isset($store) ? $store->country : null)}}}" >
-                          <option>Canada</option>
-                          <option>USA</option>
-                        </select>
-                        {{{ $errors->first('country', '<span class="help-inline">:message</span>') }}}
+                        {{ Form::select('province_state',
+                                                 array('CA' => 'Canada', 'USA' => 'USA'),
+                                                 Input::old('province_state', isset($store) ? $store->province_state : null),
+                                                 array (
+                                                        'class' => 'form-control',
+                                                        'name' => 'province_state',
+                                                        'id'    => 'province_state'
+                                                 )
+                                       )
+                         }}
+                        {{ $errors->first('country', '<span class="help-inline">:message</span>') }}
                     </div>
                     <div class="col-lg-2">
                         <label class="control-label" for="postal_zip">Postal Code</label>
