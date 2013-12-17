@@ -27,7 +27,6 @@
         <th class="col-md-4">{{{ Lang::get('admin/stores/table.title') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.slug') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.phone_1') }}}</th>
-        <!--<th class="col-md-2">{{{ Lang::get('admin/stores/table.address') }}}</th>-->
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.city') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.province') }}}</th>
         <th class="col-md-2">{{{ Lang::get('admin/stores/table.updated_at') }}}</th>
@@ -49,7 +48,7 @@
         "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
         "sPaginationType": "bootstrap",
         "oLanguage": {
-          "sLengthMenu": "_MENU_ records per page"
+          "sLengthMenu": "_MENU_ stores per page"
         },
         "bProcessing": true,
         "bServerSide": true,

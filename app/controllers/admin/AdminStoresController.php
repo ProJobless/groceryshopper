@@ -61,6 +61,10 @@ class AdminStoresController extends AdminController {
         $rules = array(
             'title'   => 'required|min:3',
             'phone_1' => 'required',
+            'province_state' => 'required',
+            'city' => 'required',
+            'line_1' => 'required',
+            'country' => 'required',
         );
 
         // Validate the inputs
@@ -80,46 +84,44 @@ class AdminStoresController extends AdminController {
             $this->store->fax              = Input::get('fax');
             $this->store->url              = Input::get('url');
             $this->store->notes            = Input::get('notes');
-            $store->searchable       = (Input::get('searchable'))  ?  TRUE: FALSE;
+            $this->store->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
+            $this->store->city = Input::get('city');
+            $this->store->province_state = Input::get('province_state');
+            $this->store->postal_zip = Input::get('postal_zip');
+            $this->store->country = Input::get('country');
+            $this->store->line_2 = Input::get('line_2');
+            $this->store->line_1 = Input::get('line_1');
+
+            // We need the latitude and longitude based on the 
+            // province, country and city OR postal code
+            if( isset($this->store->city) && isset($this->store->province_state) 
+                    && isset($this->store->country) ){
+                            $coordinate = $this->fetchCoords($this->store);
+                            $this->store->latitude = $coordinate->getLatitude();
+                            $this->store->longitude = $coordinate->getlongitude();
+
+            }
+            print_r($this->store);
+
 
 
             // Was the store created?
             if($this->store->save())
             {
-                //Fetch the latitude / longitude
-                // Store the addess to the database
-                // Save the address
-                $address = new Store_address(
-                    array(
-                        'city'  => Input::get('city'),
-                        'province_state' => Input::get('province_state'),
-                        'postal_zip' => Input::get('postal_zip'),
-                        'country' => Input::get('country'),
-                        'line_2' => Input::get('line_2'),
-                        'line_1' => Input::get('line_1'),
-                        'latitude' => floatval(1.000),
-                        'longitude' => floatval(1.000),
-                        'store_id' => $store->id,
-                    )
-                );
 
-                if($address->save()) {
-                    // Redirect to the new store page
-                    return Redirect::to('admin/stores/' . $store->id . '/edit')
-                                ->with('success', Lang::get('admin/stores/messages.update.success'));
-                }
-
-                // Redirect to the new blog post page
-                return Redirect::to('admin/stores/' . $this->store->id . '/edit')->with('success', Lang::get('admin/stores/messages.create.success'));
+                // Redirect to the new store page
+                return Redirect::to('admin/stores/' . $this->store->id . '/edit')
+                        ->with('success', Lang::get('admin/stores/messages.create.success'));
             }
 
             // Redirect to the blog post create page
-            return Redirect::to('admin/stores/create')->with('error', Lang::get('admin/stores/messages.create.error'));
+            return Redirect::to('admin/stores/create')
+                    ->with('error', Lang::get('admin/stores/messages.create.error'));
         }
 
         // Form validation failed
         return Redirect::to('admin/stores/create')->withInput()->withErrors($validator);
-	}
+    }
 
     /**
      * Display the specified resource.
@@ -189,8 +191,16 @@ class AdminStoresController extends AdminController {
             $store->country = Input::get('country');
             $store->line_2 = Input::get('line_2');
             $store->line_1 = Input::get('line_1');
-            $store->latitude = floatval(1.000);
-            $store->longitude = floatval(1.000);
+
+            // We need the latitude and longitude based on the 
+            // province, country and city OR postal code
+            if( isset($store->city) && isset($store->province_state) 
+                    && isset($store->country) ){
+                            $coordinate = $this->fetchCoords($store);
+                            $store->latitude = $coordinate->getLatitude();
+                            $store->longitude = $coordinate->getlongitude();
+
+            }
 
             // Was the store updated?
             if($store->save())
@@ -201,12 +211,10 @@ class AdminStoresController extends AdminController {
                         ->with('success', Lang::get('admin/stores/messages.update.success'));
 
             }
-
             // Redirect to the store management page
             return Redirect::to('admin/stores/' . $store->id . '/edit')
                     ->with('error', Lang::get('admin/stores/messages.update.error'));
         }
-
         // Form validation failed
         return Redirect::to('admin/stores/' . $store->id . '/edit')
                 ->withInput()->withErrors($validator);
@@ -283,6 +291,21 @@ class AdminStoresController extends AdminController {
             ')
             ->remove_column('id')
             ->make();
+
+    }
+
+    private function fetchCoords($store) {
+
+            $geocoder = new \Geocoder\Geocoder();
+            $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+            $chain    = new \Geocoder\Provider\ChainProvider(array(
+                        new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
+            ));
+            $geocoder->registerProvider($chain);
+            //Fetch the address from google maps.
+            $address = $store->line_1." ".$store->line_2." ".$store->city.", ".
+                        $store->province_state.", ".$store->country.", ".$store->postal_zip;
+            return $geocoder->geocode($address);
 
     }
 

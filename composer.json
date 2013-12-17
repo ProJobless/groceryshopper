@@ -19,7 +19,11 @@
         "way/generators": "dev-master",
         "j20/php-uuid": "dev-master",
         "bllim/datatables": "*",
-        "rtablada/geocoder": "dev-master"
+        "rtablada/geocoder": "dev-master",
+        "monarobase/country-list": "dev-master",
+        "willdurand/geocoder": "@stable",
+        "league/geotools": "@stable",
+        "toin0u/geotools-laravel": "~0.2"
     },
     "require-dev": {
         "way/generators": "dev-master",
@@ -33,7 +37,6 @@
     },
     "autoload": {
         "classmap": [
-
             "app/commands",
             "app/controllers",
             "app/library",

@@ -9,9 +9,19 @@
 			Groceryshopper.ca: Find you groceries fast!!
 			@show
 		</title>
-		<meta name="keywords" content="your, awesome, keywords, here" />
-		<meta name="author" content="Jon Doe" />
-		<meta name="description" content="Lorem ipsum dolor sit amet, nihil fabulas et sea, nam posse menandri scripserit no, mei." />
+                <meta name="viewport" content="width=1024">
+                <meta http-equiv="cleartype" content="on">
+                <meta name="mobileoptimized" content="1024">
+                <meta name="format-detection" content="telephone=yes">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+                <meta http-equiv="description" content="Grocery Supermarkets is home to Great Food. Use our store locator to locate a Grocery store near you, view the weekly local store flyer.">
+
+                <meta property="og:title" content="Grocery shopper - Find grocery deals fast!!">
+                <meta property="og:description" content="Use our store locator to locate a Grocery store near you, view the weekly local store flyer.">   
+                <meta property="og:url" content="http://www.groceryshopper.ca/en_CA.html">   
+
+                <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+                <meta http-equiv="keywords" content="">
 
 		<!-- Mobile Specific Metas
 		================================================== -->
@@ -19,7 +29,7 @@
 
 		<!-- CSS
 		================================================== -->
-        {{ Basset::show('public.css') }}
+               {{ Basset::show('public.css') }}
 
 		<style>
 		@section('styles')
