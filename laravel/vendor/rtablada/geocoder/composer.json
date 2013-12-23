@@ -1,0 +1,29 @@
+{
+    "name": "rtablada/geocoder",
+    "description": "A slim Google Geocoder for PHP and Laravel",
+    "keywords": [
+        "laravel",
+        "lpm"
+    ],
+    "authors": [
+        {
+            "name": "Ryan Tablada",
+            "email": "ryan.tablada@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "shuber/curl": "dev-master",
+        "illuminate/support": "4.0.x"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Rtablada\\Geocoder": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "license": "MIT"
+}

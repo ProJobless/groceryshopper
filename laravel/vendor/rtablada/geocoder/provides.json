@@ -1,0 +1,11 @@
+{
+	"providers": [
+		"Rtablada\Geocoder\GeocoderServiceProvider"
+	],
+	"aliases": [
+		{
+			"alias": "Geocoder",
+			"facade": "Rtablada\Geocoder\Facades\Geocoder"
+		}
+	]
+}
