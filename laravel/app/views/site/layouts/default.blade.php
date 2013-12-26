@@ -31,6 +31,23 @@
 		================================================== -->
                {{ Basset::show('public.css') }}
 
+              <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+              <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600italic,600' rel='stylesheet' type='text/css'>
+                        
+               <!-- Styles -->
+               <!-- Bootstrap CSS -->
+               <link href="css/bootstrap.min.css" rel="stylesheet">
+              <!-- Animate css -->
+              <link href="css/animate.min.css" rel="stylesheet">
+              <!-- Dropdown menu -->
+              <link href="css/ddlevelsmenu-base.css" rel="stylesheet">
+              <link href="css/ddlevelsmenu-topbar.css" rel="stylesheet">
+              <!-- Countdown -->
+              <link href="css/jquery.countdown.css" rel="stylesheet">     
+                        <!-- Font awesome CSS -->
+                        <link href="css/font-awesome.min.css" rel="stylesheet">		
+                        <!-- Custom CSS -->
+                        <link href="css/style.css" rel="stylesheet">
 		<style>
 		@section('styles')
 		@show
@@ -112,6 +129,6 @@
 
 		<!-- Javascripts
 		================================================== -->
-        {{ Basset::show('public.js') }}
+            {{ Basset::show('public.js') }}
 	</body>
 </html>

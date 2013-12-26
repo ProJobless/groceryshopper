@@ -119,5 +119,5 @@ Route::resource('categories', 'CategoriesController');
 Route::resource('tags', 'TagsController');
 
 # Index Page - Last route, no matches
-Route::get('/', array('before' => 'detectLang','uses' => 'Controller@getIndex'));
+Route::get('/', array('before' => 'detectLang','uses' => 'HomeController@getIndex'));
 #Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
