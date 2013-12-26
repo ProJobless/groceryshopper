@@ -1,24 +1,24 @@
 # Laravel
-/bootstrap/compiled.php
-/vendor
+/laravel/bootstrap/compiled.php
+/laravel/vendor
 
 # Configuration
-/app/config/local
-/app/config/staging
-/app/config/production
+/laravel/app/config/local
+/laravel/app/config/staging
+/laravel/app/config/production
 
 # Basset development collections
-/public/assets/compiled/public
-/public/assets/compiled/admin
-/public/assets/compiled
+/laravel/public/assets/compiled/public
+/laravel/public/assets/compiled/admin
+/laravel/public/assets/compiled
 
 # Composer
-composer.phar
-composer.lock
+laravel/composer.phar
+laravel/composer.lock
 
 # OS
 .DS_Store
 .idea/
 
 # Packages
-app/_ide_helpers.php
+laravel/app/_ide_helpers.php
