@@ -2,8 +2,8 @@
 
 return array(
 
-    'title'      => 'Store Title',
-    'name'   => 'Name',
+    'title'      => 'Store name',
+    'slug'   => 'URL',
     'address'   => 'Address',
     'province'   => 'Province',
     'city'   => 'City',

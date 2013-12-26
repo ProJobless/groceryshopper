@@ -10,15 +10,20 @@
         }
     ],
     "require": {
-        "laravel/framework": "4.0.*",
+        "laravel/framework": "4.0.x",
         "twbs/bootstrap": "dev-master",
-        "zizaco/confide": "dev-master",
+        "zizaco/confide": "3.0.x",
         "zizaco/entrust": "dev-master",
         "jasonlewis/basset": "dev-master",
         "robclancy/presenter": "1.0.*",
         "way/generators": "dev-master",
         "j20/php-uuid": "dev-master",
-        "bllim/datatables": "*"
+        "bllim/datatables": "*",
+        "rtablada/geocoder": "dev-master",
+        "monarobase/country-list": "dev-master",
+        "willdurand/geocoder": "@stable",
+        "league/geotools": "@stable",
+        "toin0u/geotools-laravel": "~0.2"
     },
     "require-dev": {
         "way/generators": "dev-master",
@@ -27,11 +32,11 @@
         "barryvdh/laravel-ide-helper": "dev-master",
         "leafo/lessphp": "v0.4.0",
         "natxet/CssMin": "dev-master",
-        "lmammino/jsmin4assetic": "1.0.*"
+        "lmammino/jsmin4assetic": "1.0.*",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "classmap": [
-
             "app/commands",
             "app/controllers",
             "app/library",

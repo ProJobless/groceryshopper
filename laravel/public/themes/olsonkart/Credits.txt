@@ -1,0 +1,25 @@
+Credits:
+--------
+http://getbootstrap.com
+http://jquery.com
+HTML5Shiv - @afarkas @jdalton @jon_neal @rem
+Respond - Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas.
+http://subtlepatterns.com/
+http://fotogrph.com/ 
+http://pixabay.com
+http://www.eyecon.ro/bootstrap-datepicker/
+http://arshaw.com/fullcalendar/
+http://www.dinpattern.com/
+http://premiumsoftware.net/cleditor/
+http://www.flotcharts.org/
+http://boedesign.com/demos/gritter/
+https://github.com/tefra/navgoco
+http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/
+http://rateit.codeplex.com/
+https://github.com/nostalgiaz/bootstrap-toggle-buttons
+http://jqueryui.com/
+http://benpickles.github.io/peity/
+http://www.dynamicdrive.com/dynamicindex1/ddlevelsmenu/
+http://caroufredsel.dev7studios.com/
+http://keith-wood.name/countdown.html
+http://isotope.metafizzy.co/
