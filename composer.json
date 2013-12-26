@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "laravel/framework": "4.0.*",
+        "laravel/framework": "4.0.x",
         "twbs/bootstrap": "dev-master",
-        "zizaco/confide": "dev-master",
+        "zizaco/confide": "3.0.x",
         "zizaco/entrust": "dev-master",
         "jasonlewis/basset": "dev-master",
         "robclancy/presenter": "1.0.*",

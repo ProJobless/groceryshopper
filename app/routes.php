@@ -21,58 +21,12 @@ Route::model('post', 'Post');
 Route::model('role', 'Role');
 Route::model('store', 'Store');
 
-Route::get('/store-new', function(){
-    $store = new Store(array(
-                    'title' => "Farmboy",
-                    'name' => 'farmboy',
-                    'phone_1' => '514-900-2345',
-                    'phone_2' => '514-900-6799',
-                    'fax' => '514-989-7890',
-                    'url' => 'http://www.google.com',
-                    'notes' => '',
-                    'searchable' => '1',
-
-        )
-    );
-    $store_address = new Store_address(array(
-                     ''
-        )
-    );
-    $store->save();
-    // Grab User 1
-    $user = User::find(1);
-});
-
 /** ------------------------------------------
  *  Admin Routes
  *  ------------------------------------------
  */
 Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 {
-
-    # Comment Management
-    Route::get('comments/{comment}/edit', 'AdminCommentsController@getEdit')
-        ->where('comment', '[0-9]+');
-    Route::post('comments/{comment}/edit', 'AdminCommentsController@postEdit')
-        ->where('comment', '[0-9]+');
-    Route::get('comments/{comment}/delete', 'AdminCommentsController@getDelete')
-        ->where('comment', '[0-9]+');
-    Route::post('comments/{comment}/delete', 'AdminCommentsController@postDelete')
-        ->where('comment', '[0-9]+');
-    Route::controller('comments', 'AdminCommentsController');
-
-    # Blog Management
-    Route::get('blogs/{post}/show', 'AdminBlogsController@getShow')
-        ->where('post', '[0-9]+');
-    Route::get('blogs/{post}/edit', 'AdminBlogsController@getEdit')
-        ->where('post', '[0-9]+');
-    Route::post('blogs/{post}/edit', 'AdminBlogsController@postEdit')
-        ->where('post', '[0-9]+');
-    Route::get('blogs/{post}/delete', 'AdminBlogsController@getDelete')
-        ->where('post', '[0-9]+');
-    Route::post('blogs/{post}/delete', 'AdminBlogsController@postDelete')
-        ->where('post', '[0-9]+');
-    Route::controller('blogs', 'AdminBlogsController');
 
     # Store Management
     Route::get('stores/{store}/show', 'AdminStoresController@getShow')
@@ -158,17 +112,12 @@ Route::post('{postSlug}', 'BlogController@postView');
 
 Route::resource('stores', 'StoresController');
 
-Route::resource('products', 'ProductsController');
-
-Route::resource('store_addresses', 'Store_addressesController');
+Route::resource('groceryitems', 'GroceryitemsController');
 
 Route::resource('categories', 'CategoriesController');
 
 Route::resource('tags', 'TagsController');
 
-Route::resource('store_brands', 'Store_brandsController');
-
-Route::resource('tweets', 'TweetsController');
-
 # Index Page - Last route, no matches
-Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
+Route::get('/', array('before' => 'detectLang','uses' => 'Controller@getIndex'));
+#Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
