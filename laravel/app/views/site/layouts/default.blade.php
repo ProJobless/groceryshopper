@@ -29,30 +29,28 @@
 
 		<!-- CSS
 		================================================== -->
-               {{ Basset::show('public.css') }}
 
               <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
               <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600italic,600' rel='stylesheet' type='text/css'>
                         
                <!-- Styles -->
                <!-- Bootstrap CSS -->
-               <link href="css/bootstrap.min.css" rel="stylesheet">
+               {{ HTML::style('assets/css/bootstrap.min.css'); }}
               <!-- Animate css -->
-              <link href="css/animate.min.css" rel="stylesheet">
+               {{ HTML::style('assets/css/animate.min.css'); }}
               <!-- Dropdown menu -->
-              <link href="css/ddlevelsmenu-base.css" rel="stylesheet">
-              <link href="css/ddlevelsmenu-topbar.css" rel="stylesheet">
-              <!-- Countdown -->
-              <link href="css/jquery.countdown.css" rel="stylesheet">     
-                        <!-- Font awesome CSS -->
-                        <link href="css/font-awesome.min.css" rel="stylesheet">		
-                        <!-- Custom CSS -->
-                        <link href="css/style.css" rel="stylesheet">
-		<style>
-		@section('styles')
-		@show
-		</style>
 
+               {{ HTML::style('assets/css/ddlevelsmenu-base.css'); }}
+               {{ HTML::style('assets/css/ddlevelsmenu-topbar.css'); }}
+              
+              <!-- Countdown -->
+              {{ HTML::style('assets/css/jquery.countdown.css'); }}
+
+              <!-- Font awesome CSS -->
+               {{ HTML::style('assets/css/font-awesome.min.css'); }}
+
+              <!-- Custom CSS -->
+              {{ HTML::style('assets/css/style.css'); }}
 		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -68,67 +66,26 @@
 	</head>
 
 	<body>
-		<!-- To make sticky footer need to wrap in a div -->
-		<div id="wrap">
-		<!-- Navbar -->
-		<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
-			 <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav">
-						<li {{ (Request::is('/') ? ' class="active"' : '') }}><a href="{{{ URL::to('') }}}">Home</a></li>
-					</ul>
 
-                    <ul class="nav navbar-nav pull-right">
-                        @if (Auth::check())
-                        @if (Auth::user()->hasRole('admin'))
-                        <li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
-                        @endif
-                        <li><a href="{{{ URL::to('user') }}}">Logged in as {{{ Auth::user()->username }}}</a></li>
-                        <li><a href="{{{ URL::to('user/logout') }}}">Logout</a></li>
-                        @else
-                        <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}">Login</a></li>
-                        <li {{ (Request::is('user/register') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/create') }}}">{{{ Lang::get('site.sign_up') }}}</a></li>
-                        @endif
-                    </ul>
-					<!-- ./ nav-collapse -->
-				</div>
-			</div>
-		</div>
-		<!-- ./ navbar -->
-
-		<!-- Container -->
-		<div class="container">
-			<!-- Notifications -->
-			@include('notifications')
-			<!-- ./ notifications -->
-
-			<!-- Content -->
-			@yield('content')
-			<!-- ./ content -->
-		</div>
-		<!-- ./ container -->
-
-		<!-- the following div is needed to make a sticky footer -->
-		<div id="push"></div>
-		</div>
-		<!-- ./wrap -->
-
-
-	    <div id="footer">
-	      <div class="container">
-	      </div>
-	    </div>
-
-		<!-- Javascripts
+	<!-- Javascripts
 		================================================== -->
-            {{ Basset::show('public.js') }}
-	</body>
+        <!-- jQuery -->
+        {{ HTML::script('assets/js/jquery.js'); }}
+        <!-- Bootstrap JS -->
+        {{ HTML::script('assets/js/bootstrap.min.js'); }}
+        <!-- Dropdown menu -->
+        {{ HTML::script('assets/js/ddlevelsmenu.min.js'); }}
+        <!-- CaroFredSel -->
+        {{ HTML::script("assets/js/jquery.carouFredSel-6.2.1-packed.js"); }}
+        <!-- Countdown -->
+        {{ HTML::script("assets/js/jquery.countdown.min.js"); }}    
+        <!-- jQuery Navco -->
+        {{ HTML::script("assets/js/jquery.navgoco.min.js"); }}
+        <!-- Filter for support page -->
+        {{ HTML::script("assets/js/filter.js"); }}         
+        <!-- Respond JS for IE8 -->
+        {{ HTML::script("assets/js/respond.min.js"); }}
+        <!-- HTML5 Support for IE -->
+        {{ HTML::script("assets/js/html5shiv.js"); }}
+	</body>	
 </html>

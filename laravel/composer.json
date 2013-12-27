@@ -12,9 +12,9 @@
     "require": {
         "laravel/framework": "4.0.x",
         "twbs/bootstrap": "dev-master",
+        "codesleeve/asset-pipeline": "dev-master",
         "zizaco/confide": "3.0.x",
         "zizaco/entrust": "dev-master",
-        "jasonlewis/basset": "dev-master",
         "robclancy/presenter": "1.0.*",
         "way/generators": "dev-master",
         "j20/php-uuid": "dev-master",
