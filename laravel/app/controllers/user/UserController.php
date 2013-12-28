@@ -307,14 +307,8 @@ class UserController extends BaseController {
      */
     public function getProfile($username)
     {
-        $userModel = new User;
-        $user = $userModel->getUserByUsername($username);
-
-        // Check if the user exists
-        if (is_null($user))
-        {
-            return App::abort(404);
-        }
+		list($user,$redirect) = User::checkAuthAndRedirect('user/profile');
+        if($redirect){return $redirect;}
 
         return View::make('site/user/profile', compact('user'));
     }
@@ -327,6 +321,14 @@ class UserController extends BaseController {
         return View::make('site/user/profile', compact('user'));
     }
 
+
+	public function getGroceryList()
+	{
+        list($user,$redirect) = User::checkAuthAndRedirect('user/grocery-list');
+        if($redirect){return $redirect;}
+
+        return View::make('site/user/grocery-list', compact('user'));
+	}
     /**
      * Process a dumb redirect.
      * @param $url1

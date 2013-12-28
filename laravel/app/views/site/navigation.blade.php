@@ -5,7 +5,7 @@
         <div class="col-md-2 col-sm-2">
         <!-- Logo -->
                 <div class="logo">
-                <h1><a href="{{{ URL::to('') }}}">OlsonKart</a></h1>
+                {{ HTML::image('/assets/img/grocery_shopper_logo.png') }}
                 </div>
         </div>
         <div class="col-md-6 col-sm-5">

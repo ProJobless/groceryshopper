@@ -8,8 +8,26 @@
 
 {{-- Content --}}
 @section('content')
-<div class="page-header">
-    <h1>{{{ Lang::get('user/user.forgot_password') }}}</h1>
+<div class="blocky">
+ <div class="container">
+    <div class="row">
+       <div class="col-md-6">
+	  <div class="reg-login-info">
+	     <h2>Forgot your account password<span class="color">!!!</span></h2>
+	     <p>You can reset your password easily. Enter the email you used to register an account and a new password will be emailed to you.</p>
+	  </div>
+       </div>
+       <div class="col-md-6">
+	  <div class="reg-login-info">
+                  <div class="cool-block">
+                        <div class="cool-block-bor">
+    				<h2>{{{ Lang::get('user/user.forgot_password') }}}</h2>
+					{{ Confide::makeForgotPasswordForm() }}
+			</div>
+	         </div>
+	 </div>
+       </div>
+     </div>
+ </div>
 </div>
-{{ Confide::makeForgotPasswordForm() }}
 @stop

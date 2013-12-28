@@ -61,10 +61,16 @@
         <link rel="shortcut icon" href="{{{ asset('assets/ico/favicon.png') }}}">
     </head>
     <body>
+
+        <!-- Navigation -->
+	@include('site.layouts.navigation')
+        <!-- ./ navigation -->
+      <div class="clearfix"></div>
+
+	
         <!-- Notifications -->
         @include('notifications')
         <!-- ./ notifications -->
-
         <!-- Content -->
         @yield('content')
         <!-- ./ content -->
