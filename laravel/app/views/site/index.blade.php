@@ -18,9 +18,9 @@
 		<div class="blocky">
 		 <div class="container center-block">
 			<div class="row">
-			   <div class="col-md-10 col-md-offset-2">
+			   <div class="col-md-10 col-md-offset-1">
 									<form class="form-inline widget-search" role="search">
-											<div class="form-group col-lg-10">
+											<div class="form-group">
 												 <div class="input-group custom-search-form">
 													  <input type="text" class="form-control" placeholder="Search">
 													  <span class="input-group-btn">
@@ -36,20 +36,5 @@
 			</div>
 		 </div>
 		</div>
-
-
-
-      <!-- Items List starts -->
-
-      <div class="shop-items blocky">
-        <div class="container">
-
-         <div class="row">
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Items List ends -->
 
 @stop

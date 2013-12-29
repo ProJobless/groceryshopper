@@ -20,7 +20,7 @@
 
 	       <div class="col-md-4 col-sm-4">
 		 <div class="fwidget">
-		   <h4>Categories</h4>
+		   <h4>Top search categories</h4>
 		   <hr />
 		   <ul>
 		     <li><a href="#">Foods</a></li>
@@ -57,7 +57,7 @@
     <hr />
 
     <div class="copy text-center">
-       Copyright 2013 &copy; - <a href="http://responsivewebinc.com/bootstrap-themes">Bootstrap Themes</a>
+	   Copyright 2013 &copy; - <a href="http://www.groceryshopper.ca">Groceryshopper.ca</a>
     </div>
  </div>
 </footer>
