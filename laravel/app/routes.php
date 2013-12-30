@@ -105,6 +105,19 @@ Route::get('contact-us', function()
     return View::make('site/contact-us');
 });
 
+
+# Search routes
+
+Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+			->where('keyword', '[0-9a-z]+');
+Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
+
+
+
+# User RESTful Routes (Login, Logout, Register, etc)
+Route::controller('search', 'SearchController');
+
+
 # Posts - Second to last set, match slug
 Route::get('{postSlug}', 'BlogController@getView');
 Route::post('{postSlug}', 'BlogController@postView');

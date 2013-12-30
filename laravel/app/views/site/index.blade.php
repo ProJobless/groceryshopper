@@ -19,19 +19,20 @@
 		 <div class="container center-block">
 			<div class="row">
 			   <div class="col-md-10 col-md-offset-1">
-									<form class="form-inline widget-search" role="search">
-											<div class="form-group">
-												 <div class="input-group custom-search-form">
-													  <input type="text" class="form-control" placeholder="Search">
-													  <span class="input-group-btn">
-													  <button class="btn btn-info" type="submit">
-													  <span class="glyphicon glyphicon-search"></span>Search
+{{ Form::open(array( 'action' => array('SearchController@processSearch'), 'role' => 'search', 'class' => 'form-inline widget-search')) }}
+							<div class="form-group">
+								 <div class="input-group custom-search-form">
+									  {{ Former::text('')->class('form-control')->placeholder('Search')->require()->name('keyword') }}
+									  <span class="input-group-btn">
+									  <button class="btn btn-info" type="submit">
+									  <span class="glyphicon glyphicon-search"></span>  Search
 
-													 </button>
-													 </span>
-													 </div><!-- /input-group -->
-												</div>
-									</form>
+									 </button>
+									 </span>
+									 </div><!-- /input-group -->
+								</div>
+					{{ Former::close() }} 
+					</form>
 			   </div>               
 			</div>
 		 </div>
