@@ -112,7 +112,7 @@ return array(
         'Zizaco\Entrust\EntrustServiceProvider', // Entrust Provider for roles
         'Robbo\Presenter\PresenterServiceProvider', // Presenter
         'Bllim\Datatables\DatatablesServiceProvider', // Datatables
-
+		'Former\FormerServiceProvider', // Form builder
         /* Uncomment for use in development */
         'Way\Generators\GeneratorsServiceProvider', // Generators
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', // IDE Helpers
@@ -191,7 +191,9 @@ return array(
         'Basset'          => 'Basset\Facade', // Better Asset Management
         'String'          => 'Andrew13\Helpers\String', // String
         'Carbon'          => 'Carbon\Carbon', // Carbon
-        'Datatables'      => 'Bllim\Datatables\Datatables', // DataTables
+		'Datatables'      => 'Bllim\Datatables\Datatables', // DataTables, 
+		'Former'		  => 'Former\Facades\Former',  //Form builder
+
 
 	),
     'available_language' => array('en', 'pt', 'es'),
