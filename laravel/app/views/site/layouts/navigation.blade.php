@@ -25,28 +25,16 @@
                                 </ul>
                         </li>
                 	@else
-                        <li><a href="{{{ URL::to('user/login') }}}" >Account</a>
+                        <li><a href="{{{ URL::to('user/login') }}}" >Your account</a>
                 	@endif
-                        <li><a href="#" rel="ddsubmenu1">Pages</a>
+                        <li><a href="#" rel="ddsubmenu1">Price Compare</a>
                             <ul id="ddsubmenu1" class="ddsubmenustyle">
-                                <li><a href="404.html">404</a></li>
-                                <li><a href="faq.html">FAQ</a></li>
-                                <li><a href="blog.html">Blog</a></li>
-                                <li><a href="careers.html">Careers</a>
-                                <li><a href="{{{ URL::to('support') }}}">Support</a></li>
-                                <li><a href="{{{ URL::to('about') }}}">About</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#" rel="ddsubmenu1">Computers</a>
-                            <ul id="ddsubmenu1" class="ddsubmenustyle">
-                                <li><a href="items.html">Desktop</a></li>
-                                <li><a href="items.html">Laptop</a></li>
-                                <li><a href="items.html">NetBook</a></li>
-                                <li><a href="items.html">All-In-One PC</a>
-                                <li><a href="items.html">Alienware</a></li>
+                                <li><a href="404.html">Find local grocery stores</a></li>
+                                <li><a href="faq.html">Flyers</a></li>
                             </ul>
                         </li>
                         <li><a href="{{{ URL::to('contact') }}}">Contact</a></li>
+                        <li><a href="{{{ URL::to('contact') }}}">About</a></li>
                     </ul>
                 </div>
             </div>
