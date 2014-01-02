@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use illuminate\database\migrations\migration;
 
 class CreatePostsTable extends Migration {
 
