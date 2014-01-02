@@ -112,9 +112,8 @@ class SearchController extends BaseController {
 		$auth_key = "3cq3h0MUUOAuD7T0M2FyGWWkd5ouNbsbhszvQF5B";
 		$auth_secret = "XjKHXlgMPlVPcpbD6y3jyIiSKkBjZFCX58vPSQqV";
 		//require_once ('../vendor/factual-php-driver/Factual.php');
-		require_once ('../app/libraries/Factual/Factual/Factual.php');
+		require_once ('../app/libraries/factual-php-driver/Factual.php');
 		$factual = new Factual($auth_key,$auth_secret);
-		
 		//Search for products containing the word "$keyword"
 		$query = new FactualQuery;
 		$query->field("product_name")->search($keyword); 
