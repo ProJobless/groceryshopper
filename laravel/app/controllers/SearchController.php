@@ -58,8 +58,20 @@ class SearchController extends BaseController {
         if ($validator->passes())
 		{
 			$keyword  = Input::get('keyword');
-			$results = $this->_perform_search($keyword);
-			return View::make('site/search-results');
+			$page = Input::get('page', 1);
+			// Get the count and the data
+			$offset = ($page * 20) - 20;
+			
+			$data = $this->_perform_search($keyword, $offset);
+			$results  = $data['data'];
+			$rowcount = $data['rowcount'];
+			$total_pages = ceil($rowcount / 20);
+			if ($page > $total_pages or $page < 1)
+			{
+			    $page = 1;
+			}
+			
+			return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
 		
 		}
         // There was a problem deleting the store
@@ -92,25 +104,26 @@ class SearchController extends BaseController {
 
 	
 	
-	private function _perform_search($keyword) {
+	private function _perform_search($keyword, $offset = 0) {
 		// echo the data
 		
-		$tableName = "products-cpg";
+		$tableName = "products-cpg-nutrition";
 
 		$auth_key = "3cq3h0MUUOAuD7T0M2FyGWWkd5ouNbsbhszvQF5B";
 		$auth_secret = "XjKHXlgMPlVPcpbD6y3jyIiSKkBjZFCX58vPSQqV";
 		require_once('../vendor/factual-php-driver/Factual.php');
 		$factual = new Factual($auth_key,$auth_secret);
 		
-		//Search for products containing the word "shampoo"
+		//Search for products containing the word "$keyword"
 		$query = new FactualQuery;
 		$query->field("product_name")->search($keyword); 
+		$query->field("category")->includesAny(array("Meat","Food", "Seafood", "tea"));
 		$query->sortAsc("product_name");
+		$query->limit(20);
+		$query->includeRowCount();
+		$query->offset($offset);
 		$res = $factual->fetch($tableName, $query); 
-		return ($res->getData());
-		
-		
-		$res = $factual->schema("places");
-		print_r($res->getColumnSchemas());
+		print_r($res->getRowCount());
+		return array ("data" => $res->getData(), "rowcount" => $res->getRowCount());
 	}
 }

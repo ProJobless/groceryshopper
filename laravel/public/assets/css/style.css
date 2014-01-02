@@ -2092,3 +2092,80 @@ footer .copy{
       margin-top:50px;
    }
 }
+
+.glyphicon { margin-right:5px; }
+.searchitem .thumbnail
+{
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.searchitem.list-group-searchitem
+{
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.searchitem.list-group-searchitem:nth-of-type(odd):hover,.searchitem.list-group-searchitem:hover
+{
+    background: #428bca;
+}
+
+.searchitem.list-group-searchitem .list-group-image
+{
+    margin-right: 10px;
+}
+.searchitem.list-group-searchitem .thumbnail
+{
+    margin-bottom: 0px;
+}
+.searchitem.list-group-searchitem .caption
+{
+    padding: 9px 9px 0px 9px;
+}
+.searchitem.list-group-searchitem:nth-of-type(odd)
+{
+    background: #eeeeee;
+}
+
+.searchitem.list-group-searchitem:before, .searchitem.list-group-searchitem:after
+{
+    display: table;
+    content: " ";
+}
+
+.searchitem.list-group-searchitem img
+{
+    float: left;
+}
+.searchitem.list-group-searchitem:after
+{
+    clear: both;
+}
+.list-group-searchitem-text
+{
+    margin: 0 0 11px;
+}
+.searchitem {
+	xheight:330px;
+}
+.searchitem .thumbnail .list-group-image {
+	height:180px;
+	max-width:200px;
+}
+.searchitem .lead {
+	margin: 7px 5px;
+	display: inline-block;
+	border-radius: 5px;
+	font-size: 13px;
+	font-weight: bold;
+	background:#16cbe6;
+	color:#fff;
+	width:40px;
+	text-align:center;
+	line-height:25px;
+}

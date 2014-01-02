@@ -33,6 +33,12 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600italic,600' rel='stylesheet' type='text/css'>
 
+        <!-- jQuery -->
+        {{ HTML::script('assets/js/jquery.js'); }}
+        <!-- Bootstrap JS -->
+        {{ HTML::script('assets/js/bootstrap.min.js'); }}
+        <!-- Bootstrap Paginator -->
+        {{ HTML::script("assets/js/bootstrap-paginator.min.js"); }}
         <!-- Styles -->
         <!-- Bootstrap CSS -->
         {{ HTML::style('assets/css/bootstrap.min.css'); }}
@@ -78,10 +84,6 @@
 	@include('site.layouts.footer')
         <!-- Javascripts
         ================================================== -->
-        <!-- jQuery -->
-        {{ HTML::script('assets/js/jquery.js'); }}
-        <!-- Bootstrap JS -->
-        {{ HTML::script('assets/js/bootstrap.min.js'); }}
         <!-- Dropdown menu -->
         {{ HTML::script('assets/js/ddlevelsmenu.js'); }}
         <!-- CaroFredSel -->
@@ -96,6 +98,18 @@
         {{ HTML::script("assets/js/respond.min.js"); }}
         <!-- HTML5 Support for IE -->
         {{ HTML::script("assets/js/html5shiv.js"); }}
-        {{ HTML::script("assets/js/custom.js"); }}
+        {{ HTML::script("assets/js/custom.js"); }}a
+	<script type="text/javascript">
+		 function getStartedInitialization(){
+			var options = {
+			    currentPage: 3,
+			    totalPages: 10
+			}
+
+			$('#toppager').bootstrapPaginator(options);
+		    }
+	</script>
+
+
     </body>
 </html>
