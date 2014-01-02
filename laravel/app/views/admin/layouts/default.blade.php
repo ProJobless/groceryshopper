@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head id="Grocery Shopper">
-		<title>Unicorn Admin</title>
+		<title>Grocery Shopper Admin</title>
 
     <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,9 +22,9 @@
     <meta name="google-site-verification" content="">
 
     <!-- Dublin Core Metadata : http://dublincore.org/ -->
-    <meta name="DC.title" content="Project Name">
+    <meta name="DC.title" content="Grocery Shopper">
     <meta name="DC.subject" content="@yield('description')">
-    <meta name="DC.creator" content="@yield('author')">
+    <meta name="DC.creator" content="@yield('groceryshopper.ca')">
 
     <!--  Mobile Viewport Fix -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -89,12 +89,17 @@
                 </div>
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav">
-                        <li{{ (Request::is('admin') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin') }}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                        <li{{ (Request::is('admin/products') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/products') }}}">
-                                        <span class="glyphicon glyphicon-list-alt"></span> Products</a>
+                        <li{{ (Request::is('admin') ? ' class="active"' : '') }}>
+				<a href="{{{ URL::to('admin') }}}"><span class="glyphicon glyphicon-home"></span> Home</a>
+			</li>
+                        <li{{ (Request::is('admin/groceryitems') ? ' class="active"' : '') }}>
+				<a href="{{{ URL::to('admin/groceryitems') }}}">
+                                        <span class="glyphicon glyphicon-list-alt"></span> Grocery items</a>
                         </li>
-                        <li{{ (Request::is('admin/stores*') ? ' class="active"' : '') }}><a href="{{{ URL::to('admin/stores') }}}">
-                                        <span class="glyphicon glyphicon-list-alt"></span> Stores</a></li>
+                        <li{{ (Request::is('admin/stores') ? ' class="active"' : '') }}>
+				<a href="{{{ URL::to('admin/stores') }}}">
+                                        <span class="glyphicon glyphicon-list-alt"></span> Stores</a>
+			</li>
                         <li class="dropdown{{ (Request::is('admin/users*|admin/roles*') ? ' active' : '') }}">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="{{{ URL::to('admin/users') }}}">
                                 <span class="glyphicon glyphicon-user"></span> Users <span class="caret"></span>
