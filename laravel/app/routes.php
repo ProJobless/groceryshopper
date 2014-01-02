@@ -105,6 +105,28 @@ Route::get('contact-us', function()
     return View::make('site/contact-us');
 });
 
+// about page (app/views/about.blade.php)
+Route::get('about',array('as' => 'about', function()
+{
+	return View::make('site/about');
+}));
+
+
+# Search routes
+Route::group(array('prefix' => 'products'), function()
+{
+
+Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+			->where('keyword', '[0-9a-z]+');
+Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
+
+});
+
+
+# User RESTful Routes (Login, Logout, Register, etc)
+Route::controller('search', 'SearchController');
+
+
 # Posts - Second to last set, match slug
 Route::get('{postSlug}', 'BlogController@getView');
 Route::post('{postSlug}', 'BlogController@postView');
@@ -119,5 +141,5 @@ Route::resource('categories', 'CategoriesController');
 Route::resource('tags', 'TagsController');
 
 # Index Page - Last route, no matches
-Route::get('/', array('before' => 'detectLang','uses' => 'Controller@getIndex'));
+Route::get('/', array('before' => 'detectLang','uses' => 'HomeController@getIndex'));
 #Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));

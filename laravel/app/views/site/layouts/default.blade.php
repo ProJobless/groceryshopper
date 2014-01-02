@@ -1,117 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Basic Page Needs
-		================================================== -->
-		<meta charset="utf-8" />
-		<title>
-			@section('title')
-			Groceryshopper.ca: Find you groceries fast!!
-			@show
-		</title>
-                <meta name="viewport" content="width=1024">
-                <meta http-equiv="cleartype" content="on">
-                <meta name="mobileoptimized" content="1024">
-                <meta name="format-detection" content="telephone=yes">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-                <meta http-equiv="description" content="Grocery Supermarkets is home to Great Food. Use our store locator to locate a Grocery store near you, view the weekly local store flyer.">
+    <head>
+        <!-- Basic Page Needs
+        ================================================== -->
+        <meta charset="utf-8" />
+        <title>
+            @section('title')
+            Groceryshopper.ca: Find you groceries fast!!
+            @show
+        </title>
+        <meta name="viewport" content="width=1024">
+        <meta http-equiv="cleartype" content="on">
+        <meta name="mobileoptimized" content="1024">
+        <meta name="format-detection" content="telephone=yes">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="description" content="Grocery Supermarkets is home to Great Food. Use our store locator to locate a Grocery store near you, view the weekly local store flyer.">
 
-                <meta property="og:title" content="Grocery shopper - Find grocery deals fast!!">
-                <meta property="og:description" content="Use our store locator to locate a Grocery store near you, view the weekly local store flyer.">   
-                <meta property="og:url" content="http://www.groceryshopper.ca/en_CA.html">   
+        <meta property="og:title" content="Grocery shopper - Find grocery deals fast!!">
+        <meta property="og:description" content="Use our store locator to locate a Grocery store near you, view the weekly local store flyer.">
+        <meta property="og:url" content="http://www.groceryshopper.ca/en_CA.html">
 
-                <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-                <meta http-equiv="keywords" content="">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="keywords" content="">
 
-		<!-- Mobile Specific Metas
-		================================================== -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Mobile Specific Metas
+        ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<!-- CSS
-		================================================== -->
-               {{ Basset::show('public.css') }}
+        <!-- CSS
+        ================================================== -->
 
-		<style>
-		@section('styles')
-		@show
-		</style>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600italic,600' rel='stylesheet' type='text/css'>
 
-		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-		<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+        <!-- jQuery -->
+        {{ HTML::script('assets/js/jquery.js'); }}
+        <!-- Bootstrap JS -->
+        {{ HTML::script('assets/js/bootstrap.min.js'); }}
+        <!-- Bootstrap Paginator -->
+        {{ HTML::script("assets/js/bootstrap-paginator.min.js"); }}
+        <!-- Styles -->
+        <!-- Bootstrap CSS -->
+        {{ HTML::style('assets/css/bootstrap.min.css'); }}
+        <!-- Animate css -->
+        {{ HTML::style('assets/css/animate.min.css'); }}
+        <!-- Dropdown menu -->
 
-		<!-- Favicons
-		================================================== -->
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{{ asset('assets/ico/apple-touch-icon-144-precomposed.png') }}}">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{{ asset('assets/ico/apple-touch-icon-114-precomposed.png') }}}">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{{ asset('assets/ico/apple-touch-icon-72-precomposed.png') }}}">
-		<link rel="apple-touch-icon-precomposed" href="{{{ asset('assets/ico/apple-touch-icon-57-precomposed.png') }}}">
-		<link rel="shortcut icon" href="{{{ asset('assets/ico/favicon.png') }}}">
-	</head>
+        {{ HTML::style('assets/css/ddlevelsmenu-base.css'); }}
+        {{ HTML::style('assets/css/ddlevelsmenu-topbar.css'); }}
 
-	<body>
-		<!-- To make sticky footer need to wrap in a div -->
-		<div id="wrap">
-		<!-- Navbar -->
-		<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
-			 <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav">
-						<li {{ (Request::is('/') ? ' class="active"' : '') }}><a href="{{{ URL::to('') }}}">Home</a></li>
-					</ul>
+        <!-- Countdown -->
+        {{ HTML::style('assets/css/jquery.countdown.css'); }}
 
-                    <ul class="nav navbar-nav pull-right">
-                        @if (Auth::check())
-                        @if (Auth::user()->hasRole('admin'))
-                        <li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
-                        @endif
-                        <li><a href="{{{ URL::to('user') }}}">Logged in as {{{ Auth::user()->username }}}</a></li>
-                        <li><a href="{{{ URL::to('user/logout') }}}">Logout</a></li>
-                        @else
-                        <li {{ (Request::is('user/login') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/login') }}}">Login</a></li>
-                        <li {{ (Request::is('user/register') ? ' class="active"' : '') }}><a href="{{{ URL::to('user/create') }}}">{{{ Lang::get('site.sign_up') }}}</a></li>
-                        @endif
-                    </ul>
-					<!-- ./ nav-collapse -->
-				</div>
-			</div>
-		</div>
-		<!-- ./ navbar -->
+        <!-- Font awesome CSS -->
+        {{ HTML::style('assets/css/font-awesome.min.css'); }}
 
-		<!-- Container -->
-		<div class="container">
-			<!-- Notifications -->
-			@include('notifications')
-			<!-- ./ notifications -->
+        <!-- Custom CSS -->
+        {{ HTML::style('assets/css/style.css'); }}
 
-			<!-- Content -->
-			@yield('content')
-			<!-- ./ content -->
-		</div>
-		<!-- ./ container -->
+        <!-- Favicons
+        ================================================== -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{{ asset('assets/ico/apple-touch-icon-144-precomposed.png') }}}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{{ asset('assets/ico/apple-touch-icon-114-precomposed.png') }}}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{{ asset('assets/ico/apple-touch-icon-72-precomposed.png') }}}">
+        <link rel="apple-touch-icon-precomposed" href="{{{ asset('assets/ico/apple-touch-icon-57-precomposed.png') }}}">
+        <link rel="shortcut icon" href="{{{ asset('assets/ico/favicon.png') }}}">
+    </head>
+    <body>
 
-		<!-- the following div is needed to make a sticky footer -->
-		<div id="push"></div>
-		</div>
-		<!-- ./wrap -->
+        <!-- Navigation -->
+	@include('site.layouts.navigation')
+        <!-- ./ navigation -->
+      <div class="clearfix"></div>
+
+	
+        <!-- Notifications -->
+        @include('notifications')
+        <!-- ./ notifications -->
+        <!-- Content -->
+        @yield('content')
+        <!-- ./ content -->
+
+	@include('site.layouts.footer')
+        <!-- Javascripts
+        ================================================== -->
+        <!-- Dropdown menu -->
+        {{ HTML::script('assets/js/ddlevelsmenu.js'); }}
+        <!-- CaroFredSel -->
+        {{ HTML::script("assets/js/jquery.carouFredSel-6.2.1-packed.js"); }}
+        <!-- Countdown -->
+        {{ HTML::script("assets/js/jquery.countdown.min.js"); }}
+        <!-- jQuery Navco -->
+        {{ HTML::script("assets/js/jquery.navgoco.min.js"); }}
+        <!-- Filter for support page -->
+        {{ HTML::script("assets/js/filter.js"); }}
+        <!-- Respond JS for IE8 -->
+        {{ HTML::script("assets/js/respond.min.js"); }}
+        <!-- HTML5 Support for IE -->
+        {{ HTML::script("assets/js/html5shiv.js"); }}
+        {{ HTML::script("assets/js/custom.js"); }}a
+	<script type="text/javascript">
+		 function getStartedInitialization(){
+			var options = {
+			    currentPage: 3,
+			    totalPages: 10
+			}
+
+			$('#toppager').bootstrapPaginator(options);
+		    }
+	</script>
 
 
-	    <div id="footer">
-	      <div class="container">
-	      </div>
-	    </div>
-
-		<!-- Javascripts
-		================================================== -->
-        {{ Basset::show('public.js') }}
-	</body>
+    </body>
 </html>
