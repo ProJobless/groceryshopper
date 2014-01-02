@@ -30,7 +30,7 @@ $env = $app->detectEnvironment(array(
 
     'local' => array('dev', 'TugsMacBookPro.local', '127.0.0.1', '*.local', '*.mcgill.ca'), // Change this to your local machine hostname.
     'staging' => array('Mustard'),
-    'production' => array('web-01.safarivu.com'),
+    'production' => array('tugsnet-web'),
 
 ));
 
