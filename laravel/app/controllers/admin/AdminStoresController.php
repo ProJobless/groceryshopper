@@ -31,7 +31,7 @@ class AdminStoresController extends AdminController {
 
         // Grab all the stores
         $stores = $this->store;
-
+	print_r("Hello");die();
         // Show the page
         return View::make('admin/stores/index', compact('stores', 'title'));
     }

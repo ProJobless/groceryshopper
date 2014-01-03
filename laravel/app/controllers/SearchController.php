@@ -123,7 +123,6 @@ class SearchController extends BaseController {
 		$query->includeRowCount();
 		$query->offset($offset);
 		$res = $factual->fetch($tableName, $query); 
-		print_r($res->getRowCount());
 		return array ("data" => $res->getData(), "rowcount" => $res->getRowCount());
 	}
 }

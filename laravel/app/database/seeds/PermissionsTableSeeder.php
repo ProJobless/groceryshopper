@@ -29,6 +29,10 @@ class PermissionsTableSeeder extends Seeder {
                 'display_name'      => 'manage roles'
             ),
             array(
+                'name'      => 'manage_stores',
+                'display_name'      => 'manage stores'
+            ),
+            array(
                 'name'      => 'post_comment',
                 'display_name'      => 'post comment'
             ),
@@ -66,6 +70,10 @@ class PermissionsTableSeeder extends Seeder {
             array(
                 'role_id'      => 2,
                 'permission_id' => 6
+            ),
+            array(
+                'role_id'      => 1,
+                'permission_id' => 7
             ),
         );
 

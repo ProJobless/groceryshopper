@@ -24,7 +24,8 @@
         "league/geotools": "@stable",
         "solarium/solarium": "3.2.*",
         "anahkiasen/former": "dev-master",
-        "toin0u/geotools-laravel": "~0.2"
+        "toin0u/geotools-laravel": "~0.2",
+	"edvinaskrucas/notification": "2.*"
     },
     "require-dev": {
         "way/generators": "dev-master",

@@ -6,11 +6,6 @@
 
 $(document).ready(function(){
 	
-	$('.data-table').dataTable({
-		"bJQueryUI": true,
-		"sPaginationType": "full_numbers",
-		"sDom": '<""l>t<"F"fp>'
-	});
 	
 	var checkboxClass = 'icheckbox_flat-blue';
 	var radioClass = 'iradio_flat-blue';
@@ -19,7 +14,6 @@ $(document).ready(function(){
     	radioClass: radioClass
 	});
 	
-	$('select').select2();
 	
 
 	$("span.icon input:checkbox, th input:checkbox").on('ifChecked || ifUnchecked',function() {

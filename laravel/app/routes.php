@@ -16,8 +16,6 @@
  *  ------------------------------------------
  */
 Route::model('user', 'User');
-Route::model('comment', 'Comment');
-Route::model('post', 'Post');
 Route::model('role', 'Role');
 Route::model('store', 'Store');
 
@@ -115,11 +113,9 @@ Route::get('about',array('as' => 'about', function()
 # Search routes
 Route::group(array('prefix' => 'products'), function()
 {
-
-Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
-			->where('keyword', '[0-9a-z]+');
-Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
-
+	Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+				->where('keyword', '[0-9a-z]+');
+	Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
 });
 
 
@@ -138,8 +134,5 @@ Route::resource('groceryitems', 'GroceryitemsController');
 
 Route::resource('categories', 'CategoriesController');
 
-Route::resource('tags', 'TagsController');
-
 # Index Page - Last route, no matches
 Route::get('/', array('before' => 'detectLang','uses' => 'HomeController@getIndex'));
-#Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
