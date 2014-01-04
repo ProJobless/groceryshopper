@@ -45,7 +45,7 @@
             <div class="col-md-4 col-sm-5">
               <div class="kart-links">
                 @if (Auth::check())
-                @if (Auth::user()->hasRole('admin'))
+                @if (Auth::user()->hasRole('administrator'))
                 <a href="{{{ URL::to('admin') }}}">Admin Panel</a>
                 @endif
                 <a href="{{{ URL::to('user') }}}">Logged in as {{{ Auth::user()->username }}}</a>

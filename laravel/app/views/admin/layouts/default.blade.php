@@ -52,6 +52,7 @@
         {{ HTML::style('assets/css/fullcalendar.css'); }}
         {{ HTML::style('assets/css/jquery.jscrollpane.css'); }}
         {{ HTML::style('assets/css/select2.css'); }}
+        {{ HTML::style('assets/css/icheck/flat/blue.css'); }}
 
         <!-- Countdown -->
         {{ HTML::style('assets/css/unicorn.css'); }}
@@ -163,7 +164,7 @@
 							<li><a href="{{{ URL::to('admin/groceryitems/add') }}}">Categories</a></li>
 						</ul>
 					</li>
-                        		<li {{ ( ( Request::is('admin/roles') || Request::is('admin/users') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
+                        		<li {{ ( ( Request::is('admin/roles') || Request::is('admin/users') || Request::is('admin/permissions') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
 						<a href="#"><i class="glyphicon glyphicon-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
 						<ul>
                                 			<li{{ (Request::is('admin/users*') ? ' class="active"' : '') }}>
@@ -172,13 +173,16 @@
 							<li{{ (Request::is('admin/roles*') ? ' class="active"' : '') }}>
 								<a href="{{{ URL::to('admin/roles') }}}"><span class="glyphicon glyphicon-user"></span> Roles</a>
 							</li>
+							<li{{ (Request::is('admin/permissions*') ? ' class="active"' : '') }}>
+								<a href="{{{ URL::to('admin/permissions') }}}"><span class="glyphicon glyphicon-user"></span> Permissions</a>
+							</li>
 						</ul>
 					</li>
                         		<li {{ ( ( Request::is('admin/stores')) ? ' class="submenu active open"' : ' class="submenu"') }}>
 						<a href="#"><i class="fa fa-th"></i> <span>Stores</span> <i class="arrow fa fa-chevron-right"></i></a>
 						<ul>
                                 			<li{{ (Request::is('admin/stores*') ? ' class="active"' : '') }}>
-							 	<a href="{{{ URL::to('admin/stores*') }}}">List </a>
+							 	<a href="{{{ URL::to('admin/stores') }}}">List </a>
 							</li>
 							<li{{ (Request::is('admin/stores/add') ? ' class="active"' : '') }}>
 								<a href="{{{ URL::to('admin/stores/add') }}}"><span class="glyphicon glyphicon-user"></span>Add </a>

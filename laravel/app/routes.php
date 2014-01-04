@@ -18,6 +18,7 @@
 Route::model('user', 'User');
 Route::model('role', 'Role');
 Route::model('store', 'Store');
+Route::model('permission', 'Permission');
 
 /** ------------------------------------------
  *  Admin Routes
@@ -64,6 +65,19 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('roles/{role}/delete', 'AdminRolesController@postDelete')
         ->where('role', '[0-9]+');
     Route::controller('roles', 'AdminRolesController');
+    
+    # Permission Management
+    Route::get('permissions/{permission}/show', 'AdminPermissionsController@getShow')
+        ->where('permission', '[0-9]+');
+    Route::get('permissions/{permission}/edit', 'AdminPermissionsController@getEdit')
+        ->where('permission', '[0-9]+');
+    Route::post('permissions/{permission}/edit', 'AdminPermissionsController@postEdit')
+        ->where('permission', '[0-9]+');
+    Route::get('permissions/{permission}/delete', 'AdminPermissionsController@getDelete')
+        ->where('permission', '[0-9]+');
+    Route::post('permissions/{permission}/delete', 'AdminPermissionsController@postDelete')
+        ->where('permission', '[0-9]+');
+    Route::controller('permissions', 'AdminPermissionsController');
 
     # Admin Dashboard
     Route::controller('/', 'AdminDashboardController');

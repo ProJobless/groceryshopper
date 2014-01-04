@@ -31,7 +31,6 @@ class AdminStoresController extends AdminController {
 
         // Grab all the stores
         $stores = $this->store;
-	print_r("Hello");die();
         // Show the page
         return View::make('admin/stores/index', compact('stores', 'title'));
     }
@@ -282,17 +281,24 @@ class AdminStoresController extends AdminController {
     public function getData()
     {
         $stores = Store::select(array('stores.id', 'stores.title', 'stores.slug',
-                         'stores.phone_1', 'stores.line_1','stores.city', 'stores.province_state', 'stores.updated_at'));
+                         'stores.phone_1', 'stores.line_1','stores.province_state', 'stores.city', 'stores.country', 'stores.postal_zip', 'stores.province_state as address', 'stores.updated_at'));
         return Datatables::of($stores)
+            ->edit_column('address', '{{ join("<br />", array($line_1, $city, $province_state." ".$country, $postal_zip)) }}' )
+
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
                 <a href="{{{ URL::to(\'admin/stores/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
             ')
-            ->add_column('address', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
-            ')
             ->remove_column('id')
+            ->remove_column('city')
+            ->remove_column('province_state')
+            ->remove_column('country')
             ->make();
 
     }
+	
+    function _build_address($stores) {
+		return "Store address";
+   }
 
     private function fetchCoords($store) {
 

@@ -16,7 +16,6 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumb')
 	 @parent
-	 <a href="{{{ URL::to('admin/users') }}}" title="Manage users" class="tip-bottom"><i class="fa fa-user"></i> Users</a>
 
 @stop
 {{-- Content --}}
@@ -32,8 +31,7 @@
 		    <div class="col-xs-12">
 			<div class="widget-box">
 				<div class="widget-title">
-					<span class="icon"><i class="fa fa-user"></i></span>
-					<h5>Create a new User</h5>
+					@yield('formtitle')
 				</div>
 				<div class="widget-content nopadding">
 				<!-- Content -->
@@ -43,4 +41,16 @@
 			<!-- ./ content -->
 		     </div>
 		</div>
+@stop
+{{-- Scripts --}}
+@section('scripts')
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('input[type=checkbox],input[type=radio]').iCheck({
+			checkboxClass: 'icheckbox_flat-blue',
+			radioClass: 'iradio_flat-blue'
+			});
+			
+		});
+	</script>
 @stop

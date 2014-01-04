@@ -1,13 +1,18 @@
 @extends('admin.layouts.modal')
+{{-- Breadcrumbs --}}
+@section('breadcrumb')
+	 @parent
+	 <a href="{{{ URL::to('admin/roles') }}}" title="Manage roles" class="tip-bottom"><i class="fa fa-user"></i>Roles</a>
+	 <a href="{{{ URL::to('admin/roles/' .$role->id . '/delete') }}}" title="{{{ $title }}}" class="tip-bottom"><i class="fa fa-trash-o"></i>{{{ $title }}}</a>
+
+@stop
+@section('formtitle')
+<span class="icon"><i class="fa fa-user"></i></span>
+<h5>{{{ $title }}}</h5>
+@stop
 
 {{-- Content --}}
-@section('content')
-    <!-- Tabs -->
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">General</a></li>
-            <li><a href="#tab-permissions" data-toggle="tab">Permissions</a></li>
-        </ul>
-    <!-- ./ tabs -->
+@section('formcontent')
 
     {{-- Delete Role Form --}}
     <form class="form-horizontal" method="post" action="" autocomplete="off">
@@ -15,14 +20,12 @@
         <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
         <input type="hidden" name="id" value="{{ $role->id }}" />
         <!-- ./ csrf token -->
-
+	<p> Are you sure you want to delete the following role?</p>
         <!-- Form Actions -->
-        <div class="control-group">
-            <div class="controls">
-                <element class="btn-cancel close_popup">Cancel</element>
-                <button type="submit" class="btn btn-danger close_popup">Delete</button>
-            </div>
-        </div>
+	<div class="form-actions">
+		    <button type="submit" class="btn btn-danger">Delete</button>
+		    <button type="button" class="btn">Cancel</button>
+	</div>
         <!-- ./ form actions -->
     </form>
 @stop
