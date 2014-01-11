@@ -1,17 +1,17 @@
 <?php
 
-class StoresController extends BaseController {
+class GroceryitemsController extends BaseController {
 
     /**
-     * Store Repository
+     * Groceryitem Repository
      *
-     * @var Store
+     * @var Groceryitem
      */
-    protected $store;
+    protected $groceryitem;
 
-    public function __construct(Store $store)
+    public function __construct(Groceryitem $groceryitem)
     {
-        $this->store = $store;
+        $this->groceryitem = $groceryitem;
     }
 
     /**
@@ -21,8 +21,9 @@ class StoresController extends BaseController {
      */
     public function index()
     {
-        $stores = $this->store->all();
-        return View::make('site/stores/stores.index', compact('stores'));
+    $groceryitems = $this->groceryitem->all();
+
+    return View::make('groceryitems.index', compact('groceryitems'));
     }
 
     /**
@@ -32,7 +33,7 @@ class StoresController extends BaseController {
      */
     public function create()
     {
-        return View::make('stores.create');
+        return View::make('groceryitems.create');
     }
 
     /**
@@ -43,16 +44,16 @@ class StoresController extends BaseController {
     public function store()
     {
         $input = Input::all();
-        $validation = Validator::make($input, Store::$rules);
+        $validation = Validator::make($input, Groceryitem::$rules);
 
         if ($validation->passes())
         {
-            $this->store->create($input);
+            $this->product->create($input);
 
-            return Redirect::route('stores.index');
+            return Redirect::route('groceryitems.index');
         }
 
-        return Redirect::route('stores.create')
+        return Redirect::route('groceryitems.create')
             ->withInput()
             ->withErrors($validation)
             ->with('message', 'There were validation errors.');
@@ -66,10 +67,9 @@ class StoresController extends BaseController {
      */
     public function show($id)
     {
-        $store = $this->store->findOrFail($id);
-        print_r($store);
+        $groceryitem = $this->product->findOrFail($id);
 
-        return View::make('stores.show', compact('store'));
+        return View::make('groceryitems.show', compact('product'));
     }
 
     /**
@@ -80,14 +80,14 @@ class StoresController extends BaseController {
      */
     public function edit($id)
     {
-        $store = $this->store->find($id);
+        $groceryitem = $this->product->find($id);
 
-        if (is_null($store))
+        if (is_null($groceryitem))
         {
-            return Redirect::route('stores.index');
+            return Redirect::route('groceryitems.index');
         }
 
-        return View::make('stores.edit', compact('store'));
+        return View::make('groceryitems.edit', compact('product'));
     }
 
     /**
@@ -99,17 +99,17 @@ class StoresController extends BaseController {
     public function update($id)
     {
         $input = array_except(Input::all(), '_method');
-        $validation = Validator::make($input, Store::$rules);
+        $validation = Validator::make($input, Groceryitem::$rules);
 
         if ($validation->passes())
         {
-            $store = $this->store->find($id);
-            $store->update($input);
+            $groceryitem = $this->product->find($id);
+            $groceryitem->update($input);
 
-            return Redirect::route('stores.show', $id);
+            return Redirect::route('groceryitems.show', $id);
         }
 
-        return Redirect::route('stores.edit', $id)
+        return Redirect::route('groceryitems.edit', $id)
             ->withInput()
             ->withErrors($validation)
             ->with('message', 'There were validation errors.');
@@ -123,9 +123,9 @@ class StoresController extends BaseController {
      */
     public function destroy($id)
     {
-        $this->store->find($id)->delete();
+        $this->product->find($id)->delete();
 
-        return Redirect::route('stores.index');
+        return Redirect::route('groceryitems.index');
     }
 
 }
