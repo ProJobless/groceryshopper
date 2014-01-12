@@ -5,15 +5,15 @@ use Carbon\Carbon;
 
 
 class Groceryitem extends Eloquent implements PresentableInterface {
-  protected $guarded = array('id', 'factual_factual_id');
+  protected $guarded = array('id');
 
   protected $fillable = array(
     'title', 'name', 'factual_avg_price', 'factual_brand', 'factual_id', 'factual_upc',
-  
   );
   public static $rules = array(
       'name' => 'required',
       'title' => 'required',
+      'factual_id' => 'required',
   );
 
   public function getPresenter()

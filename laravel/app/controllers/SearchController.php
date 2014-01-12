@@ -91,33 +91,62 @@ class SearchController extends BaseController {
     private function store($result) {
         // Load the module
       $groceryitem = new Groceryitem;
-      var_dump($result);
       $input = $result;
-      $validation = Validator::make($input, Groceryitem::$rules);
-      if ($validation->passes())
-      {
-          $groceryitem->title = $result['factual_product_name'];
+      $groceryitem->title = $result['product_name'];
+      // Core details.
+      $groceryitem->factual_id = $result['factual_id'];
+      $groceryitem->factual_url = "http://www.factual.com";
+      $groceryitem->factual_image_urls = isset($result['image_urls']) ? $result['image_urls']['0'] : NULL;
+      $groceryitem->factual_brand = $result['brand'];
+      $groceryitem->factual_product_name = $result['product_name'];
+      $groceryitem->factual_upc = isset($result['upc']) ? $result['upc']: NULL;
+      $groceryitem->factual_ean13 = isset($result['ean13']) ?  $result['ean13'] : NULL;
+      $groceryitem->factual_category = $result['category'];
+      $groceryitem->factual_avg_price = isset($result['avg_price']) ? $result['avg_price'] : NULL;
+      //Other details.
+      $groceryitem->factual_size = isset($result['size']) ? $result['size'][0] : NULL;
+      $groceryitem->factual_manufacturer = isset($result['manufacturer']) ? $result['manufacturer'] : NULL;
+      $groceryitem->factual_ingredients = isset($result['ingredients']) ? NULL : NULL;
+      $groceryitem->factual_ingredients = isset($result['ingredients']) ? NULL : NULL;
+      $groceryitem->factual_ingredients = isset($result['ingredients']) ? NULL : NULL;
+      $groceryitem->factual_serving_size = isset($result['serving_size']) ? $result['serving_size'] : NULL;
+      $groceryitem->factual_servings = isset($result['servings']) ? $result['servings'] : NULL;
+      $groceryitem->factual_calories = isset($result['calories']) ? $result['calories'] : NULL;
+      $groceryitem->factual_fat_calories = isset($result['fat_calories']) ? $result['fat_calories'] : NULL;
+      $groceryitem->factual_total_fat = isset($result['total_fat']) ? $result['total_fat'] : NULL;
+      $groceryitem->factual_sat_fat = isset($result['sat_fat']) ? $result['sat_fat'] : NULL;
+      $groceryitem->factual_trans_fat = isset($result['trans_fat']) ? $result['trans_fat'] : NULL;
+      $groceryitem->factual_cholesterol = isset($result['cholesterol']) ? $result['cholesterol'] : NULL;
+      $groceryitem->factual_sodium = isset($result['sodium']) ? $result['sodium'] : NULL;
+      $groceryitem->factual_potassium = isset($result['potassium']) ? $result['potassium'] : NULL;
+      $groceryitem->factual_dietary_fiber = isset($result['dietary_fiber']) ? $result['dietary_fiber'] : NULL;
+      $groceryitem->factual_sugars = isset($result['sugars']) ? $result['sugars'] : NULL;
+      $groceryitem->factual_protein = isset($result['protein']) ? $result['protein'] : NULL;
+      $groceryitem->factual_upc_e = isset($result['upc_e']) ? $result['upc_e'] : NULL;
 
-          // Core details.
-          $groceryitem->factual_id = $result['factual_id'];
-          $groceryitem->factual_url = "http://www.factual.com";
-          $groceryitem->factual_image_urls = $result['image_url']['0'];
-          $groceryitem->factual_brand = $result['brand'];
-          $groceryitem->factual_product_name = $result['factual_product_name'];
-          $groceryitem->factual_upc = $result['upc'];
-          $groceryitem->factual_ean13 = $result['ean13'];
-          $groceryitem->category = $result['category'];
-          $groceryitem->factual_avg_price = isset($result['avg_price']) ? $result['avg_price'] : NULL;
+      // System values
+      $groceryitem->upc = isset($result['upc']) ? $result['upc'] : NULL;
+      $groceryitem->size = isset($result['size']) ? $this->_build_size($result['size'][0]) : NULL;
+      $groceryitem->image_url = isset($result['image_urls']) ? $result['image_urls']['0'] : NULL;
+      $groceryitem->brand = $result['brand'];
+      $groceryitem->product_name = $result['product_name'];
+      $groceryitem->unit_id = 1;
 
-          //Other details.
-          $groceryitem->factual_size = isset($result['size']) ? $result['size'][0] : NULL_EMPTY_STRING;
-          $groceryitem->factual_manufacturer = isset($groceryitem['manufacturer']) ? $groceryitem['manufacturer'] : NULL_EMPTY_STRING;
-          $groceryitem->factual_ingredients = isset($groceryitems['ingredients']) ? NULL : NULL;
 
-          $groceryitem->save();
+      //$groceryitem->save();
+
+    }
+
+    private function _build_size($input) {
+      $sizes = preg_split("/;/", $input);
+      foreach($sizes as $size) {
+        //list($value, $unit) = preg_split("/[\s]+/", trim($size));
+        // Fetch only the values.
+        $value = str_replace(['+', '-'], '', filter_var($size, FILTER_SANITIZE_NUMBER_FLOAT));
+        $unit = preg_replace('/[\d\s\.]/', '', trim($size));
+
+        // get the unit
       }
-      die();
-
     }
 
 
