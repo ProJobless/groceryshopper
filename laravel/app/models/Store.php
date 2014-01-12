@@ -36,6 +36,7 @@ class Store extends Eloquent implements PresentableInterface {
     {
         return $this->hasMany('Store_address');
     }
+
     /**
      * Get the store author.
      *

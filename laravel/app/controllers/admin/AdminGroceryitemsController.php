@@ -28,8 +28,8 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.groceryitems_management');
-
-        // Grab all the stores
+        var_dump($title);
+        // Grab all the Groceryitems
         $groceryitems = $this->groceryitem;
         // Show the page
         return View::make('admin/groceryitems/index', compact('groceryitems', 'title'));
@@ -44,7 +44,7 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.create_a_new_groceryitem');
-
+        
         // Show the page
         return View::make('admin/groceryitems/create_edit', compact('title'));
     }

@@ -19,6 +19,7 @@ Route::model('user', 'User');
 Route::model('role', 'Role');
 Route::model('store', 'Store');
 Route::model('permission', 'Permission');
+Route::model('groceryitem', 'Groceryitem');
 
 /** ------------------------------------------
  *  Admin Routes
@@ -39,6 +40,20 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('stores/{store}/delete', 'AdminStoresController@postDelete')
         ->where('store', '[0-9]+');
     Route::controller('stores', 'AdminStoresController');
+    
+    # Groceryitem Management
+    Route::get('groceryitems/{groceryitem}/show', 'AdminGroceryitemsController@getShow')
+        ->where('groceryitem', '[0-9]+');
+    Route::get('groceryitems/{groceryitem}/edit', 'AdminGroceryitemsController@getEdit')
+        ->where('groceryitem', '[0-9]+');
+    Route::post('groceryitems/{groceryitem}/edit', 'AdminGroceryitemsController@postEdit')
+        ->where('groceryitem', '[0-9]+');
+    Route::get('groceryitems/{groceryitem}/delete', 'AdminGroceryitemsController@getDelete')
+        ->where('groceryitem', '[0-9]+');
+    Route::post('groceryitems/{groceryitem}/delete', 'AdminGroceryitemsController@postDelete')
+        ->where('groceryitem', '[0-9]+');
+    Route::controller('groceryitems', 'AdminGroceryitemsController');
+
 
     # User Management
     Route::get('users/{user}/show', 'AdminUsersController@getShow')

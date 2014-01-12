@@ -21,9 +21,10 @@ class GroceryitemsController extends BaseController {
      */
     public function index()
     {
-    $groceryitems = $this->groceryitem->all();
+        $groceryitems = $this->groceryitem->all();
 
-    return View::make('groceryitems.index', compact('groceryitems'));
+
+        return View::make('groceryitems.index', compact('groceryitems'));
     }
 
     /**
@@ -48,7 +49,7 @@ class GroceryitemsController extends BaseController {
 
         if ($validation->passes())
         {
-            $this->product->create($input);
+            $this->groceryitem->create($input);
 
             return Redirect::route('groceryitems.index');
         }
@@ -72,6 +73,7 @@ class GroceryitemsController extends BaseController {
         return View::make('groceryitems.show', compact('product'));
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -86,7 +88,6 @@ class GroceryitemsController extends BaseController {
         {
             return Redirect::route('groceryitems.index');
         }
-
         return View::make('groceryitems.edit', compact('product'));
     }
 
