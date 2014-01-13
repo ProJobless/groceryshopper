@@ -44,7 +44,7 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.create_a_new_groceryitem');
-        
+
         // Show the page
         return View::make('admin/groceryitems/create_edit', compact('title'));
     }
