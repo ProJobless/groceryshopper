@@ -20,6 +20,7 @@ Route::model('role', 'Role');
 Route::model('store', 'Store');
 Route::model('permission', 'Permission');
 Route::model('groceryitem', 'Groceryitem');
+Route::model('unit', 'Unit');
 
 /** ------------------------------------------
  *  Admin Routes
@@ -40,7 +41,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('stores/{store}/delete', 'AdminStoresController@postDelete')
         ->where('store', '[0-9]+');
     Route::controller('stores', 'AdminStoresController');
-    
+
     # Groceryitem Management
     Route::get('groceryitems/{groceryitem}/show', 'AdminGroceryitemsController@getShow')
         ->where('groceryitem', '[0-9]+');
@@ -80,7 +81,20 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('roles/{role}/delete', 'AdminRolesController@postDelete')
         ->where('role', '[0-9]+');
     Route::controller('roles', 'AdminRolesController');
-    
+
+    # Product Unit Management
+    Route::get('units/{unit}/show', 'AdminUnitsController@getShow')
+        ->where('unit', '[0-9]+');
+    Route::get('units/{unit}/edit', 'AdminUnitsController@getEdit')
+        ->where('unit', '[0-9]+');
+    Route::post('units/{unit}/edit', 'AdminunitsController@postEdit')
+        ->where('unit', '[0-9]+');
+    Route::get('units/{unit}/delete', 'AdminUnitsController@getDelete')
+        ->where('unit', '[0-9]+');
+    Route::post('units/{unit}/delete', 'AdminUnitsController@postDelete')
+        ->where('unit', '[0-9]+');
+    Route::controller('units', 'AdminUnitsController');
+
     # Permission Management
     Route::get('permissions/{permission}/show', 'AdminPermissionsController@getShow')
         ->where('permission', '[0-9]+');
@@ -142,19 +156,17 @@ Route::get('about',array('as' => 'about', function()
 # Search routes
 Route::group(array('prefix' => 'products'), function()
 {
-	Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
-				->where('keyword', '[0-9a-z]+');
-	Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
+    Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+        ->where('keyword', '[0-9a-z]+');
+    Route::get('search/{keyword}/results', array( 'uses' => 'SearchController@getSearch'))
+        ->where('keyword', '[0-9a-z]+');
+    Route::get('search/{keyword}/results/{page}', array( 'uses' => 'SearchController@getSearch'))
+        ->where('keyword', '[0-9a-z]+');
+    Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
 });
 
 
-# User RESTful Routes (Login, Logout, Register, etc)
 Route::controller('search', 'SearchController');
-
-
-# Posts - Second to last set, match slug
-Route::get('{postSlug}', 'BlogController@getView');
-Route::post('{postSlug}', 'BlogController@postView');
 
 
 Route::resource('stores', 'StoresController');
@@ -162,6 +174,8 @@ Route::resource('stores', 'StoresController');
 Route::resource('groceryitems', 'GroceryitemsController');
 
 Route::resource('categories', 'CategoriesController');
+
+Route::resource('units', 'UnitsController');
 
 # Index Page - Last route, no matches
 Route::get('/', array('before' => 'detectLang','uses' => 'HomeController@getIndex'));

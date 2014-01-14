@@ -27,6 +27,11 @@ class SearchController extends BaseController {
     public function __construct()
     {
         parent::__construct();
+        // Exit if not ajax.
+        $this->beforeFilter('ajax', array('only' => 'store'));
+
+        // Exit if not a valid _token.
+        $this->beforeFilter('csrf', array('only' => 'store'));
     }
     /**
     * Search index

@@ -31,12 +31,12 @@
 									 </span>
 									 </div><!-- /input-group -->
 								</div>
-					{{ Former::close() }} 
+					{{ Former::close() }}
 					</form>
-			   </div>               
+			   </div>
 			</div>
 		 </div>
-     </div> <!-- end of blocky form --> 
+     </div> <!-- end of blocky form -->
       <!-- Items List starts -->
       <div class="shop-items blocky">
 		<div class="container">
@@ -71,7 +71,7 @@
 					placement: 'bottom'
 				    },
 				    pageUrl: function(type, page, current){
-						return "{{ URL::to('products/search#?page=') }}"+page;
+						return "{{ URL::to('products/search') }}"+keyword+"/results/page"+"/"+page;
 				    }
 				}
 
@@ -119,7 +119,7 @@
 			      <li><a href="#">4</a></li>
 			      <li><a href="#">5</a></li>
 			      <li><a href="#">&raquo;</a></li>
-			    </ul> 
+			    </ul>
 		</div>
 	     </div>
 	     <!-- End Pagination -->
