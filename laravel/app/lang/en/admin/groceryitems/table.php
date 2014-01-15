@@ -3,7 +3,7 @@
 return array(
 
     'image_url' => 'Thumbnail',
-    'product_name'      => 'Item name',
+    'title'      => 'Item name',
     'brand'   => 'Brand',
     'size'   => 'Unit size',
     'upc code'   => 'UPC code',

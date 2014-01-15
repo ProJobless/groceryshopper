@@ -3,6 +3,7 @@
 class AdminGroceryitemsController extends AdminController {
 
 
+
     /**
      * Groceryitem Model
      * @var Groceryitem
@@ -28,7 +29,6 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.groceryitems_management');
-        var_dump($title);
         // Grab all the Groceryitems
         $groceryitems = $this->groceryitem;
         // Show the page
@@ -164,16 +164,16 @@ class AdminGroceryitemsController extends AdminController {
             {
                 $groceryitem_id = $store->id;
                 // Redirect to the new store page
-                return Redirect::to('admin/stores/' . $groceryitem->id . '/edit')
-                        ->with('success', Lang::get('admin/stores/messages.update.success'));
+                return Redirect::to('admin/groceryitems/' . $groceryitem->id . '/edit')
+                        ->with('success', Lang::get('admin/groceryitems/messages.update.success'));
 
             }
             // Redirect to the store management page
-            return Redirect::to('admin/stores/' . $groceryitem->id . '/edit')
-                    ->with('error', Lang::get('admin/stores/messages.update.error'));
+            return Redirect::to('admin/groceryitems/' . $groceryitem->id . '/edit')
+                    ->with('error', Lang::get('admin/groceryitems/messages.update.error'));
         }
         // Form validation failed
-        return Redirect::to('admin/stores/' . $groceryitem->id . '/edit')
+        return Redirect::to('admin/groceryitems/' . $groceryitem->id . '/edit')
                 ->withInput()->withErrors($validator);
     }
 
@@ -187,10 +187,10 @@ class AdminGroceryitemsController extends AdminController {
     public function getDelete($groceryitem)
     {
         // Title
-        $title = Lang::get('admin/stores/title.store_delete');
+        $title = Lang::get('admin/groceryitems/title.store_delete');
 
         // Show the page
-        return View::make('admin/stores/delete', compact('store', 'title'));
+        return View::make('admin/groceryitems/delete', compact('store', 'title'));
     }
 
     /**
@@ -223,12 +223,12 @@ class AdminGroceryitemsController extends AdminController {
             {
                 // Redirect to the store  management page
                 return Redirect::to('admin/stores')
-                    ->with('success', Lang::get('admin/stores/messages.delete.success'));
+                    ->with('success', Lang::get('admin/groceryitems/messages.delete.success'));
             }
         }
         // There was a problem deleting the store
         return Redirect::to('admin/stores')
-            ->with('error', Lang::get('admin/stores/messages.delete.error'));
+            ->with('error', Lang::get('admin/groceryitems/messages.delete.error'));
     }
 
     /**
@@ -238,18 +238,12 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function getData()
     {
-        $groceryitems = Groceryitem::select(array('stores.id', 'stores.title', 'stores.slug',
-                         'stores.phone_1', 'stores.line_1','stores.province_state', 'stores.city', 'stores.country', 'stores.postal_zip', 'stores.province_state as address', 'stores.updated_at'));
+        $groceryitems = Groceryitem::select(array('groceryitems.id', 'groceryitems.image_url', 'groceryitems.title', 'groceryitems.brand','groceryitems.manufacturer', 'groceryitems.factual_id'));
         return Datatables::of($groceryitems)
-            ->edit_column('address', '{{ join("<br />", array($line_1, $city, $province_state." ".$country, $postal_zip)) }}' )
-
-            ->add_column('actions', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
-                <a href="{{{ URL::to(\'admin/stores/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
-            ')
-            ->remove_column('id')
-            ->remove_column('city')
-            ->remove_column('province_state')
-            ->remove_column('country')
+            ->add_column('actions', '<a href="{{{ URL::to(\'admin/groceryitems/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
+                <a href="{{{ URL::to(\'admin/groceryitems/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
+                ')
+                ->remove_column('groceryitems.id')
             ->make();
 
     }
