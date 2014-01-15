@@ -44,7 +44,6 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.create_a_new_groceryitem');
-        
         // Show the page
         return View::make('admin/groceryitems/create_edit', compact('title'));
     }
@@ -72,37 +71,23 @@ class AdminGroceryitemsController extends AdminController {
 
             // Update the store post data
             $this->groceryitem->title            = Input::get('title');
-            $this->groceryitem->slug             = Str::slug(Input::get('title'));
-            $this->groceryitem->phone_1          = Input::get('phone_1');
-            $this->groceryitem->phone_2          = Input::get('phone_2');
-            $this->groceryitem->fax              = Input::get('fax');
-            $this->groceryitem->url              = Input::get('url');
-            $this->groceryitem->notes            = Input::get('notes');
-            $this->groceryitem->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
-            $this->groceryitem->city = Input::get('city');
-            $this->groceryitem->province_state = Input::get('province_state');
-            $this->groceryitem->postal_zip = Input::get('postal_zip');
-            $this->groceryitem->country = Input::get('country');
-            $this->groceryitem->line_2 = Input::get('line_2');
-            $this->groceryitem->line_1 = Input::get('line_1');
 
 
             // Was the store created?
             if($this->groceryitem->save())
             {
-
-                // Redirect to the new store page
+                // Redirect to the new item page
                 return Redirect::to('admin/groceryitems/' . $this->groceryitem->id . '/edit')
                         ->with('success', Lang::get('admin/groceryitems/messages.create.success'));
             }
 
-            // Redirect to the blog post create page
+            // Redirect to the  create page
             return Redirect::to('admin/groceryitems/create')
                     ->with('error', Lang::get('admin/groceryitems/messages.create.error'));
         }
 
         // Form validation failed
-        return Redirect::to('admin/stores/create')->withInput()->withErrors($validator);
+        return Redirect::to('admin/groceryitems/create')->withInput()->withErrors($validator);
     }
 
     /**
@@ -123,10 +108,10 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function getEdit($groceryitem){
         // Title
-        $title = Lang::get('admin/stores/title.store_update');
+        $title = Lang::get('admin/groceryitems/title.store_update');
 
         // Show the page
-        return View::make('admin/stores/create_edit', compact('store', 'title'));
+        return View::make('admin/groceryitems/create_edit', compact('store', 'title'));
     }
 
     /**
@@ -162,17 +147,7 @@ class AdminGroceryitemsController extends AdminController {
                 $groceryitem->slug = Str::slug(Input::get('title'));
             }
             $groceryitem->phone_1          = Input::get('phone_1');
-            $groceryitem->phone_2          = Input::get('phone_2');
-            $groceryitem->fax              = Input::get('fax');
-            $groceryitem->url              = Input::get('url');
-            $groceryitem->notes            = Input::get('notes');
             $groceryitem->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
-            $groceryitem->city = Input::get('city');
-            $groceryitem->province_state = Input::get('province_state');
-            $groceryitem->postal_zip = Input::get('postal_zip');
-            $groceryitem->country = Input::get('country');
-            $groceryitem->line_2 = Input::get('line_2');
-            $groceryitem->line_1 = Input::get('line_1');
 
             // We need the latitude and longitude based on the
             // province, country and city OR postal code
