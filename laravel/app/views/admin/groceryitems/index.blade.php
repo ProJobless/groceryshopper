@@ -25,7 +25,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="pull-right">
-							<a data-toggle="modal"  href="myModal" xhref="{{{ URL::to('admin/groceryitems/create') }}}" class="btn btn-small btn-info iframe"><span class="glyphicon glyphicon-plus-sign"></span> Create</a>
+							<a  href="{{{ URL::to('admin/groceryitems/create') }}}" class="btn btn-small btn-info iframe"><span class="glyphicon glyphicon-plus-sign"></span> Add a grocery item</a>
 						</div>
 				</div>
 				<div class="row">
@@ -45,12 +45,11 @@
 											<th >{{{ Lang::get('admin/groceryitems/table.image_url') }}}</th>
 											<th >{{{ Lang::get('admin/groceryitems/table.title') }}}</th>
 											<th >{{{ Lang::get('admin/groceryitems/table.brand') }}}</th>
-											<th >{{{ Lang::get('admin/groceryitems/table.unit_size') }}}</th>
 											<th >{{{ Lang::get('admin/groceryitems/table.manufacturer') }}}</th>
-											<th >{{{ Lang::get('admin/groceryitems/table.image_url') }}}</th>
+											<th >{{{ Lang::get('admin/groceryitems/table.unit_size') }}}</th>
+											<th >{{{ Lang::get('admin/groceryitems/table.factual_id') }}}</th>
 											<th >{{{ Lang::get('admin/groceryitems/table.updated_at') }}}</th>
 											<th >{{{ Lang::get('table.actions') }}}</th>
-											<th >{{{ Lang::get('admin/groceryitems/table.factual_id') }}}</th>
 										</tr>
 									</thead>
 									<tbody>

@@ -6,6 +6,7 @@ return array(
     'title'      => 'Item name',
     'brand'   => 'Brand',
     'size'   => 'Unit size',
+    'unit_size'   => 'Unit size',
     'upc code'   => 'UPC code',
     'manufacturer'   => 'Manufacturer',
     'updated_at' => 'Last updated on',

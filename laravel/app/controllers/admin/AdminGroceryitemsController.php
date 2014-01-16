@@ -108,10 +108,13 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function getEdit($groceryitem){
         // Title
-        $title = Lang::get('admin/groceryitems/title.store_update');
+        $title = Lang::get('admin/groceryitems/title.groceryitem_update');
+        
+        // Mode
+        $mode = 'edit';
 
         // Show the page
-        return View::make('admin/groceryitems/create_edit', compact('store', 'title'));
+        return View::make('admin/groceryitems/create_edit', compact('groceryitem', 'title', 'mode'));
     }
 
     /**
@@ -238,12 +241,16 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function getData()
     {
-        $groceryitems = Groceryitem::select(array('groceryitems.id', 'groceryitems.image_url', 'groceryitems.title', 'groceryitems.brand','groceryitems.manufacturer', 'groceryitems.factual_id'));
+        $groceryitems = Groceryitem::select(array('groceryitems.id', 'groceryitems.image_url', 'groceryitems.title', 'groceryitems.brand','groceryitems.manufacturer', 'groceryitems.unit_id', 'groceryitems.size', 'groceryitems.factual_id', 'groceryitems.upc', 'groceryitems.updated_at'));
         return Datatables::of($groceryitems)
+          ->edit_column('image_url', '<a href="{{{ URL::to($image_url) }}}"><img width="80px" height="80px" src="{{{ URL::to($image_url) }}}" /></a>')
+          ->edit_column('unit_size', '{{ join("", array($unit_id, $size)) }}' )
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/groceryitems/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
                 <a href="{{{ URL::to(\'admin/groceryitems/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
                 ')
-                ->remove_column('groceryitems.id')
+            ->remove_column('id')
+            ->remove_column('unit_id')
+            ->remove_column('upc')
             ->make();
 
     }
