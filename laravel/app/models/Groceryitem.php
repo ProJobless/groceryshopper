@@ -31,6 +31,14 @@ class Groceryitem extends Eloquent implements PresentableInterface {
   {
       return $this->belongsToMany('Store');
   }
+
+  public function categories() {
+      return $this>belongsToMany('Category', 'category_id');
+  }
+  public function size_units() {
+      return $this>belongsTo('Unit', 'unit_id');
+  }
+
   /**
    * Get the store author.
    *

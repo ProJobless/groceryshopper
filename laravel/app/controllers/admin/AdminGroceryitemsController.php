@@ -2,8 +2,6 @@
 
 class AdminGroceryitemsController extends AdminController {
 
-
-
     /**
      * Groceryitem Model
      * @var Groceryitem

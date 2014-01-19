@@ -259,22 +259,24 @@
         {{ HTML::script('assets/js/excanvas.js'); }}
         {{ HTML::script('assets/js/jquery.min.js'); }}
         {{ HTML::script('assets/js/jquery-ui.custom.js'); }}
+        <!-- Bootstrap JS -->
+        {{ HTML::script('assets/js/bootstrap.min.js'); }}
         {{ HTML::script('assets/js/jquery.flot.min.js'); }}
         {{ HTML::script('assets/js/jquery.flot.resize.min.js'); }}
         {{ HTML::script('assets/js/jquery.sparkline.min.js'); }}
         {{ HTML::script("assets/js/jquery.nicescroll.min.js"); }}
         {{ HTML::script("assets/js/jquery.dataTables.min.js"); }}
-        {{ HTML::script("assets/js/jquery.icheck.min.js"); }}
-        <!-- Bootstrap JS -->
-        {{ HTML::script('assets/js/bootstrap.min.js'); }}
         <!-- Countdown -->
         {{ HTML::script("assets/js/fullcalendar.min.js"); }}
-        {{ HTML::script("assets/js/select2.min.js"); }}
         {{ HTML::script("assets/js/bootbox.min.js"); }}
-        <!-- HTML5 Support for IE -->
-	
-	{{ HTML::script("assets/js/unicorn.js"); }}
-        {{ HTML::script("assets/js/unicorn.dashboard.js"); }}
+
+        <!-- Validation -->
+       {{ HTML::script("assets/js/select2.min.js"); }}
+       {{ HTML::script("assets/js/jquery.icheck.min.js"); }}
+       {{ HTML::script("assets/js/jquery.validate.js"); }}
+       
+       {{ HTML::script("assets/js/unicorn.js"); }}
+       {{ HTML::script("assets/js/unicorn.dashboard.js"); }}
 	<!-- local scripts -->
 	@yield('scripts');
 

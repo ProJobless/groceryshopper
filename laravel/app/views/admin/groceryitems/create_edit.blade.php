@@ -15,126 +15,149 @@
 @section('formcontent')
 	<!-- Tabs -->
 	{{-- Create User Form --}}
-	<form class="form-horizontal" method="post" action="@if (isset($groceryitem)){{ URL::to('admin/groceryitems/' . $groceryitem->id . '/edit') }}@endif" autocomplete="off" novalidate="novalidate">
+  <form class="form-horizontal" name="basic_validate" id="basic_validate" method="post" 
+        action="@if (isset($groceryitem)){{ URL::to('admin/groceryitems/' . $groceryitem->id . '/edit') }}@endif" autocomplete="off" novalidate="novalidate">
 			<!-- CSRF Token -->
 			<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
       <!-- ./ csrf token -->
 
 			<!-- product_name -->
 			<div class="form-group {{{ $errors->has('product_name') ? 'has-error' : '' }}}">
-				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">product_name</label>
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Name</label>
 				<div class="col-sm-9 col-md-9 col-lg-10">
 					<input class="form-control input-sm" type="text" name="product_name" id="product_name" value="{{{ Input::old('product_name', isset($groceryitem) ? $groceryitem->product_name : null) }}}" />
 					{{{ $errors->first('product_name', '<span class="help-block text-left">:message</span>') }}}
 				</div>
 			</div>
-			<!-- ./ product_name -->
-
-			<!-- manufacturer -->
-			<div class="form-group {{{ $errors->has('manufacturer') ? 'has-error' : '' }}}">
-				<label class="col-md-2 control-label" for="manufacturer">manufacturer</label>
-				<div class="col-md-10">
-					<input class="form-control" type="text" name="manufacturer" id="manufacturer" value="{{{ Input::old('manufacturer', isset($groceryitem) ? $groceryitem->manufacturer : null) }}}" />
-					{{{ $errors->first('manufacturer', '<span class="help-inline">:message</span>') }}}
-				</div>
-			</div>
-			<!-- ./ manufacturer -->
-
+      <!-- ./ product_name -->
 
 			<!-- brand -->
 			<div class="form-group {{{ $errors->has('brand') ? 'has-error' : '' }}}">
-				<label class="col-md-2 control-label" for="brand">brand</label>
-				<div class="col-md-10">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Brand</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
 					<input class="form-control" type="text" name="brand" id="brand" value="{{{ Input::old('brand', isset($groceryitem) ? $groceryitem->brand : null) }}}" />
 					{{{ $errors->first('brand', '<span class="help-inline">:message</span>') }}}
 				</div>
 			</div>
-			<!-- ./ brand -->
+      <!-- ./ brand -->
 
-
-			<!-- size -->
-			<div class="form-group {{{ $errors->has('size') ? 'has-error' : '' }}}">
-				<label class="col-md-2 control-label" for="size">size</label>
-				<div class="col-md-10">
-					<input class="form-control" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
-					{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
-				</div>
+			<!-- category -->
+			<div class="form-group {{{ $errors->has('category') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Categories</label>
+        <div class="col-sm-9 col-md-9 col-lg-10">
+            <select multiple>
+              <option>First option</option>
+              <option selected>Second option</option>
+              <option>Third option</option>
+              <option>Fourth option</option>
+              <option>Fifth option</option>
+              <option>Sixth option</option>
+              <option>Seventh option</option>
+              <option>Eighth option</option>
+            </select>
+					<span class="help-block">
+						Select categories which this item belong to.
+					</span>
+					{{{ $errors->first('category', '<span class="help-inline">:message</span>') }}}
+        </div>
 			</div>
-			<!-- ./ size -->
-
-
+      <!-- ./ category -->
+      
+			<!-- ./ unit_id -->
+              <div class="form-group">
+                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Unit Size</label>
+                <div class="col-sm-9 col-md-9 col-lg-10">
+                  <div class="row">
+			              <!-- size -->
+                    <div class="col-md-3">
+                      <div class="input-icon icon-sm">
+                        <i class="fa fa-tint"></i>
+					              <input class="form-control input-sm" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+                      </div>
+                    </div>
+			              <!-- ./ size -->
+                     <!-- unit_id -->
+										<div class="col-md-3">
+											<select id="unit_id" name="unit_id">
+												<option>First option</option>
+												<option>Second option</option>
+												<option>Third option</option>
+												<option>Fourth option</option>
+												<option>Fifth option</option>
+												<option>Sixth option</option>
+												<option>Seventh option</option>
+												<option>Eighth option</option>
+											</select>
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+										</div>
+			              <!-- ./ unit_id -->
+                  </div>
+                </div>
+              </div>
 			<!-- upc code -->
 			<div class="form-group {{{ $errors->has('upc') ? 'has-error' : '' }}}">
-				<label class="col-md-2 control-label" for="upc">upc</label>
-				<div class="col-md-10">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="upc">UPC code</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
 					<input class="form-control" type="text" name="upc" id="upc" value="{{{ Input::old('upc', isset($groceryitem) ? $groceryitem->upc : null) }}}" />
 					{{{ $errors->first('upc', '<span class="help-inline">:message</span>') }}}
 				</div>
 			</div>
 			<!-- ./ upc -->
 
-
-			<!-- Email -->
-			<div class="form-group {{{ $errors->has('email') ? 'has-error' : '' }}}">
-				<label class="col-md-2 control-label" for="email">Email</label>
-				<div class="col-md-10">
-					<input class="form-control" type="text" name="email" id="email" value="{{{ Input::old('email', isset($groceryitem) ? $groceryitem->email : null) }}}" />
-					{{{ $errors->first('email', '<span class="help-inline">:message</span>') }}}
+			<!-- manufacturer -->
+			<div class="form-group {{{ $errors->has('manufacturer') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="manufacturer">Manufacturer</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input class="form-control" type="text" name="manufacturer" id="manufacturer" value="{{{ Input::old('manufacturer', isset($groceryitem) ? $groceryitem->manufacturer : null) }}}" />
+					{{{ $errors->first('manufacturer', '<span class="help-inline">:message</span>') }}}
 				</div>
 			</div>
-			<!-- ./ email -->
+			<!-- ./ manufacturer -->
 
-			<!-- Password -->
-			<div class="form-group {{{ $errors->has('password') ? 'error' : '' }}}">
-				<label class="col-md-2 control-label" for="password">Password</label>
-				<div class="col-md-10">
-					<input class="form-control" type="password" name="password" id="password" value="" />
-					{{{ $errors->first('password', '<span class="help-inline">:message</span>') }}}
+			<!-- Image URL -->
+			<div class="form-group {{{ $errors->has('image_url') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="image_url">Image</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input type="file" name="image_url" id="image_url" value="{{{ Input::old('image_url', isset($groceryitem) ? $groceryitem->image_url : null) }}}" />
+					{{{ $errors->first('image_url', '<span class="help-inline">:message</span>') }}}
 				</div>
 			</div>
-			<!-- ./ password -->
-
-			<!-- Password Confirm -->
-			<div class="form-group {{{ $errors->has('password_confirmation') ? 'error' : '' }}}">
-				<label class="col-md-2 control-label" for="password_confirmation">Password Confirm</label>
-				<div class="col-md-10">
-					<input class="form-control" type="password" name="password_confirmation" id="password_confirmation" value="" />
-					{{{ $errors->first('password_confirmation', '<span class="help-inline">:message</span>') }}}
-				</div>
-			</div>
-			<!-- ./ password confirm -->
-
-			<!-- Activation Status -->
-			<div class="form-group {{{ $errors->has('activated') || $errors->has('confirm') ? 'error' : '' }}}">
-				<label class="col-md-2 control-label" for="confirm">Activate User?</label>
-				<div class="col-md-6">
-					@if ($mode == 'create')
-						<select class="form-control" name="confirm" id="confirm">
-							<option value="1"{{{ (Input::old('confirm', 0) === 1 ? ' selected="selected"' : '') }}}>{{{ Lang::get('general.yes') }}}</option>
-							<option value="0"{{{ (Input::old('confirm', 0) === 0 ? ' selected="selected"' : '') }}}>{{{ Lang::get('general.no') }}}</option>
-						</select>
-					@else
-						<select class="form-control" {{{ ($groceryitem->id === Confide::user()->id ? ' disabled="disabled"' : '') }}} name="confirm" id="confirm">
-							<option value="1"{{{ ($groceryitem->confirmed ? ' selected="selected"' : '') }}}>{{{ Lang::get('general.yes') }}}</option>
-							<option value="0"{{{ ( ! $groceryitem->confirmed ? ' selected="selected"' : '') }}}>{{{ Lang::get('general.no') }}}</option>
-						</select>
-					@endif
-					{{{ $errors->first('confirm', '<span class="help-inline">:message</span>') }}}
-				</div>
-			</div>
-			<!-- ./ activation status -->
+			<!-- ./ image_url -->
 
 			<!-- List of stores -->
-			<div class="form-group {{{ $errors->has('stores') ? 'error' : '' }}}">
-				<label class="col-md-2 control-label" for="stores">stores</label>
-				<div class="col-md-6">
-					<select class="form-control" name="stores[]" id="stores[]" multiple>
-					</select>
-					<span class="help-block">
-						Select a group to assign to the user, remember that a user takes on the permissions of the group they are assigned.
-					</span>
-				</div>
-			</div>
+              <div class="form-group">
+                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Store</label>
+                <div class="col-sm-9 col-md-9 col-lg-10">
+                  <div class="row">
+			              <!-- size -->
+                    <div class="col-md-3">
+                      <div class="input-icon icon-sm">
+                        <i class="fa fa-tint"></i>
+					              <input class="form-control input-sm" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+                      </div>
+                    </div>
+			              <!-- ./ size -->
+                     <!-- unit_id -->
+										<div class="col-md-3">
+											<select id="unit_id" name="unit_id">
+												<option>First option</option>
+												<option>Second option</option>
+												<option>Third option</option>
+												<option>Fourth option</option>
+												<option>Fifth option</option>
+												<option>Sixth option</option>
+												<option>Seventh option</option>
+												<option>Eighth option</option>
+											</select>
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+										</div>
+			              <!-- ./ unit_id -->
+                  </div>
+                  <button class="btn btn-default btn-sm"><i class="fa fa-edit"></i> Add another store and price</button>
+                </div>
+              </div>
       <!-- ./ stores -->
 
 
@@ -145,5 +168,154 @@
 				    <button type="reset" class="btn btn-default">Reset</button>
 			</div>
 	</form>
-		<!-- ./ form actions -->
+    <!-- ./ form actions -->
+@stop
+@section('scripts')
+	<script type="text/javascript">
+  $(document).ready(function(){
+    $('input[type=checkbox],input[type=radio]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+	  $('select').select2();
+	  // Form Validation
+    $("#basic_validate").validate({
+      rules:{
+        product_name:{
+          required:true
+        },
+        brand:{
+          required:true,
+        },
+        unit_id:{
+          required:true,
+        },
+        size:{
+          required:true,
+				  number:true,
+          date: true,
+				  min:1
+        },
+        url:{
+          required:true,
+          url: true
+        }
+      },
+      errorClass: "help-inline has-error",
+      errorElement: "span",
+      highlight:function(element, errorClass, validClass) {
+        $(element).parents('.form-group').removeClass('has-success').addClass('has-error');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.form-group').removeClass('has-error').addClass('has-success');
+      }
+	  });
+	
+	$("#number_validate").validate({
+		rules:{
+			min:{
+				required: true,
+				min:10
+			},
+			max:{
+				required:true,
+				max:24
+			},
+			number:{
+				required:true,
+				number:true
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.form-group').addClass('has-error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.form-group').removeClass('has-error');
+			$(element).parents('.form-group').addClass('has-success');
+		}
+	});
+	
+	$("#password_validate").validate({
+		rules:{
+			pwd:{
+				required: true,
+				minlength:6,
+				maxlength:20
+			},
+			pwd2:{
+				required:true,
+				minlength:6,
+				maxlength:20,
+				equalTo:"#pwd"
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.form-group').addClass('has-error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.form-group').removeClass('has-error');
+			$(element).parents('.form-group').addClass('has-success');
+		}
+  });
+  function addRow() {
+        //$(template(i++)).appendTo("#orderitems tbody");
+  }
+  var i = 1;
+  // start with one row
+  addRow();
+  // add more rows on click
+  $("#add").click(addRow);
+
+  // only for demo purposes
+  // $.validator.setDefaults({
+  //  submitHandler: function() {
+  //      alert("submitted!");
+  //        }
+  //        });
+  //        $.validator.messages.max = jQuery.validator.format("Your totals mustn't exceed {0}!");
+  //
+  //        $.validator.addMethod("quantity", function(value, element) {
+  //          return !this.optional(element) && !this.optional($(element).parent().prev().children("select")[0]);
+  //          }, "Please select both the item and its amount.");
+  //
+  //          $().ready(function() {
+  //            $("#orderform").validate({
+  //                errorPlacement: function(error, element) {
+  //                      error.appendTo( element.parent().next() );
+  //                          },
+  //                              highlight: function(element, errorClass) {
+  //                                    $(element).addClass(errorClass).parent().prev().children("select").addClass(errorClass);
+  //                                        }
+  //                                          });
+  //
+  //                                            var template = jQuery.validator.format($.trim($("#template").val()));
+  //
+  //                                                      var i = 1;
+  //                                                        // start with one row
+  //                                                          addRow();
+  //                                                            // add more rows on click
+  //                                                              $("#add").click(addRow);
+  //
+  //                                                                // check keyup on quantity inputs to update totals field
+  //                                                                  $("#orderform").validateDelegate("input.quantity", "keyup", function(event) {
+  //                                                                      var totals = 0;
+  //                                                                          $("#orderitems input.quantity").each(function() {
+  //                                                                                totals += +this.value;
+  //                                                                                    });
+  //                                                                                        $("#totals").attr("value", totals).valid();
+  //                                                                                          });
+  //
+  //                                                                                          });
+  //                                                                                          
+
+
+
+
+
+});
+</script>
 @stop

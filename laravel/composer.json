@@ -25,7 +25,8 @@
         "solarium/solarium": "3.2.*",
         "anahkiasen/former": "dev-master",
         "toin0u/geotools-laravel": "~0.2",
-	"edvinaskrucas/notification": "2.*"
+	      "edvinaskrucas/notification": "2.*",
+        "moltin/cart": "dev-master"
     },
     "require-dev": {
         "way/generators": "dev-master",

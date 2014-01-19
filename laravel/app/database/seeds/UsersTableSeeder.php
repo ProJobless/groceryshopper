@@ -4,7 +4,7 @@ class UsersTableSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('users')->delete();
+        //DB::table('users')->delete();
 
 
         $users = array(
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder {
             )
         );
 
-        DB::table('users')->insert( $users );
+        // DB::table('users')->insert( $users );
     }
 
 }
