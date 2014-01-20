@@ -142,10 +142,13 @@ class SearchController extends BaseController {
         $unit = Unit::where('name', '=', 'each')->first();
         $groceryitem->unit_id = $unit->id;
       }else {
-        $this->_save_unit_size($groceryitem, $result['size'][0]);
+        $groceryitem = $this->_save_unit_size($groceryitem, $result['size'][0]);
       }
 
-      // Save the category 
+      // Save the category.
+      if (isset($result['category'])) {
+      
+      }
       $groceryitem->save();
 
     }
@@ -158,12 +161,9 @@ class SearchController extends BaseController {
         $value = str_replace(['+', '-'], '', filter_var($size, FILTER_SANITIZE_NUMBER_FLOAT));
         $unitname = preg_replace('/[\d\s\.]/', '', trim($size));
         $values[] = array("value" => $value, "unit" => $unitname);
-
       }
-      var_dump($values);
-      $units = Unit::all();
+      $units = array();
       foreach($values as $value){
-        //$unit = Unit::where('name', '=', $value['unit'])->get();
         $unit = Unit::where('symbol', '=', $value['unit'])->first();
         if (is_null($unit)) {
             $unit = new Unit();
@@ -172,11 +172,10 @@ class SearchController extends BaseController {
             $unit->symbol = $value['unit'];
             $unit->save();
         }
-        $groceryitem->unit_id  = $unit->id;
+        $units[]  = $unit->id;
       }
-      // Save the unit
-      // get the unit
-      var_dump($groceryitem);
+      $groceryitem->unit_id = $units[0];
+      return $groceryitem;
     }
 
 

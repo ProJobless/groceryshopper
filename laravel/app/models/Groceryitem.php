@@ -27,16 +27,33 @@ class Groceryitem extends Eloquent implements PresentableInterface {
       return parent::delete();
   }
 
+  /**
+  *  Store relationship
+  */
   public function stores()
   {
       return $this->belongsToMany('Store');
   }
 
+  /**
+   * Category relationship
+   */
   public function categories() {
       return $this>belongsToMany('Category', 'category_id');
   }
-  public function size_units() {
+
+  /**
+   * Unit relationship
+   */
+  public function units() {
       return $this>belongsTo('Unit', 'unit_id');
+  }
+  
+  /**
+   * Shopper relationship
+   */
+  public function shopper() {
+      return $this>belongsToMany('User', 'user_id');
   }
 
   /**
@@ -60,7 +77,7 @@ class Groceryitem extends Eloquent implements PresentableInterface {
   }
 
   /**
-   * Get the date the post was created.
+   * Get the date the groceryitem was created.
    *
    * @param \Carbon|null $date
    * @return string

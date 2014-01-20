@@ -11,6 +11,7 @@
     ],
     "require": {
         "laravel/framework": "4.1.*",
+        "laravelbook/ardent": "dev-master",
         "twbs/bootstrap": "dev-master",
         "codesleeve/asset-pipeline": "dev-master",
         "zizaco/confide": "3.1.x",
