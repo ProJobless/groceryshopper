@@ -39,21 +39,22 @@ class Groceryitem extends Eloquent implements PresentableInterface {
    * Category relationship
    */
   public function categories() {
-      return $this>belongsToMany('Category', 'category_id');
+      return $this>belongsToMany('Category', 'category_id')->withTimestamps();
   }
 
   /**
    * Unit relationship
    */
   public function units() {
-      return $this>belongsTo('Unit', 'unit_id');
+      return $this>belongsTo('Unit', 'unit_id')->withPivot('','');
   }
   
   /**
    * Shopper relationship
    */
   public function shopper() {
-      return $this>belongsToMany('User', 'user_id');
+      return $this>belongsToMany('User', 'user_id')->withTimestamps();
+      //return $this>morphMany('User', 'shopper');
   }
 
   /**

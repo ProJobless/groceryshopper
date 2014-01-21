@@ -136,7 +136,7 @@ class SearchController extends BaseController {
       $groceryitem->image_url = isset($result['image_urls']) ? $result['image_urls']['0'] : NULL;
       $groceryitem->brand = $result['brand'];
       $groceryitem->product_name = $result['product_name'];
-      
+
       // Save the unit and size
       if(!isset($result['size'])) {
         $unit = Unit::where('name', '=', 'each')->first();
@@ -147,7 +147,7 @@ class SearchController extends BaseController {
 
       // Save the category.
       if (isset($result['category'])) {
-      
+        //Save in the relationship table
       }
       $groceryitem->save();
 

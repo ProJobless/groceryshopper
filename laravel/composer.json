@@ -1,7 +1,7 @@
 {
-    "name": "andrew13/Laravel-4-Bootstrap-Starter-Site",
-    "description": "Laravel 4 Starter Site",
-    "keywords": ["laravel","Starter Site"],
+    "name": "Grocery shopper.caLaravel-4-Bootstrap-Starter-Site",
+    "description": "Grocery shopper.ca",
+    "keywords": ["laravel","Grocery shopper"],
     "license": "MIT",
     "authors": [
         {
@@ -11,22 +11,20 @@
     ],
     "require": {
         "laravel/framework": "4.1.*",
-        "laravelbook/ardent": "dev-master",
         "twbs/bootstrap": "dev-master",
         "codesleeve/asset-pipeline": "dev-master",
         "zizaco/confide": "3.1.x",
         "zizaco/entrust": "dev-master",
         "robclancy/presenter": "1.0.*",
-        "way/generators": "dev-master",
         "j20/php-uuid": "dev-master",
         "bllim/datatables": "*",
         "monarobase/country-list": "dev-master",
         "willdurand/geocoder": "@stable",
         "league/geotools": "@stable",
         "solarium/solarium": "3.2.*",
-        "anahkiasen/former": "dev-master",
         "toin0u/geotools-laravel": "~0.2",
 	      "edvinaskrucas/notification": "2.*",
+        "cartalyst/sentry": "2.0.*",
         "moltin/cart": "dev-master"
     },
     "require-dev": {
