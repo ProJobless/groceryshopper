@@ -71,6 +71,11 @@ class Groceryitem extends Eloquent implements PresentableInterface {
       return Url::to($this->name);
   }
 
+  public function shoppinglist() {
+    // body...
+  }
+
+
   /**
    * Get the date the groceryitem was created.
    *

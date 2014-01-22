@@ -80,14 +80,13 @@
                      <!-- unit_id -->
 										<div class="col-md-3">
 											<select id="unit_id" name="unit_id">
-												<option>First option</option>
-												<option>Second option</option>
-												<option>Third option</option>
-												<option>Fourth option</option>
-												<option>Fifth option</option>
-												<option>Sixth option</option>
-												<option>Seventh option</option>
-												<option>Eighth option</option>
+                        @foreach ($units as $unit)
+                          @if ($mode == 'create')
+                          <option value="{{{ $unit->id }}}"{{{ ( in_array($unit->id, $selectedUnits) ? ' selected="selected"' : '') }}}>{{{ $unit->symbol }}}</option>
+                          @else
+                          <option value="{{{ $unit->id }}}"{{{ ( array_search($unit->id, $groceryitem->currentunitIds()) !== false && array_search($unit->id, $groceryitem->currentunitIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $unit->name }}}</option>
+                          @endif
+                        @endforeach
 											</select>
                   			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
 										</div>

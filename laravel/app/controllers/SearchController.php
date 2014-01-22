@@ -143,19 +143,32 @@ class SearchController extends BaseController {
       }else {
         $groceryitem = $this->_save_unit_size($groceryitem, $result['size'][0]);
       }
-  
-      var_dump($groceryitem);
-      
+      $groceryitem->save();
+
       // Save the category.
       if (isset($result['category'])) {
         //Save in the relationship table for the categories.
-        
+        $this->_save_category($groceryitem, $result['category']);
       }
-      $groceryitem->save();
-
     }
 
-    private function _save_unit_size($groceryitem, $input) {
+    private function _save_category(Groceryitem $item, $category_name) {
+      // See if it exists
+      $category = Category::where('title' , '=', $category_name)->first();
+      if( is_null($category)) {
+        $category  = new Category(array(
+          'title' => $category_name,
+          'slug' => Str::slug($category_name),
+          'meta_title' => $category_name
+        ));
+        $item->categories()->save($category);
+      }else {
+        var_dump($category);
+        $item->categories()->sync(array($category->id));
+      }
+    }
+
+    private function _save_unit_size(Groceryitem $groceryitem, $input) {
       $sizes = preg_split("/;/", $input);
       foreach($sizes as $size) {
         //list($value, $unit) = preg_split("/[\s]+/", trim($size));

@@ -6,16 +6,37 @@ class AdminGroceryitemsController extends AdminController {
      * Groceryitem Model
      * @var Groceryitem
      */
-    protected $groceryitem;
+  protected $groceryitem;
+
+    /**
+     * Category Model
+     * @var Category
+     */
+    protected $category;
+
+    /**
+     * Store Model
+     * @var Store
+     */
+  protected $store;
+
+    /**
+     * Unit Model
+     * @var Unit
+     */
+    protected $unit;
 
     /**
      * Inject the models.
      * @param Groceryitem $groceryitem
      */
-    public function __construct(Groceryitem $groceryitem)
+    public function __construct(Groceryitem $groceryitem, Category $category, Store $store, Unit $unit)
     {
         parent::__construct();
         $this->groceryitem = $groceryitem;
+        $this->store = $store;
+        $this->unit = $unit;
+        $this->category = $category;
     }
 
     /**
@@ -43,9 +64,29 @@ class AdminGroceryitemsController extends AdminController {
         // Title
         $title = Lang::get('admin/groceryitems/title.create_a_new_groceryitem');
         // Show the page
+
+        // All categories
+        $categories = $this->category->all();
+
+        // All the stores..
+        $stores = $this->store->all();
+
+        // All the units
+        $units = $this->unit->all();
+        
+        // Selected groups
+        $selectedStores = Input::old('stores', array());
+
+        // Selected permissions
+        $selectedCategories = Input::old('categories', array());
+
+        // Selected units
+        $selectedUnits = Input::old('units', array());
+
+        
         // Mode
         $mode = 'create';
-        return View::make('admin/groceryitems/create_edit', compact('title', 'mode'));
+        return View::make('admin/groceryitems/create_edit', compact('units', 'categories', 'stores', 'selectedStores', 'selectedUnits', 'selectedCategories', 'title', 'mode'));
     }
 
     /**
@@ -261,16 +302,16 @@ class AdminGroceryitemsController extends AdminController {
 
     private function fetchCoords($groceryitem) {
 
-            $geocoder = new \Geocoder\Geocoder();
-            $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-            $chain    = new \Geocoder\Provider\ChainProvider(array(
-                        new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
-            ));
-            $geocoder->registerProvider($chain);
-            //Fetch the address from google maps.
-            $address = $groceryitem->line_1." ".$store->line_2." ".$store->city.", ".
-                        $groceryitem->province_state.", ".$store->country.", ".$store->postal_zip;
-            return $geocoder->geocode($address);
+          $geocoder = new \Geocoder\Geocoder();
+          $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+          $chain    = new \Geocoder\Provider\ChainProvider(array(
+                      new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
+          ));
+          $geocoder->registerProvider($chain);
+          //Fetch the address from google maps.
+          $address = $groceryitem->line_1." ".$store->line_2." ".$store->city.", ".
+                      $groceryitem->province_state.", ".$store->country.", ".$store->postal_zip;
+          return $geocoder->geocode($address);
 
     }
 
