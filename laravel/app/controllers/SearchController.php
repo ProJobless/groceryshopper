@@ -15,7 +15,6 @@
 
 class SearchController extends BaseController {
 
-
     /**
     * Tell Laravel we want this class restful. See:
     * http://laravel.com/docs/start/controllers#restful
@@ -144,10 +143,13 @@ class SearchController extends BaseController {
       }else {
         $groceryitem = $this->_save_unit_size($groceryitem, $result['size'][0]);
       }
-
+  
+      var_dump($groceryitem);
+      
       // Save the category.
       if (isset($result['category'])) {
-        //Save in the relationship table
+        //Save in the relationship table for the categories.
+        
       }
       $groceryitem->save();
 
