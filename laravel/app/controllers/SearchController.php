@@ -27,6 +27,11 @@ class SearchController extends BaseController {
     public function __construct()
     {
         parent::__construct();
+        // Exit if not ajax.
+        $this->beforeFilter('ajax', array('only' => 'store'));
+
+        // Exit if not a valid _token.
+        $this->beforeFilter('csrf', array('only' => 'store'));
     }
     /**
     * Search index
@@ -73,7 +78,7 @@ class SearchController extends BaseController {
 
             //Save the search results.
             foreach($results as $result) {
-                $this->store($result);
+                $this->saveDataToDb($result);
             }
 
             return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
@@ -88,7 +93,7 @@ class SearchController extends BaseController {
     {
     }
 
-    private function store($result) {
+    private function saveDataToDb($result) {
         // Load the module
       $groceryitem = new Groceryitem;
       $input = $result;
@@ -126,27 +131,51 @@ class SearchController extends BaseController {
 
       // System values
       $groceryitem->upc = isset($result['upc']) ? $result['upc'] : NULL;
-      $groceryitem->size = isset($result['size']) ? $this->_build_size($result['size'][0]) : NULL;
+
+      //Get the size
       $groceryitem->image_url = isset($result['image_urls']) ? $result['image_urls']['0'] : NULL;
       $groceryitem->brand = $result['brand'];
       $groceryitem->product_name = $result['product_name'];
-      $groceryitem->unit_id = 1;
 
+      // Save the unit and size
+      if(!isset($result['size'])) {
+        $unit = Unit::where('name', '=', 'each')->first();
+        $groceryitem->unit_id = $unit->id;
+      }else {
+        $groceryitem = $this->_save_unit_size($groceryitem, $result['size'][0]);
+      }
 
-      //$groceryitem->save();
+      // Save the category.
+      if (isset($result['category'])) {
+        //Save in the relationship table
+      }
+      $groceryitem->save();
 
     }
 
-    private function _build_size($input) {
+    private function _save_unit_size($groceryitem, $input) {
       $sizes = preg_split("/;/", $input);
       foreach($sizes as $size) {
         //list($value, $unit) = preg_split("/[\s]+/", trim($size));
         // Fetch only the values.
         $value = str_replace(['+', '-'], '', filter_var($size, FILTER_SANITIZE_NUMBER_FLOAT));
-        $unit = preg_replace('/[\d\s\.]/', '', trim($size));
-
-        // get the unit
+        $unitname = preg_replace('/[\d\s\.]/', '', trim($size));
+        $values[] = array("value" => $value, "unit" => $unitname);
       }
+      $units = array();
+      foreach($values as $value){
+        $unit = Unit::where('symbol', '=', $value['unit'])->first();
+        if (is_null($unit)) {
+            $unit = new Unit();
+            $unit->title = $value['unit'];
+            $unit->name = $value['unit'];
+            $unit->symbol = $value['unit'];
+            $unit->save();
+        }
+        $units[]  = $unit->id;
+      }
+      $groceryitem->unit_id = $units[0];
+      return $groceryitem;
     }
 
 

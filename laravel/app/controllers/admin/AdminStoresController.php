@@ -100,8 +100,6 @@ class AdminStoresController extends AdminController {
                             $this->store->longitude = $coordinate->getlongitude();
 
             }
-            print_r($this->store);
-
 
 
             // Was the store created?

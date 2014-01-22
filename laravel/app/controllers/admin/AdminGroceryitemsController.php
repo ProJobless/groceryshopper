@@ -2,7 +2,6 @@
 
 class AdminGroceryitemsController extends AdminController {
 
-
     /**
      * Groceryitem Model
      * @var Groceryitem
@@ -28,7 +27,6 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.groceryitems_management');
-        var_dump($title);
         // Grab all the Groceryitems
         $groceryitems = $this->groceryitem;
         // Show the page
@@ -44,9 +42,10 @@ class AdminGroceryitemsController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/groceryitems/title.create_a_new_groceryitem');
-
         // Show the page
-        return View::make('admin/groceryitems/create_edit', compact('title'));
+        // Mode
+        $mode = 'create';
+        return View::make('admin/groceryitems/create_edit', compact('title', 'mode'));
     }
 
     /**
@@ -72,37 +71,23 @@ class AdminGroceryitemsController extends AdminController {
 
             // Update the store post data
             $this->groceryitem->title            = Input::get('title');
-            $this->groceryitem->slug             = Str::slug(Input::get('title'));
-            $this->groceryitem->phone_1          = Input::get('phone_1');
-            $this->groceryitem->phone_2          = Input::get('phone_2');
-            $this->groceryitem->fax              = Input::get('fax');
-            $this->groceryitem->url              = Input::get('url');
-            $this->groceryitem->notes            = Input::get('notes');
-            $this->groceryitem->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
-            $this->groceryitem->city = Input::get('city');
-            $this->groceryitem->province_state = Input::get('province_state');
-            $this->groceryitem->postal_zip = Input::get('postal_zip');
-            $this->groceryitem->country = Input::get('country');
-            $this->groceryitem->line_2 = Input::get('line_2');
-            $this->groceryitem->line_1 = Input::get('line_1');
 
 
             // Was the store created?
             if($this->groceryitem->save())
             {
-
-                // Redirect to the new store page
+                // Redirect to the new item page
                 return Redirect::to('admin/groceryitems/' . $this->groceryitem->id . '/edit')
                         ->with('success', Lang::get('admin/groceryitems/messages.create.success'));
             }
 
-            // Redirect to the blog post create page
+            // Redirect to the  create page
             return Redirect::to('admin/groceryitems/create')
                     ->with('error', Lang::get('admin/groceryitems/messages.create.error'));
         }
 
         // Form validation failed
-        return Redirect::to('admin/stores/create')->withInput()->withErrors($validator);
+        return Redirect::to('admin/groceryitems/create')->withInput()->withErrors($validator);
     }
 
     /**
@@ -123,10 +108,12 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function getEdit($groceryitem){
         // Title
-        $title = Lang::get('admin/stores/title.store_update');
+        $title = Lang::get('admin/groceryitems/title.groceryitem_update');
+        // Mode
+        $mode = 'edit';
 
         // Show the page
-        return View::make('admin/stores/create_edit', compact('store', 'title'));
+        return View::make('admin/groceryitems/create_edit', compact('groceryitem', 'title', 'mode'));
     }
 
     /**
@@ -162,17 +149,7 @@ class AdminGroceryitemsController extends AdminController {
                 $groceryitem->slug = Str::slug(Input::get('title'));
             }
             $groceryitem->phone_1          = Input::get('phone_1');
-            $groceryitem->phone_2          = Input::get('phone_2');
-            $groceryitem->fax              = Input::get('fax');
-            $groceryitem->url              = Input::get('url');
-            $groceryitem->notes            = Input::get('notes');
             $groceryitem->searchable       = (Input::get('searchable') != NULL )  ?  1 : 0;
-            $groceryitem->city = Input::get('city');
-            $groceryitem->province_state = Input::get('province_state');
-            $groceryitem->postal_zip = Input::get('postal_zip');
-            $groceryitem->country = Input::get('country');
-            $groceryitem->line_2 = Input::get('line_2');
-            $groceryitem->line_1 = Input::get('line_1');
 
             // We need the latitude and longitude based on the
             // province, country and city OR postal code
@@ -189,16 +166,16 @@ class AdminGroceryitemsController extends AdminController {
             {
                 $groceryitem_id = $store->id;
                 // Redirect to the new store page
-                return Redirect::to('admin/stores/' . $groceryitem->id . '/edit')
-                        ->with('success', Lang::get('admin/stores/messages.update.success'));
+                return Redirect::to('admin/groceryitems/' . $groceryitem->id . '/edit')
+                        ->with('success', Lang::get('admin/groceryitems/messages.update.success'));
 
             }
             // Redirect to the store management page
-            return Redirect::to('admin/stores/' . $groceryitem->id . '/edit')
-                    ->with('error', Lang::get('admin/stores/messages.update.error'));
+            return Redirect::to('admin/groceryitems/' . $groceryitem->id . '/edit')
+                    ->with('error', Lang::get('admin/groceryitems/messages.update.error'));
         }
         // Form validation failed
-        return Redirect::to('admin/stores/' . $groceryitem->id . '/edit')
+        return Redirect::to('admin/groceryitems/' . $groceryitem->id . '/edit')
                 ->withInput()->withErrors($validator);
     }
 
@@ -212,10 +189,10 @@ class AdminGroceryitemsController extends AdminController {
     public function getDelete($groceryitem)
     {
         // Title
-        $title = Lang::get('admin/stores/title.store_delete');
+        $title = Lang::get('admin/groceryitems/title.store_delete');
 
         // Show the page
-        return View::make('admin/stores/delete', compact('store', 'title'));
+        return View::make('admin/groceryitems/delete', compact('store', 'title'));
     }
 
     /**
@@ -248,12 +225,12 @@ class AdminGroceryitemsController extends AdminController {
             {
                 // Redirect to the store  management page
                 return Redirect::to('admin/stores')
-                    ->with('success', Lang::get('admin/stores/messages.delete.success'));
+                    ->with('success', Lang::get('admin/groceryitems/messages.delete.success'));
             }
         }
         // There was a problem deleting the store
         return Redirect::to('admin/stores')
-            ->with('error', Lang::get('admin/stores/messages.delete.error'));
+            ->with('error', Lang::get('admin/groceryitems/messages.delete.error'));
     }
 
     /**
@@ -263,18 +240,16 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function getData()
     {
-        $groceryitems = Groceryitem::select(array('stores.id', 'stores.title', 'stores.slug',
-                         'stores.phone_1', 'stores.line_1','stores.province_state', 'stores.city', 'stores.country', 'stores.postal_zip', 'stores.province_state as address', 'stores.updated_at'));
+        $groceryitems = Groceryitem::select(array('groceryitems.id', 'groceryitems.image_url', 'groceryitems.title', 'groceryitems.brand','groceryitems.manufacturer', 'groceryitems.unit_id', 'groceryitems.size', 'groceryitems.factual_id', 'groceryitems.upc', 'groceryitems.updated_at'));
         return Datatables::of($groceryitems)
-            ->edit_column('address', '{{ join("<br />", array($line_1, $city, $province_state." ".$country, $postal_zip)) }}' )
-
-            ->add_column('actions', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
-                <a href="{{{ URL::to(\'admin/stores/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
-            ')
+          ->edit_column('image_url', '<a href="{{{ URL::to($image_url) }}}"><img width="80px" height="80px" src="{{{ URL::to($image_url) }}}" /></a>')
+          ->edit_column('unit_size', '{{ join("", array($unit_id, $size)) }}' )
+            ->add_column('actions', '<a href="{{{ URL::to(\'admin/groceryitems/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
+                <a href="{{{ URL::to(\'admin/groceryitems/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
+                ')
             ->remove_column('id')
-            ->remove_column('city')
-            ->remove_column('province_state')
-            ->remove_column('country')
+            ->remove_column('unit_id')
+            ->remove_column('upc')
             ->make();
 
     }

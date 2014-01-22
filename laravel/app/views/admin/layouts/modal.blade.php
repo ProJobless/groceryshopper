@@ -50,6 +50,7 @@
 			checkboxClass: 'icheckbox_flat-blue',
 			radioClass: 'iradio_flat-blue'
 			});
+      $('select').select2();
 			
 		});
 	</script>

@@ -1,32 +1,29 @@
 <?php
-
 use Illuminate\Support\Facades\URL; # not sure why i need this here :c
 use Robbo\Presenter\PresentableInterface;
 use Carbon\Carbon;
 
-class Category extends Eloquent implements PresentableInterface {
-	protected $guarded = array();
+class Unit extends Eloquent implements PresentableInterface {
+	protected $guarded = array('id');
 
-	public static $rules = array(
-		'name' => 'required',
-		'rank' => 'required'
-  );
+  public static $rules = array();
 
+  /**
+    * Post relationship
+    */
+  public function groceryitems()
+  {
+      return $this->hasMany('Groceryitem');
+  }
   public function getPresenter()
   {
-        return new GroceryitemPresenter($this);
+        return new UnitPresenter($this);
   }
 
   public function delete()
   {
       //Delete the store
       return parent::delete();
-  }
-  /**
-   * Groceryitem relationship
-   */
-  public function groceryitems() {
-      return $this>belongsToMany('Groceryitem', 'groceryitem_id');
   }
 
   /**
@@ -65,5 +62,4 @@ class Category extends Eloquent implements PresentableInterface {
     {
         return $this->date($this->updated_at);
     }
-
 }

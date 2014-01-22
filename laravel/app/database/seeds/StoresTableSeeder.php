@@ -5,7 +5,7 @@ class StoresTableSeeder extends Seeder {
   public function run()
   {
     // Uncomment the below to wipe the table clean before populating
-    DB::table('stores')->truncate();
+    //DB::table('stores')->truncate();
 
     $stores = array(
             array(
@@ -71,7 +71,7 @@ class StoresTableSeeder extends Seeder {
       );
 
     // Uncomment the below to run the seeder
-    DB::table('stores')->insert($stores);
+    //DB::table('stores')->insert($stores);
   }
 
 }

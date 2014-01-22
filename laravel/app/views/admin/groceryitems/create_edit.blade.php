@@ -1,158 +1,321 @@
 @extends('admin.layouts.modal')
+{{-- Breadcrumbs --}}
+@section('breadcrumb')
+	 @parent
+	 <a href="{{{ URL::to('admin/groceryitems') }}}" title="Manage grocery items" class="tip-bottom"><i class="fa fa-user"></i>Grocery items</a>
+	 <a href="{{{ URL::to('admin/groceryitems/' . (isset($groceryitem) ? $groceryitem->id.'/edit' : 'create') ) }}}" title="{{{ $title }}}" class="tip-bottom"><i class="fa fa-edit"></i>{{{ $title }}}</a>
+
+@stop
+@section('formtitle')
+<span class="icon"><i class="fa fa-user"></i></span>
+<h5>{{{ $title }}}</h5>
+@stop
 
 {{-- Content --}}
-@section('content')
-<!-- Tabs -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-general" data-toggle="tab">Data</a></li>
-    </ul>
-<!-- ./ tabs -->
+@section('formcontent')
+	<!-- Tabs -->
+	{{-- Create User Form --}}
+  <form class="form-horizontal" name="basic_validate" id="basic_validate" method="post" 
+        action="@if (isset($groceryitem)){{ URL::to('admin/groceryitems/' . $groceryitem->id . '/edit') }}@endif" autocomplete="off" novalidate="novalidate">
+			<!-- CSRF Token -->
+			<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+      <!-- ./ csrf token -->
 
-{{-- Edit Grocery Item Form --}}
-<form class="form-horizontal" method="post" action="@if (isset($groceryitem)){{ URL::to('admin/groceryitems/' . $groceryitem->id . '/edit') }}@endif" autocomplete="off">
-    <!-- CSRF Token -->
-    <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-    <!-- ./ csrf token -->
+			<!-- product_name -->
+			<div class="form-group {{{ $errors->has('product_name') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Name</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input class="form-control input-sm" type="text" name="product_name" id="product_name" value="{{{ Input::old('product_name', isset($groceryitem) ? $groceryitem->product_name : null) }}}" />
+					{{{ $errors->first('product_name', '<span class="help-block text-left">:message</span>') }}}
+				</div>
+			</div>
+      <!-- ./ product_name -->
 
-    <!-- Tabs Content -->
-    <div class="tab-content">
-        <!-- General tab -->
-        <div class="tab-pane active" id="tab-general">
-            <!-- Store Title -->
-            <div class="form-group {{{ $errors->has('title') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="title">Store Title</label>
-                    <input class="form-control" type="text" name="title" id="title" value="{{{ Input::old('title', isset($groceryitem) ? $groceryitem->title : null) }}}" />
-                    {{ $errors->first('title', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- ./ store title -->
+			<!-- brand -->
+			<div class="form-group {{{ $errors->has('brand') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Brand</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input class="form-control" type="text" name="brand" id="brand" value="{{{ Input::old('brand', isset($groceryitem) ? $groceryitem->brand : null) }}}" />
+					{{{ $errors->first('brand', '<span class="help-inline">:message</span>') }}}
+				</div>
+			</div>
+      <!-- ./ brand -->
 
-
-
-            <!-- Address -->
-            <div class="form-group {{{ $errors->has('line_1') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="line_1">Street</label>
-                    <input class="form-control" type="text" name="line_1" id="line_1" value="{{{ Input::old('line_1', isset($groceryitem) ? $groceryitem->line_1 : null) }}}" />
-                    {{ $errors->first('line_1', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-                <!-- ./ store title -->
-            <div class="controls controls-row">
-                <div class="form-group row {{{ $errors->has('city') ? 'error' : '' }}}">
-                    <div class="col-lg-4">
-                        <label class="control-label" for="store">City</label>
-                        <input class="form-control" type="text" name="city" id="city" value="{{{ Input::old('city', isset($groceryitem) ? $groceryitem->city : null) }}}" />
-                        {{ $errors->first('city', '<span class="help-inline">:message</span>') }}
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="control-label" for="province_state">Province</label>
-                        {{ Form::select('province_state',
-                                                 array('QC' => 'Quebec', 'ON' => 'Ontario'),
-                                                 Input::old('province_state', isset($groceryitem) ? $groceryitem->province_state : null),
-                                                 array (
-                                                        'class' => 'form-control',
-                                                        'name' => 'province_state',
-                                                        'id'    => 'province_state'
-                                                 )
-                                       )
-                         }}
-                        {{ $errors->first('province_state', '<span class="help-inline">:message</span>') }}
-                    </div>
-                    <div class="col-lg-3">
-                        <label class="control-label" for="country">Country</label>
-                        {{ Form::select('country',
-                                                 array('CA' => 'Canada', 'USA' => 'USA'),
-                                                 Input::old('country', isset($groceryitem) ? $groceryitem->country : null),
-                                                 array (
-                                                        'class' => 'form-control',
-                                                        'name' => 'country',
-                                                        'id'    => 'country'
-                                                 )
-                                       )
-                         }}
-                        {{ $errors->first('country', '<span class="help-inline">:message</span>') }}
-                    </div>
-                    <div class="col-lg-2">
-                        <label class="control-label" for="postal_zip">Postal Code</label>
-                        <input class="form-control" type="text" name="postal_zip" id="postal_zip" value="{{{ Input::old('postal_zip', isset($groceryitem) ? $groceryitem->postal_zip : null) }}}" />
-                        {{ $errors->first('postal_zip', '<span class="help-inline">:message</span>') }}
-                    </div>
-                </div>
-                <div class="form-group {{{ $errors->has('line_1') ? 'error' : '' }}}">
-                </div>
-            </div>
-            <!-- Phone -->
-            <div class="form-group {{{ $errors->has('phone_1') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="phone_1">Phone number</label>
-                    <input class="form-control" type="text" name="phone_1" id="phone_1" value="{{{ Input::old('phone_1', isset($groceryitem) ? $groceryitem->phone_1 : null) }}}" />
-                    {{ $errors->first('phone_1', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- ./ store phone -->
-            <div class="form-group {{{ $errors->has('fax') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="fax">Fax</label>
-                    <input class="form-control" type="text" name="fax" id="fax" value="{{{ Input::old('line_1', isset($groceryitem) ? $groceryitem->fax : null) }}}" />
-                    {{ $errors->first('fax', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- URL friendly slug -->
-            <div class="form-group {{{ $errors->has('slug') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="slug">URL friendly name</label>
-                    <input class="form-control" type="text" name="slug" id="slug" value="{{{ Input::old('slug', isset($groceryitem) ? $groceryitem->slug : null) }}}" />
-                    {{ $errors->first('slug', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- ./ slug -->
-
-            <!-- Website -->
-            <div class="form-group {{{ $errors->has('url') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="url">Website </label>
-                    <input class="form-control" type="text" name="url" id="url" value="{{{ Input::old('url', isset($groceryitem) ? $groceryitem->url : null) }}}" />
-                    {{ $errors->first('url', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- ./ Url -->
-
-
-            <!-- Notes -->
-            <div class="form-group {{{ $errors->has('notes') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="content">Notes</label>
-                    <textarea class="form-control full-width" name="notes" value="notes" rows="4">{{ Input::old('notes', isset($groceryitem) ? $groceryitem->notes : null) }}</textarea>
-                    {{ $errors->first('notes', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- searchable -->
-            <?php $checked = (isset($groceryitem) && $groceryitem->searchable == 1) ? 'checked' : ""; ?>
-            <div class="form-group {{{ $errors->has('searchable') ? 'error' : '' }}}">
-                <div class="col-md-12">
-                    <label class="control-label" for="content">Can this store be searched?
-                            <input type="checkbox" name="searchable" {{{ Input::old('searchable', isset($groceryitem) ? $checked : NULL ) }}}
-                                    value="{{{ Input::old('searchable', isset($groceryitem) ? $groceryitem->searchable : 0 ) }}}" id="searchable">
-                    </label>
-                    {{ $errors->first('searchable', '<span class="help-inline">:message</span>') }}
-                </div>
-            </div>
-            <!-- ./ content -->
+			<!-- category -->
+			<div class="form-group {{{ $errors->has('category') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Categories</label>
+        <div class="col-sm-9 col-md-9 col-lg-10">
+            <select multiple>
+              <option>First option</option>
+              <option selected>Second option</option>
+              <option>Third option</option>
+              <option>Fourth option</option>
+              <option>Fifth option</option>
+              <option>Sixth option</option>
+              <option>Seventh option</option>
+              <option>Eighth option</option>
+            </select>
+					<span class="help-block">
+						Select categories which this item belong to.
+					</span>
+					{{{ $errors->first('category', '<span class="help-inline">:message</span>') }}}
         </div>
-        <!-- ./ general tab -->
-    </div>
-    <!-- ./ tabs content -->
+			</div>
+      <!-- ./ category -->
+      
+			<!-- ./ unit_id -->
+              <div class="form-group">
+                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Unit Size</label>
+                <div class="col-sm-9 col-md-9 col-lg-10">
+                  <div class="row">
+			              <!-- size -->
+                    <div class="col-md-3">
+                      <div class="input-icon icon-sm">
+                        <i class="fa fa-tint"></i>
+					              <input class="form-control input-sm" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+                      </div>
+                    </div>
+			              <!-- ./ size -->
+                     <!-- unit_id -->
+										<div class="col-md-3">
+											<select id="unit_id" name="unit_id">
+												<option>First option</option>
+												<option>Second option</option>
+												<option>Third option</option>
+												<option>Fourth option</option>
+												<option>Fifth option</option>
+												<option>Sixth option</option>
+												<option>Seventh option</option>
+												<option>Eighth option</option>
+											</select>
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+										</div>
+			              <!-- ./ unit_id -->
+                  </div>
+                </div>
+              </div>
+			<!-- upc code -->
+			<div class="form-group {{{ $errors->has('upc') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="upc">UPC code</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input class="form-control" type="text" name="upc" id="upc" value="{{{ Input::old('upc', isset($groceryitem) ? $groceryitem->upc : null) }}}" />
+					{{{ $errors->first('upc', '<span class="help-inline">:message</span>') }}}
+				</div>
+			</div>
+			<!-- ./ upc -->
 
-    <!-- Form Actions -->
-    <div class="form-group">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-success">Submit</button>
-            <button type="reset" class="btn btn-default">Reset</button>
-            <element class="btn-cancel close_popup">Cancel</element>
-        </div>
-    </div>
+			<!-- manufacturer -->
+			<div class="form-group {{{ $errors->has('manufacturer') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="manufacturer">Manufacturer</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input class="form-control" type="text" name="manufacturer" id="manufacturer" value="{{{ Input::old('manufacturer', isset($groceryitem) ? $groceryitem->manufacturer : null) }}}" />
+					{{{ $errors->first('manufacturer', '<span class="help-inline">:message</span>') }}}
+				</div>
+			</div>
+			<!-- ./ manufacturer -->
+
+			<!-- Image URL -->
+			<div class="form-group {{{ $errors->has('image_url') ? 'has-error' : '' }}}">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="image_url">Image</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input type="file" name="image_url" id="image_url" value="{{{ Input::old('image_url', isset($groceryitem) ? $groceryitem->image_url : null) }}}" />
+					{{{ $errors->first('image_url', '<span class="help-inline">:message</span>') }}}
+				</div>
+			</div>
+			<!-- ./ image_url -->
+
+			<!-- List of stores -->
+              <div class="form-group">
+                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Store</label>
+                <div class="col-sm-9 col-md-9 col-lg-10">
+                  <div class="row">
+			              <!-- size -->
+                    <div class="col-md-3">
+                      <div class="input-icon icon-sm">
+                        <i class="fa fa-tint"></i>
+					              <input class="form-control input-sm" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+                      </div>
+                    </div>
+			              <!-- ./ size -->
+                     <!-- unit_id -->
+										<div class="col-md-3">
+											<select id="unit_id" name="unit_id">
+												<option>First option</option>
+												<option>Second option</option>
+												<option>Third option</option>
+												<option>Fourth option</option>
+												<option>Fifth option</option>
+												<option>Sixth option</option>
+												<option>Seventh option</option>
+												<option>Eighth option</option>
+											</select>
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+										</div>
+			              <!-- ./ unit_id -->
+                  </div>
+                  <button class="btn btn-default btn-sm"><i class="fa fa-edit"></i> Add another store and price</button>
+                </div>
+              </div>
+      <!-- ./ stores -->
+
+
+		<!-- Form Actions -->
+			<div class="form-actions">
+				    <button type="submit" class="btn btn-primary">Save changes</button>
+				    <button type="button" class="btn">Cancel</button>
+				    <button type="reset" class="btn btn-default">Reset</button>
+			</div>
+	</form>
     <!-- ./ form actions -->
-</form>
+@stop
+@section('scripts')
+	<script type="text/javascript">
+  $(document).ready(function(){
+    $('input[type=checkbox],input[type=radio]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+	  $('select').select2();
+	  // Form Validation
+    $("#basic_validate").validate({
+      rules:{
+        product_name:{
+          required:true
+        },
+        brand:{
+          required:true,
+        },
+        unit_id:{
+          required:true,
+        },
+        size:{
+          required:true,
+				  number:true,
+          date: true,
+				  min:1
+        },
+        url:{
+          required:true,
+          url: true
+        }
+      },
+      errorClass: "help-inline has-error",
+      errorElement: "span",
+      highlight:function(element, errorClass, validClass) {
+        $(element).parents('.form-group').removeClass('has-success').addClass('has-error');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.form-group').removeClass('has-error').addClass('has-success');
+      }
+	  });
+	
+	$("#number_validate").validate({
+		rules:{
+			min:{
+				required: true,
+				min:10
+			},
+			max:{
+				required:true,
+				max:24
+			},
+			number:{
+				required:true,
+				number:true
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.form-group').addClass('has-error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.form-group').removeClass('has-error');
+			$(element).parents('.form-group').addClass('has-success');
+		}
+	});
+	
+	$("#password_validate").validate({
+		rules:{
+			pwd:{
+				required: true,
+				minlength:6,
+				maxlength:20
+			},
+			pwd2:{
+				required:true,
+				minlength:6,
+				maxlength:20,
+				equalTo:"#pwd"
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.form-group').addClass('has-error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.form-group').removeClass('has-error');
+			$(element).parents('.form-group').addClass('has-success');
+		}
+  });
+  function addRow() {
+        //$(template(i++)).appendTo("#orderitems tbody");
+  }
+  var i = 1;
+  // start with one row
+  addRow();
+  // add more rows on click
+  $("#add").click(addRow);
+
+  // only for demo purposes
+  // $.validator.setDefaults({
+  //  submitHandler: function() {
+  //      alert("submitted!");
+  //        }
+  //        });
+  //        $.validator.messages.max = jQuery.validator.format("Your totals mustn't exceed {0}!");
+  //
+  //        $.validator.addMethod("quantity", function(value, element) {
+  //          return !this.optional(element) && !this.optional($(element).parent().prev().children("select")[0]);
+  //          }, "Please select both the item and its amount.");
+  //
+  //          $().ready(function() {
+  //            $("#orderform").validate({
+  //                errorPlacement: function(error, element) {
+  //                      error.appendTo( element.parent().next() );
+  //                          },
+  //                              highlight: function(element, errorClass) {
+  //                                    $(element).addClass(errorClass).parent().prev().children("select").addClass(errorClass);
+  //                                        }
+  //                                          });
+  //
+  //                                            var template = jQuery.validator.format($.trim($("#template").val()));
+  //
+  //                                                      var i = 1;
+  //                                                        // start with one row
+  //                                                          addRow();
+  //                                                            // add more rows on click
+  //                                                              $("#add").click(addRow);
+  //
+  //                                                                // check keyup on quantity inputs to update totals field
+  //                                                                  $("#orderform").validateDelegate("input.quantity", "keyup", function(event) {
+  //                                                                      var totals = 0;
+  //                                                                          $("#orderitems input.quantity").each(function() {
+  //                                                                                totals += +this.value;
+  //                                                                                    });
+  //                                                                                        $("#totals").attr("value", totals).valid();
+  //                                                                                          });
+  //
+  //                                                                                          });
+  //                                                                                          
+
+
+
+
+
+});
+</script>
 @stop

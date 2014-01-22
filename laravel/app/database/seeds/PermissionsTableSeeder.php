@@ -4,7 +4,7 @@ class PermissionsTableSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('permissions')->delete();
+        //DB::table('permissions')->delete();
 
 
         $permissions = array(
@@ -38,9 +38,9 @@ class PermissionsTableSeeder extends Seeder {
             ),
         );
 
-        DB::table('permissions')->insert( $permissions );
+        //DB::table('permissions')->insert( $permissions );
 
-        DB::table('permission_role')->delete();
+        //DB::table('permission_role')->delete();
 
         $permissions = array(
             array(
@@ -77,7 +77,7 @@ class PermissionsTableSeeder extends Seeder {
             ),
         );
 
-        DB::table('permission_role')->insert( $permissions );
+        //DB::table('permission_role')->insert( $permissions );
     }
 
 }
