@@ -1,5 +1,5 @@
 {
-    "name": "andrew13/Laravel-4-Bootstrap-Starter-Site",
+    "name": "mgathu/groceryshopper",
     "description": "Laravel 4 Starter Site",
     "keywords": ["laravel","Starter Site"],
     "license": "MIT",
@@ -16,7 +16,6 @@
         "zizaco/confide": "3.1.x",
         "zizaco/entrust": "dev-master",
         "robclancy/presenter": "1.0.*",
-        "way/generators": "dev-master",
         "j20/php-uuid": "dev-master",
         "bllim/datatables": "*",
         "monarobase/country-list": "dev-master",
@@ -25,8 +24,16 @@
         "solarium/solarium": "3.2.*",
         "anahkiasen/former": "dev-master",
         "toin0u/geotools-laravel": "~0.2",
-	"edvinaskrucas/notification": "2.*"
+	    "edvinaskrucas/notification": "2.*",
+        "cartalyst/cart": "1.*",
+        "moltin/cart": "dev-master"
     },
+    "repositories": [
+      {
+        "type": "composer",
+        "url": "http://packages.cartalyst.com"
+      }
+     ],
     "require-dev": {
         "way/generators": "dev-master",
         "mockery/mockery": "dev-master@dev",
