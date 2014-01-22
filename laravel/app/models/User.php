@@ -104,7 +104,13 @@ class User extends ConfideUser implements PresentableInterface {
     {
         return (new Confide(new ConfideEloquentRepository()))->user();
     }
-
-
-
+   /**
+    * Shopper relationship
+    */
+    public function groceryitems() {
+        return $this->belongsToMany('Groceryitem', 'shoppinglist', 'user_id', 'groceryitem_id')
+          ->withPivot('quantity', 'store_id')
+          ->join('store', 'store_id', 'store.id');
+          //->select('drink_id', 'customer_id', 'pivot_customer_got_drink', 'chair.name AS pivot_chair_name'); //this select is optional
+    }
 }
