@@ -3,8 +3,101 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9f8648b9bc46e0d04233291acb26b02e",
+    "hash": "fe5a81c05c995f13f9d900df5dd67ce2",
     "packages": [
+        {
+            "name": "anahkiasen/former",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Anahkiasen/former.git",
+                "reference": "e399cd88d4ee4f8f656fd27cf3c8a07d58e02840"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Anahkiasen/former/zipball/e399cd88d4ee4f8f656fd27cf3c8a07d58e02840",
+                "reference": "e399cd88d4ee4f8f656fd27cf3c8a07d58e02840",
+                "shasum": ""
+            },
+            "require": {
+                "anahkiasen/html-object": "~1.2.0",
+                "illuminate/config": "~4",
+                "illuminate/container": "~4",
+                "illuminate/http": "~4",
+                "illuminate/routing": "~4",
+                "illuminate/session": "~4",
+                "illuminate/translation": "~4"
+            },
+            "require-dev": {
+                "illuminate/database": "~4",
+                "mockery/mockery": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Former": "src",
+                    "Laravel": "src"
+                },
+                "classmap": [
+                    "tests"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Fabre",
+                    "email": "ehtnam6@gmail.com"
+                }
+            ],
+            "description": "A powerful form builder",
+            "homepage": "http://anahkiasen.github.com/former/",
+            "keywords": [
+                "bootstrap",
+                "form",
+                "foundation",
+                "laravel"
+            ],
+            "time": "2014-01-14 11:49:56"
+        },
+        {
+            "name": "anahkiasen/html-object",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Anahkiasen/html-object.git",
+                "reference": "71eb5bd920e845aaea0d7face6e73aa9a63d6bde"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Anahkiasen/html-object/zipball/71eb5bd920e845aaea0d7face6e73aa9a63d6bde",
+                "reference": "71eb5bd920e845aaea0d7face6e73aa9a63d6bde",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HtmlObject": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anahkiasen",
+                    "email": "ehtnam6@gmail.com"
+                }
+            ],
+            "description": "A set of classes to create and manipulate HTML objects abstractions",
+            "time": "2014-01-14 11:42:36"
+        },
         {
             "name": "bllim/datatables",
             "version": "dev-master",
@@ -61,106 +154,6 @@
             "time": "2014-01-19 13:29:42"
         },
         {
-            "name": "cartalyst/sentry",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cartalyst/sentry.git",
-                "reference": "b59905eb0e04ca85737f6d2a57c1ef34e8f56dc6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentry/zipball/b59905eb0e04ca85737f6d2a57c1ef34e8f56dc6",
-                "reference": "b59905eb0e04ca85737f6d2a57c1ef34e8f56dc6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "illuminate/cookie": ">=4.0.9,<4.2",
-                "illuminate/database": ">=4.0.9,<4.2",
-                "illuminate/http": ">=4.0.9,<4.2",
-                "illuminate/session": ">=4.0.9,<4.2",
-                "ircmaxell/password-compat": "1.0.*",
-                "mockery/mockery": "0.7.2"
-            },
-            "suggest": {
-                "happydemon/txt": "Required Text helpers when using the Kohana implementation",
-                "illuminate/database": "Default sentry user, group and throttling implementations.",
-                "ircmaxell/password-compat": "Default hashing uses PHP 5.5 password_* functions, with forward-compatible support."
-            },
-            "type": "library",
-            "extra": {
-                "component": "package",
-                "frameworks": [
-                    "Laravel 3",
-                    "Laravel 4",
-                    "CodeIgniter 3",
-                    "FuelPHP 1",
-                    "Kohana"
-                ],
-                "versions": {
-                    "1": "1.1/master",
-                    "2": "master"
-                },
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/Cartalyst/Sentry/Groups/Exceptions.php",
-                    "src/Cartalyst/Sentry/Throttling/Exceptions.php",
-                    "src/Cartalyst/Sentry/Users/Exceptions.php",
-                    "src/migrations"
-                ],
-                "psr-0": {
-                    "Cartalyst\\Sentry": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Ben Corlett",
-                    "email": "ben.corlett@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Cartalyst LLC",
-                    "email": "help@cartalyst.com"
-                },
-                {
-                    "name": "Bruno Gaspar",
-                    "email": "bruno.gaspar@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Dan Syme",
-                    "email": "dan.syme@cartalyst.com",
-                    "role": "Creator & Designer"
-                },
-                {
-                    "name": "Daniel Petrie",
-                    "email": "dan.petrie@cartalyst.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP 5.3+ Fully-featured Authentication & Authorization System",
-            "keywords": [
-                "auth",
-                "codeigniter",
-                "fuelphp",
-                "kohana",
-                "laravel",
-                "security"
-            ],
-            "time": "2013-12-24 16:29:49"
-        },
-        {
             "name": "classpreloader/classpreloader",
             "version": "1.0.1",
             "source": {
@@ -213,21 +206,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/CodeSleeve/asset-pipeline.git",
-                "reference": "26b9b8981bc0a883308838a64227f5101a8807d0"
+                "reference": "88ecd2ac34c1ed1e50c3f75fd76388e9d0b618f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CodeSleeve/asset-pipeline/zipball/26b9b8981bc0a883308838a64227f5101a8807d0",
-                "reference": "26b9b8981bc0a883308838a64227f5101a8807d0",
+                "url": "https://api.github.com/repos/CodeSleeve/asset-pipeline/zipball/88ecd2ac34c1ed1e50c3f75fd76388e9d0b618f4",
+                "reference": "88ecd2ac34c1ed1e50c3f75fd76388e9d0b618f4",
                 "shasum": ""
             },
             "require": {
-                "codesleeve/sprockets": "v1.0",
+                "codesleeve/sprockets": "v1.1",
                 "coffeescript/coffeescript": "1.3.1",
                 "illuminate/support": "4.*",
                 "leafo/lessphp": "v0.4.0",
                 "leafo/scssphp": "0.0.9",
-                "nitra/php-min": "dev-master",
+                "nitra/php-min": "@dev",
                 "php": ">=5.3.0"
             },
             "require-dev": {
@@ -257,20 +250,20 @@
                 }
             ],
             "description": "A very simple and easy to use asset pipeline for laravel 4.",
-            "time": "2014-01-15 22:45:46"
+            "time": "2014-01-22 02:13:36"
         },
         {
             "name": "codesleeve/sprockets",
-            "version": "v1.0",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CodeSleeve/sprockets.git",
-                "reference": "ce0f3abd1924f59d609e1eb8730b275d5439fcab"
+                "reference": "118537a11c363d18ee3a3cf8cfe68e350882df3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CodeSleeve/sprockets/zipball/ce0f3abd1924f59d609e1eb8730b275d5439fcab",
-                "reference": "ce0f3abd1924f59d609e1eb8730b275d5439fcab",
+                "url": "https://api.github.com/repos/CodeSleeve/sprockets/zipball/118537a11c363d18ee3a3cf8cfe68e350882df3d",
+                "reference": "118537a11c363d18ee3a3cf8cfe68e350882df3d",
                 "shasum": ""
             },
             "require": {
@@ -296,7 +289,7 @@
                     "email": "kelt@codesleeve.com"
                 }
             ],
-            "time": "2014-01-09 22:36:01"
+            "time": "2014-01-22 01:38:13"
         },
         {
             "name": "coffeescript/coffeescript",
@@ -768,12 +761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "24c9aafb913ea7aeb0c2522428025477b77f235c"
+                "reference": "0555702816ad551e3a5a98ec9e322e323f06bb8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/24c9aafb913ea7aeb0c2522428025477b77f235c",
-                "reference": "24c9aafb913ea7aeb0c2522428025477b77f235c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/0555702816ad551e3a5a98ec9e322e323f06bb8a",
+                "reference": "0555702816ad551e3a5a98ec9e322e323f06bb8a",
                 "shasum": ""
             },
             "require": {
@@ -877,7 +870,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2014-01-20 04:32:11"
+            "time": "2014-01-22 07:41:19"
         },
         {
             "name": "laravelbook/ardent",
@@ -1527,12 +1520,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "211e237090842f0bc1813b639633e05267fb0444"
+                "reference": "8876c820c3b31eb3f435ab6419f75aecef4b5412"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/211e237090842f0bc1813b639633e05267fb0444",
-                "reference": "211e237090842f0bc1813b639633e05267fb0444",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/8876c820c3b31eb3f435ab6419f75aecef4b5412",
+                "reference": "8876c820c3b31eb3f435ab6419f75aecef4b5412",
                 "shasum": ""
             },
             "require": {
@@ -1613,7 +1606,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2014-01-18 17:51:33"
+            "time": "2014-01-22 03:16:33"
         },
         {
             "name": "predis/predis",
@@ -2762,12 +2755,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "4120aadd68ddd15d2b8f0cddc9c72118caec9923"
+                "reference": "7938134fd1382deb7b300da1672559fe2afb3706"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4120aadd68ddd15d2b8f0cddc9c72118caec9923",
-                "reference": "4120aadd68ddd15d2b8f0cddc9c72118caec9923",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/7938134fd1382deb7b300da1672559fe2afb3706",
+                "reference": "7938134fd1382deb7b300da1672559fe2afb3706",
                 "shasum": ""
             },
             "type": "library",
@@ -2796,7 +2789,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2014-01-20 06:36:08"
+            "time": "2014-01-21 11:15:49"
         },
         {
             "name": "umpirsky/country-list",
@@ -4464,6 +4457,7 @@
         "monarobase/country-list": 20,
         "willdurand/geocoder": 0,
         "league/geotools": 0,
+        "anahkiasen/former": 20,
         "moltin/cart": 20,
         "way/generators": 20,
         "mockery/mockery": 20,
