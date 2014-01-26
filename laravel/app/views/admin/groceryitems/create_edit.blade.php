@@ -33,7 +33,7 @@
 
 			<!-- brand -->
 			<div class="form-group {{{ $errors->has('brand') ? 'has-error' : '' }}}">
-				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Brand</label>
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="brand">Brand</label>
 				<div class="col-sm-9 col-md-9 col-lg-10">
 					<input class="form-control" type="text" name="brand" id="brand" value="{{{ Input::old('brand', isset($groceryitem) ? $groceryitem->brand : null) }}}" />
 					{{{ $errors->first('brand', '<span class="help-inline">:message</span>') }}}
@@ -43,18 +43,17 @@
 
 			<!-- category -->
 			<div class="form-group {{{ $errors->has('category') ? 'has-error' : '' }}}">
-				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="product_name">Categories</label>
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label" for="category">Categories</label>
         <div class="col-sm-9 col-md-9 col-lg-10">
-            <select multiple>
-              <option>First option</option>
-              <option selected>Second option</option>
-              <option>Third option</option>
-              <option>Fourth option</option>
-              <option>Fifth option</option>
-              <option>Sixth option</option>
-              <option>Seventh option</option>
-              <option>Eighth option</option>
-            </select>
+              <select multiple id="category_id" name="category_id">
+                @foreach ($categories as $category)
+                  @if ($mode == 'create')
+                  <option value="{{{ $category->id }}}"{{{ ( in_array($category->id, $selectedCategories) ? ' selected="selected"' : '') }}}>{{{ $category->title }}}</option>
+                  @else
+                  <option value="{{{ $category->id }}}"{{{ ( array_search($category->id, $groceryitem->currentCategoryIds()) !== false && array_search($category->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $category->name }}}</option>
+                  @endif
+                @endforeach
+              </select>
 					<span class="help-block">
 						Select categories which this item belong to.
 					</span>
@@ -65,14 +64,15 @@
       
 			<!-- ./ unit_id -->
               <div class="form-group">
-                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Unit Size</label>
+                <label for="size" class="col-sm-3 col-md-3 col-lg-2 control-label">Unit Size</label>
                 <div class="col-sm-9 col-md-9 col-lg-10">
                   <div class="row">
 			              <!-- size -->
                     <div class="col-md-3">
-                      <div class="input-icon icon-sm">
-                        <i class="fa fa-tint"></i>
-					              <input class="form-control input-sm" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-addon">
+                        <i class="fa fa-th"></i></span>
+					              <input class="form-control input-sm" type="text" placeholder="Enter the quantity" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
                   			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
                       </div>
                     </div>
@@ -126,35 +126,35 @@
 
 			<!-- List of stores -->
               <div class="form-group">
-                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Store</label>
+                <label for="" class="col-sm-3 col-md-3 col-lg-2 control-label">Store and price</label>
                 <div class="col-sm-9 col-md-9 col-lg-10">
                   <div class="row">
-			              <!-- size -->
-                    <div class="col-md-3">
-                      <div class="input-icon icon-sm">
-                        <i class="fa fa-tint"></i>
-					              <input class="form-control input-sm" type="text" name="size" id="size" value="{{{ Input::old('size', isset($groceryitem) ? $groceryitem->size : null) }}}" />
-                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
-                      </div>
-                    </div>
-			              <!-- ./ size -->
-                     <!-- unit_id -->
-										<div class="col-md-3">
-											<select id="unit_id" name="unit_id">
-												<option>First option</option>
-												<option>Second option</option>
-												<option>Third option</option>
-												<option>Fourth option</option>
-												<option>Fifth option</option>
-												<option>Sixth option</option>
-												<option>Seventh option</option>
-												<option>Eighth option</option>
+                     <!-- store_id -->
+										<div class="col-md-6">
+											<select id="store_id" name="store_id">
+                        @foreach ($stores as $store)
+                          @if ($mode == 'create')
+                          <option value="{{{ $store->id }}}"{{{ ( in_array($store->id, $selectedStores) ? ' selected="selected"' : '') }}}>{{{ $store->title }}} - {{{ $store->line_1 }}}</option>
+                          @else
+                          <option value="{{{ $store->id }}}"{{{ ( array_search($store->id, $groceryitem->currentstoreIds()) !== false && array_search($store->id, $groceryitem->currentstoreIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $store->name }}}</option>
+                          @endif
+                        @endforeach
 											</select>
                   			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
 										</div>
-			              <!-- ./ unit_id -->
+			              <!-- ./ store_id -->
+			              <!-- price-->
+                    <div class="col-md-3">
+                      <div class="input-group input-group-sm">
+                        <span class="input-group-addon">
+                        <i class="fa fa-dollar"></i></span>
+					              <input class="form-control input-sm" type="text" name="price" id="price" value="{{{ Input::old('price', isset($price) ? $price : null) }}}" />
+                  			{{{ $errors->first('size', '<span class="help-inline">:message</span>') }}}
+                      </div>
+                    </div>
+			              <!-- ./ price -->
                   </div>
-                  <button class="btn btn-default btn-sm"><i class="fa fa-edit"></i> Add another store and price</button>
+                  <button class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Add another store and price</button>
                 </div>
               </div>
       <!-- ./ stores -->
@@ -189,11 +189,23 @@
         unit_id:{
           required:true,
         },
+        category_id:{
+          required:true,
+        },
+        store_id:{
+          required:true,
+        },
         size:{
           required:true,
 				  number:true,
           date: true,
 				  min:1
+        },
+        price:{
+          required:false,
+				  number:true,
+          date: true,
+				  min:0.1
         },
         url:{
           required:true,
