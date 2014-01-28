@@ -96,13 +96,17 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function postCreate()
     {
-        // Declare the rules for the form validation
-        $rules = array(
-            'title'   => 'required|min:3',
-        );
+       // Declare the rules for the form validation
+       $rules = array(
+            'product_name'   => 'required',
+            'brand' => 'required',
+            'manufacturer' => 'required',
+       );
 
-        // Validate the inputs
-        $validator = Validator::make(Input::all(), $rules);
+      // Validate the inputs
+
+      $validator = Validator::make(Input::all(), $rules);
+
 
         // Check if the form validates with success
         if ($validator->passes())
@@ -110,15 +114,30 @@ class AdminGroceryitemsController extends AdminController {
             // Create a new store
             $user = Auth::user();
 
-            // Update the store post data
-            $this->groceryitem->title            = Input::get('title');
+            // Update the groceryitem post data
+            $this->groceryitem->title  = Input::get('product_name');
+            $this->groceryitem->factual_id  = 'xxxx-local-xxx';
+            $this->groceryitem->factual_url = "http://www.groceryshopper.ca";
+            $this->groceryitem->unit_id = Input::get('unit_id');
+            $this->groceryitem->size = Input::get('size');
+            $this->groceryitem->upc = Input::get('upc');
+            $this->groceryitem->manufacturer = Input::get('manufacturer');
 
+            // Save if valid. Password field will be hashed before save
+            $this->groceryitem->save();
 
             // Was the store created?
             if($this->groceryitem->save())
             {
+                // Save the categories
+              $this->groceryitem->saveCategories(Input::get( 'categories' ));
+
+              // Save the stores and the related prices and 
+              // quantities.
+              $this->_save_store_info();
+
                 // Redirect to the new item page
-                return Redirect::to('admin/groceryitems/' . $this->groceryitem->id . '/edit')
+              return Redirect::to('admin/groceryitems/' . $this->groceryitem->id . '/edit')
                         ->with('success', Lang::get('admin/groceryitems/messages.create.success'));
             }
 
@@ -131,6 +150,28 @@ class AdminGroceryitemsController extends AdminController {
         return Redirect::to('admin/groceryitems/create')->withInput()->withErrors($validator);
     }
 
+    /**
+     * Save the store and groceryitem relationship data.
+     *
+     * @return Response
+     */
+    private function _save_store_info() {
+        $store_info = array();
+        foreach( Input::all() as $key => $val) {
+          if(preg_match("/ID/", $key)) {
+            $id = substr($key, 2, 1);
+            $field = substr($key, 4);
+            $store_info[$id][$field] = $val;
+          }
+        }
+        // Add original item
+        $store_info[1]['store_id'] = Input::get('store_id');
+        $store_info[1]['quantity'] = Input::get('quantity');
+        $store_info[1]['price'] = Input::get('price');
+
+        var_dump($store_info);die();
+      
+    }
     /**
      * Display the specified resource.
      *
@@ -165,6 +206,7 @@ class AdminGroceryitemsController extends AdminController {
      * @return Response
      */
     public function postEdit($groceryitem) {
+
 
         // Declare the rules for the form validation
         $rules = array(

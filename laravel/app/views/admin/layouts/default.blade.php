@@ -277,6 +277,8 @@
        
        {{ HTML::script("assets/js/unicorn.js"); }}
        {{ HTML::script("assets/js/unicorn.dashboard.js"); }}
+
+        
 	<!-- local scripts -->
 	@yield('scripts');
 

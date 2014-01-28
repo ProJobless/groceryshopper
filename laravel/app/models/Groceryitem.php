@@ -71,9 +71,37 @@ class Groceryitem extends Eloquent implements PresentableInterface {
       return Url::to($this->name);
   }
 
-  public function shoppinglist() {
-    // body...
+  /**
+   * Save categoriess inputted from multiselect
+   * @param $inputRoles
+   */
+  public function saveCategories($inputCategories)
+  {
+    if(! empty($inputCategories)) {
+      $this->categories()->sync($inputCategories);
+    } else {
+          $this->categories()->detach();
+    }
   }
+
+  /**
+   * Returns user's current role ids only.
+   * @return array|bool
+   */
+  public function currentRoleIds()
+  {
+      $roles = $this->roles;
+      $roleIds = false;
+      if( !empty( $roles ) ) {
+          $roleIds = array();
+          foreach( $roles as &$role )
+          {
+              $roleIds[] = $role->id;
+          }
+      }
+      return $roleIds;
+  }
+
 
 
   /**
