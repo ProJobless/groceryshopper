@@ -38,6 +38,35 @@
 		 </div>
      </div> <!-- end of blocky form -->
       <!-- Items List starts -->
+
+  <div class="cartInfo">
+    <span class="simpleCart_quantity"></span> items - <span class="simpleCart_total"></span>
+    <a href="javascript:;" class="simpleCart_checkout">Checkout</a>
+  </div>
+  <!-- show the cart -->
+  <div class="simpleCart_items"></div>
+<!-- cart total (ex. $23.11)-->
+<div class="simpleCart_total"></div>
+
+<!-- cart quantity (ex. 3) -->
+<div class="simpleCart_quantity"></div>
+
+<!-- tax cost (ex. $1.38) -->
+<div class="simpleCart_tax"></div>
+
+<!-- tax rate (ex. %0.6) -->
+<div class="simpleCart_taxRate"></div>
+
+<!-- shipping (ex. $5.00) -->
+<div class="simpleCart_shipping"></div>
+
+<!-- grand total, including tax and shipping (ex. $28.49) -->
+<div class="simpleCart_grandTotal"></div>
+
+
+
+
+
       <div class="shop-items blocky">
 		<div class="container">
 		     <!-- Pagination -->
@@ -76,36 +105,38 @@
 				}
 
 				$('#toppager').bootstrapPaginator(options);
-			    </script>
+          </script>
+
+
 		     </div>
 	     <!-- End Pagination -->
 		  <div id="products" class="row list-group">
 		   @foreach ($results as $result)
-			<div class="searchitem  col-xs-6 col-md-3 col-sm-4">
-			    <div class="thumbnail">
-				<!--<img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />-->
-				<img class="group list-group-image" src="{{ $result['image_urls'][0] or 'http://ct.mywebgrocer.com/legacy/productimagesroot/DJ/0/864170.jpg' }}" alt="" />
-				<div class="caption">
-				<h4 class="group inner list-group-searchitem-heading">
-					{{{ ($result['product_name'])  ? Str::words($result['product_name'], 4) :  "" }}}</h4>
-				    <p class="group inner list-group-searchitem-text">
-						  {{ $result['brand'] or ""}} <br />
-							 {{ $result['category'] or  "uncategorized"}} <br />
-							 {{ $result['size'][0]  or "1 each"}}<br />
-				    </p>
-				    <hr />
-				    <div class="row">
-					<div class="col-xs-12 col-md-6">
-					    <div class="item-price lead">
-										${{ $result['avg_price'] or "N/A"}}</div>
-					</div>
-					<div class="col-xs-12 col-md-6">
-					    <a class="btn btn-danger btn-sm" href="http://www.jquery2dotnet.com">Add to list</a>
-					</div>
-				    </div>
-				</div>
-			    </div>
-			</div>
+          <div class="searchitem  col-xs-6 col-md-3 col-sm-4 simpleCart_shelfItem">
+              <div class="thumbnail">
+            <img class="group list-group-image img-responsive" src="{{ $result['image_urls'][0] or 'http://ct.mywebgrocer.com/legacy/productimagesroot/DJ/0/864170.jpg' }}" alt="" />
+            <div class="caption">
+            <h4 class="group inner list-group-searchitem-heading item_name">
+              {{{ ($result['product_name'])  ? Str::words($result['product_name'], 4) :  "" }}}</h4>
+                <p class="group inner list-group-searchitem-text">
+                  {{ $result['brand'] or ""}} <br />
+                   {{ $result['category'] or  "uncategorized"}} <br />
+                   {{ $result['size'][0]  or "1 each"}}<br />
+                </p>
+                <input type="text" value="1" class="item_Quantity">
+                <hr />
+                <div class="row">
+              <div class="col-xs-12 col-md-6">
+                  <div class="item-price lead item_price">
+                        ${{ $result['avg_price'] or "N/A"}}</div>
+              </div>
+              <div class="col-xs-12 col-md-6">
+                  <a class="btn btn-danger btn-sm item_add" href="javascript:;">Add to list</a>
+              </div>
+                </div>
+            </div>
+              </div>
+          </div>
 		@endforeach
              </div>
 	     <!-- Pagination -->
@@ -127,4 +158,32 @@
 	</div>
         <!-- Items List ends -->
 
+@stop
+
+@section('scripts')
+  {{ HTML::script("assets/js/simplecart-js/simpleCart.min.js"); }}
+  <script type="text/javascript">
+    simpleCart({
+       checkout: {
+              type: "SendForm" , 
+              url: "http://dev.groceryshopper.ca/shopping/checkout/"
+       },
+       // set the currency, see the currency reference for more info
+       currency: "USD",
+
+       //collection of arbitrary data you may want to store with the cart, 
+       // such as customer info
+       data: {},
+       beforeAdd               : null,
+       afterAdd                : null,
+       load                    : null,
+       beforeSave              : null,
+       afterSave               : null,
+       update                  : null,
+       ready                   : null,
+       checkoutSuccess             : null,
+       checkoutFail                : null,
+       beforeCheckout              : null
+    });
+  </script>
 @stop

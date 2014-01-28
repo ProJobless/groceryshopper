@@ -99,17 +99,17 @@
         <!-- HTML5 Support for IE -->
         {{ HTML::script("assets/js/html5shiv.js"); }}
         {{ HTML::script("assets/js/custom.js"); }}a
-	<script type="text/javascript">
-		 function getStartedInitialization(){
-			var options = {
-			    currentPage: 3,
-			    totalPages: 10
-			}
+    <script type="text/javascript">
+       function getStartedInitialization(){
+        var options = {
+            currentPage: 3,
+            totalPages: 10
+        }
 
-			$('#toppager').bootstrapPaginator(options);
-		    }
-	</script>
-
-
+        $('#toppager').bootstrapPaginator(options);
+          }
+    </script>
+    <!-- local scripts -->
+    @yield('scripts');
     </body>
 </html>
