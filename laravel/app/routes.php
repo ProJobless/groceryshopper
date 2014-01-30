@@ -166,6 +166,14 @@ Route::group(array('prefix' => 'products'), function()
 });
 
 
+# Shopping list routes
+Route::group(array('prefix' => 'shoppinglist'), function() 
+{
+    # shoppinglist controller
+    Route::controller('/', 'ShoppingListController');
+
+});
+
 Route::controller('search', 'SearchController');
 
 

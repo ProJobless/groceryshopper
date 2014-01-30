@@ -163,7 +163,6 @@ class SearchController extends BaseController {
         ));
         $item->categories()->save($category);
       }else {
-        var_dump($category);
         $item->categories()->sync(array($category->id));
       }
     }

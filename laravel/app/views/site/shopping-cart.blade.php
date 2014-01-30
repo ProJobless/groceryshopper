@@ -4,47 +4,19 @@
          <div class="modal-content">
            <div class="modal-header">
              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-             <h4 class="modal-title">Shopping List</h4>
+             <h4 class="modal-title">Your shopping list</h4>
            </div>
            <div class="modal-body">
+              <div class="simpleCart_items"></div>
 
-            <!-- Items table -->
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><a href="single-item.html">HTC One</a></td>
-                  <td>2</td>
-                  <td>$250</td>
-                </tr>
-                <tr>
-                  <td><a href="single-item.html">Apple iPhone</a></td>
-                  <td>1</td>
-                  <td>$502</td>
-                </tr>
-                <tr>
-                  <td><a href="single-item.html">Galaxy Note</a></td>
-                  <td>4</td>
-                  <td>$1303</td>
-                </tr>
-                <tr>
-                  <th></th>
-                  <th>Total</th>
-                  <th>$2405</th>
-                </tr>
-              </tbody>
-            </table>
-
+              <!-- show the cart -->
+              <div class="simpleCart_items"></div>
+            <!-- grand total, including tax and shipping (ex. $28.49) -->
+            <div class="simpleCart_grandTotal"></div>
            </div>
            <div class="modal-footer">
              <button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>
-             <button type="button" class="btn btn-info">Checkout</button>
+             <button type="button" class="btn btn-info simpleCart_checkout">Find cheapest store</button>
            </div>
          </div><!-- /.modal-content -->
        </div><!-- /.modal-dialog -->
