@@ -21,7 +21,10 @@ class HomeController extends BaseController {
      */
     public function getIndex()
     {
-        // Show the page
-        return View::make('site/index', compact('posts'));
+      // Show the page
+      // Generate a new token/cart_id for every page visit
+      // based on ip address and time of day.
+      $cart_id = 'cart-' . csrf_token();
+      return View::make('site/index', compact('cart_id'));
     }
 }

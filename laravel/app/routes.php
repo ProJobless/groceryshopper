@@ -120,10 +120,12 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 
 // User reset routes
 Route::get('user/reset/{token}', 'UserController@getReset')
-    ->where('token', '[0-9a-z]+');
+  ->where('token', '[0-9a-z]+');
+
 // User password reset
 Route::post('user/reset/{token}', 'UserController@postReset')
-    ->where('token', '[0-9a-z]+');
+  ->where('token', '[0-9a-z]+');
+
 //:: User Account Routes ::
 Route::post('user/{user}/edit', 'UserController@postEdit')
     ->where('user', '[0-9]+');
@@ -149,7 +151,7 @@ Route::get('contact-us', function()
 // about page (app/views/about.blade.php)
 Route::get('about',array('as' => 'about', function()
 {
-	return View::make('site/about');
+  return View::make('site/about');
 }));
 
 
@@ -167,15 +169,19 @@ Route::group(array('prefix' => 'products'), function()
 
 
 # Shopping list routes
-Route::group(array('prefix' => 'shoppinglist'), function() 
-{
+Route::group(array('prefix' => 'shoppinglist'), function()
+  {
+
+    # Shopping list show the list of items
+    Route::get('/{cart_id}', 'ShoppingListController@getShow');
+
+   # Posted route
+    Route::post('/{cart_id}', 'ShoppingListController@postShow');
+
     # shoppinglist controller
-    Route::controller('/', 'ShoppingListController');
-
-});
-
-Route::controller('search', 'SearchController');
-
+    Route::get('/', 'ShoppingListController@getIndex');
+  } 
+);
 
 Route::resource('stores', 'StoresController');
 

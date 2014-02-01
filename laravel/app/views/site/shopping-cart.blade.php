@@ -16,7 +16,7 @@
            </div>
            <div class="modal-footer">
              <button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>
-             <button type="button" class="btn btn-info simpleCart_checkout">Find cheapest store</button>
+             <button type="button" class="btn btn-info simpleCart_checkout">View items</button>
            </div>
          </div><!-- /.modal-content -->
        </div><!-- /.modal-dialog -->

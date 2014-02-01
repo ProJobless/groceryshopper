@@ -108,6 +108,7 @@
         <!-- HTML5 Support for IE -->
         {{ HTML::script("assets/js/html5shiv.js"); }}
         {{ HTML::script("assets/js/custom.js"); }}a
+        {{ HTML::script("assets/js/simplecart-js/simpleCart.min.js"); }}
     <script type="text/javascript">
        function getStartedInitialization(){
         var options = {
@@ -118,6 +119,93 @@
         $('#toppager').bootstrapPaginator(options);
           }
     </script>
+
+  <script type="text/javascript">
+    simpleCart({
+        cartColumns: [
+                { view:'image' , attr:'thumb', label: false},
+                { attr: "name" , label: "Name" } ,
+                { attr: "price" , label: "Price", view: 'currency' } ,
+                { view: "decrement" , label: false , text: "-" } ,
+                { view:'input', attr:'quantity', label: "Quantity" },
+                { view: "increment" , label: false , text: "+" } ,
+                { attr: "total" , label: "SubTotal", view: 'currency' } ,
+                { view: "remove" , text: "Remove" , label: false }
+       ],
+       cartStyle: "table",
+       // set the currency, see the currency 
+       // reference for more info
+       currency: "CAD",
+
+       // collection of arbitrary data you may want to store 
+       // with the cart, such as customer info
+       data: {},
+
+       // set the cart langauge 
+       // (may be used for checkout)
+       language: "english-us",
+
+       // array of item fields that will not be 
+       // sent to checkout
+       excludeFromCheckout: [],
+
+       // custom function to add shipping cost
+       shippingCustom: null,
+
+       // flat rate shipping option
+       shippingFlatRate: 0,
+
+       // added shippingCustompping based on this value 
+       // multiplied by the cart quantity
+       shippingFlatRategQuantityRate: 0,
+
+       // added shipping based on this value 
+       // multiplied by the cart subtotal
+       shippingTotalRate: 0,
+
+       // tax rate applied total cart subtotal
+       taxRate: 0,
+
+       // true if tax should be applied to shippinging
+       taxShipping: false,
+
+       checkout: {
+              type: "SendForm" , 
+              url: "http://dev.groceryshopper.ca/shoppinglist/{{ $cart_id }}",
+              // http method for form, "POST" or "GET", default is "POST"
+              method: "POST" , 
+
+              // url to return to on successful checkout, default is null
+              success: "success.html" ,
+              // url to return to on cancelled checkout, 
+              // default is null
+              cancel: "cancel.html" ,
+
+              // an option list of extra 
+              //name/value pairs that can
+            // be sent along 
+            // with the checkout 
+            // data
+            extra_data: 
+            {
+                 storename:"test-store",
+                 cartid: "{{ $cart_id }}",
+                _token: "{{ Session::getToken(); }}",
+            }
+
+       },
+       beforeAdd               : null,
+       afterAdd                : null,
+       load                    : null,
+       beforeSave              : null,
+       afterSave               : null,
+       update                  : null,
+       ready                   : null,
+       checkoutSuccess         : null,
+       checkoutFail            : null,
+       beforeCheckout          : null
+    });
+  </script>
     <!-- local scripts -->
     @yield('scripts');
     </body>

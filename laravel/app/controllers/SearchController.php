@@ -80,6 +80,7 @@ class SearchController extends BaseController {
                 $this->saveDataToDb($result);
             }
 
+            var_dump($data);die();
             return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
 
         }
@@ -214,6 +215,7 @@ class SearchController extends BaseController {
     //require_once ('../vendor/factual-php-driver/Factual.php');
     require_once ('../app/libraries/factual-php-driver/Factual.php');
     $factual = new Factual($auth_key,$auth_secret);
+
     //Search for products containing the word "$keyword"
     $query = new FactualQuery;
     $query->field("product_name")->search($keyword);
