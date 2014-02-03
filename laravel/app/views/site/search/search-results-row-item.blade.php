@@ -18,7 +18,7 @@
                   <!-- Price -->
                   <div class="item-price pull-left">$360</div>
                   <!-- Add to cart -->
-                  <div class="pull-right"><a href="#" class="btn btn-danger btn-sm">Add to Cart</a></div>
+                  <div class="pull-right"><a href="#" class="btn btn-danger btn-sm">Add to shopping list</a></div>
                   <div class="clearfix"></div>
                 </div>
               </div>

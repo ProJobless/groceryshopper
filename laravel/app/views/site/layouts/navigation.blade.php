@@ -1,4 +1,6 @@
+
 <!-- Logo & Navigation starts -->
+
 <div class="header">
     <div class="container">
     <div class="row">
@@ -54,6 +56,10 @@
                  <a {{ (Request::is('user/login') ? ' class="active"' : '') }} href="{{{ URL::to('user/login') }}}">Login</a>
                  <a {{ (Request::is('user/register') ? ' class="active"' : '') }} href="{{{ URL::to('user/create') }}}">{{{ Lang::get('site.sign_up') }}}</a>
                 @endif
+
+                <a data-toggle="modal" href="#shoppingcart"><i class="icon-shopping-cart"></i> <span class="simpleCart_quantity"></span> items - <span class="simpleCart_grandTotal"></span></a>
+
+                                                                              
               </div>
             </div>
         </div>

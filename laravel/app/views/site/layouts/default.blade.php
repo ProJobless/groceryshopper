@@ -39,7 +39,9 @@
         {{ HTML::script('assets/js/bootstrap.min.js'); }}
         <!-- Bootstrap Paginator -->
         {{ HTML::script("assets/js/bootstrap-paginator.min.js"); }}
-        <!-- Styles -->
+        
+
+       <!-- Styles -->
         <!-- Bootstrap CSS -->
         {{ HTML::style('assets/css/bootstrap.min.css'); }}
         <!-- Animate css -->
@@ -58,6 +60,9 @@
         <!-- Custom CSS -->
         {{ HTML::style('assets/css/style.css'); }}
 
+        <!-- shopping list -->
+        {{ HTML::style('assets/css/shoppinglist.css'); }}
+
         <!-- Favicons
         ================================================== -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{{ asset('assets/ico/apple-touch-icon-144-precomposed.png') }}}">
@@ -67,16 +72,20 @@
         <link rel="shortcut icon" href="{{{ asset('assets/ico/favicon.png') }}}">
     </head>
     <body>
+        <!-- Navigation -->
+          @include('site.shopping-cart')
+        <!-- ./ navigation -->
 
         <!-- Navigation -->
-	@include('site.layouts.navigation')
+          @include('site.layouts.navigation')
         <!-- ./ navigation -->
-      <div class="clearfix"></div>
+        <div class="clearfix"></div>
 
-	
         <!-- Notifications -->
         @include('notifications')
         <!-- ./ notifications -->
+
+
         <!-- Content -->
         @yield('content')
         <!-- ./ content -->
@@ -99,17 +108,17 @@
         <!-- HTML5 Support for IE -->
         {{ HTML::script("assets/js/html5shiv.js"); }}
         {{ HTML::script("assets/js/custom.js"); }}a
-	<script type="text/javascript">
-		 function getStartedInitialization(){
-			var options = {
-			    currentPage: 3,
-			    totalPages: 10
-			}
+    <script type="text/javascript">
+       function getStartedInitialization(){
+        var options = {
+            currentPage: 3,
+            totalPages: 10
+        }
 
-			$('#toppager').bootstrapPaginator(options);
-		    }
-	</script>
-
-
+        $('#toppager').bootstrapPaginator(options);
+          }
+    </script>
+    <!-- local scripts -->
+    @yield('scripts');
     </body>
 </html>

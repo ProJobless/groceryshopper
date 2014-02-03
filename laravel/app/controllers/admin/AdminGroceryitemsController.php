@@ -6,16 +6,37 @@ class AdminGroceryitemsController extends AdminController {
      * Groceryitem Model
      * @var Groceryitem
      */
-    protected $groceryitem;
+  protected $groceryitem;
+
+    /**
+     * Category Model
+     * @var Category
+     */
+    protected $category;
+
+    /**
+     * Store Model
+     * @var Store
+     */
+  protected $store;
+
+    /**
+     * Unit Model
+     * @var Unit
+     */
+    protected $unit;
 
     /**
      * Inject the models.
      * @param Groceryitem $groceryitem
      */
-    public function __construct(Groceryitem $groceryitem)
+    public function __construct(Groceryitem $groceryitem, Category $category, Store $store, Unit $unit)
     {
         parent::__construct();
         $this->groceryitem = $groceryitem;
+        $this->store = $store;
+        $this->unit = $unit;
+        $this->category = $category;
     }
 
     /**
@@ -43,9 +64,29 @@ class AdminGroceryitemsController extends AdminController {
         // Title
         $title = Lang::get('admin/groceryitems/title.create_a_new_groceryitem');
         // Show the page
+
+        // All categories
+        $categories = $this->category->all();
+
+        // All the stores..
+        $stores = $this->store->all();
+
+        // All the units
+        $units = $this->unit->all();
+        
+        // Selected groups
+        $selectedStores = Input::old('stores', array());
+
+        // Selected permissions
+        $selectedCategories = Input::old('categories', array());
+
+        // Selected units
+        $selectedUnits = Input::old('units', array());
+
+        
         // Mode
         $mode = 'create';
-        return View::make('admin/groceryitems/create_edit', compact('title', 'mode'));
+        return View::make('admin/groceryitems/create_edit', compact('units', 'categories', 'stores', 'selectedStores', 'selectedUnits', 'selectedCategories', 'title', 'mode'));
     }
 
     /**
@@ -55,13 +96,17 @@ class AdminGroceryitemsController extends AdminController {
      */
     public function postCreate()
     {
-        // Declare the rules for the form validation
-        $rules = array(
-            'title'   => 'required|min:3',
-        );
+       // Declare the rules for the form validation
+       $rules = array(
+            'product_name'   => 'required',
+            'brand' => 'required',
+            'manufacturer' => 'required',
+       );
 
-        // Validate the inputs
-        $validator = Validator::make(Input::all(), $rules);
+      // Validate the inputs
+
+      $validator = Validator::make(Input::all(), $rules);
+
 
         // Check if the form validates with success
         if ($validator->passes())
@@ -69,15 +114,30 @@ class AdminGroceryitemsController extends AdminController {
             // Create a new store
             $user = Auth::user();
 
-            // Update the store post data
-            $this->groceryitem->title            = Input::get('title');
+            // Update the groceryitem post data
+            $this->groceryitem->title  = Input::get('product_name');
+            $this->groceryitem->factual_id  = 'xxxx-local-xxx';
+            $this->groceryitem->factual_url = "http://www.groceryshopper.ca";
+            $this->groceryitem->unit_id = Input::get('unit_id');
+            $this->groceryitem->size = Input::get('size');
+            $this->groceryitem->upc = Input::get('upc');
+            $this->groceryitem->manufacturer = Input::get('manufacturer');
 
+            // Save if valid. Password field will be hashed before save
+            $this->groceryitem->save();
 
             // Was the store created?
             if($this->groceryitem->save())
             {
+                // Save the categories
+              $this->groceryitem->saveCategories(Input::get( 'categories' ));
+
+              // Save the stores and the related prices and 
+              // quantities.
+              $this->_save_store_info();
+
                 // Redirect to the new item page
-                return Redirect::to('admin/groceryitems/' . $this->groceryitem->id . '/edit')
+              return Redirect::to('admin/groceryitems/' . $this->groceryitem->id . '/edit')
                         ->with('success', Lang::get('admin/groceryitems/messages.create.success'));
             }
 
@@ -90,6 +150,28 @@ class AdminGroceryitemsController extends AdminController {
         return Redirect::to('admin/groceryitems/create')->withInput()->withErrors($validator);
     }
 
+    /**
+     * Save the store and groceryitem relationship data.
+     *
+     * @return Response
+     */
+    private function _save_store_info() {
+        $store_info = array();
+        foreach( Input::all() as $key => $val) {
+          if(preg_match("/ID/", $key)) {
+            $id = substr($key, 2, 1);
+            $field = substr($key, 4);
+            $store_info[$id][$field] = $val;
+          }
+        }
+        // Add original item
+        $store_info[1]['store_id'] = Input::get('store_id');
+        $store_info[1]['quantity'] = Input::get('quantity');
+        $store_info[1]['price'] = Input::get('price');
+
+        var_dump($store_info);die();
+      
+    }
     /**
      * Display the specified resource.
      *
@@ -123,6 +205,7 @@ class AdminGroceryitemsController extends AdminController {
      * @return Response
      */
     public function postEdit($groceryitem) {
+
 
         // Declare the rules for the form validation
         $rules = array(
@@ -260,16 +343,16 @@ class AdminGroceryitemsController extends AdminController {
 
     private function fetchCoords($groceryitem) {
 
-            $geocoder = new \Geocoder\Geocoder();
-            $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-            $chain    = new \Geocoder\Provider\ChainProvider(array(
-                        new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
-            ));
-            $geocoder->registerProvider($chain);
-            //Fetch the address from google maps.
-            $address = $groceryitem->line_1." ".$store->line_2." ".$store->city.", ".
-                        $groceryitem->province_state.", ".$store->country.", ".$store->postal_zip;
-            return $geocoder->geocode($address);
+          $geocoder = new \Geocoder\Geocoder();
+          $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+          $chain    = new \Geocoder\Provider\ChainProvider(array(
+                      new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
+          ));
+          $geocoder->registerProvider($chain);
+          //Fetch the address from google maps.
+          $address = $groceryitem->line_1." ".$store->line_2." ".$store->city.", ".
+                      $groceryitem->province_state.", ".$store->country.", ".$store->postal_zip;
+          return $geocoder->geocode($address);
 
     }
 
