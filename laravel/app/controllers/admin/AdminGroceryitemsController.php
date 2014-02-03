@@ -191,7 +191,6 @@ class AdminGroceryitemsController extends AdminController {
     public function getEdit($groceryitem){
         // Title
         $title = Lang::get('admin/groceryitems/title.groceryitem_update');
-        
         // Mode
         $mode = 'edit';
 
