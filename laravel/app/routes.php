@@ -178,6 +178,7 @@ Route::group(array('prefix' => 'shoppinglist'), function()
    # Posted route
     Route::post('/{cart_id}', 'ShoppingListController@postShow');
 
+    Route::get('nesarbystores', 'ShoppingListController@getNearbystores');
     # shoppinglist controller
     Route::get('/', 'ShoppingListController@getIndex');
   } 

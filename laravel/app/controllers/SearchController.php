@@ -77,10 +77,11 @@ class SearchController extends BaseController {
 
             //Save the search results.
             foreach($results as $result) {
-                $this->saveDataToDb($result);
+              //$this->saveDataToDb($result);
+              var_dump($result);
             }
+	    die();
 
-            var_dump($data);die();
             return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
 
         }
@@ -102,8 +103,8 @@ class SearchController extends BaseController {
       $groceryitem->factual_id = $result['factual_id'];
       $groceryitem->factual_url = "http://www.factual.com";
       $groceryitem->factual_image_urls = isset($result['image_urls']) ? $result['image_urls']['0'] : NULL;
-      $groceryitem->factual_brand = $result['brand'];
-      $groceryitem->factual_product_name = $result['product_name'];
+      $groceryitem->factual_brand = isset($result['brand']) ? $result['brand'] : NULL;
+      $groceryitem->factual_product_name = $result['product_name'] ? $result['product_name'] : NULL;
       $groceryitem->factual_upc = isset($result['upc']) ? $result['upc']: NULL;
       $groceryitem->factual_ean13 = isset($result['ean13']) ?  $result['ean13'] : NULL;
       $groceryitem->factual_category = $result['category'];
@@ -134,8 +135,8 @@ class SearchController extends BaseController {
 
       //Get the size
       $groceryitem->image_url = isset($result['image_urls']) ? $result['image_urls']['0'] : NULL;
-      $groceryitem->brand = $result['brand'];
-      $groceryitem->product_name = $result['product_name'];
+      $groceryitem->brand = isset($result['brand']) ? $result['brand'] : NULL;
+      $groceryitem->product_name = $result['product_name'] ? $result['product_name'] : NULL;
 
       // Save the unit and size
       if(!isset($result['size'])) {
@@ -208,6 +209,7 @@ class SearchController extends BaseController {
   private function _perform_search($keyword, $offset = 0) {
     // echo the data
 
+
     $tableName = "products-cpg-nutrition";
 
     $auth_key = "3cq3h0MUUOAuD7T0M2FyGWWkd5ouNbsbhszvQF5B";
@@ -226,5 +228,5 @@ class SearchController extends BaseController {
     $query->offset($offset);
     $res = $factual->fetch($tableName, $query);
     return array ("data" => $res->getData(), "rowcount" => $res->getRowCount());
-	}
+  }
 }
