@@ -20,6 +20,7 @@
 			<div class="row">
 			   <div class="col-md-10 col-md-offset-1">
               {{ Form::open(array( 'action' => array('SearchController@processSearch'), 'role' => 'search', 'class' => 'form-inline widget-search')) }}
+              {{ Form::token() }}
 							<div class="form-group">
 								 <div class="input-group custom-search-form">
 									  {{ Former::text('')->class('form-control')->placeholder('Search')->require()->name('keyword') }}

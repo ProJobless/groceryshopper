@@ -38,16 +38,6 @@
 		 </div>
      </div> <!-- end of blocky form -->
       <!-- Items List starts -->
-
-  <div class="cartInfo">
-    <span class="simpleCart_quantity"></span> items - <span class="simpleCart_total"></span>
-    <a href="javascript:;" class="simpleCart_checkout">Checkout</a>
-  </div>
-
-
-
-
-
       <div class="shop-items blocky">
 		<div class="container">
 		     <!-- Pagination -->

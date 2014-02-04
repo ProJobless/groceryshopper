@@ -154,17 +154,21 @@ Route::get('about',array('as' => 'about', function()
   return View::make('site/about');
 }));
 
+Route::get('search', 'SearchController@getSearch');
+Route::post('/search', array('before' => 'csrf', 'uses' => 'SearchController@processSearch'));
 
 # Search routes
 Route::group(array('prefix' => 'products'), function()
 {
-    Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
-        ->where('keyword', '[0-9a-z]+');
-    Route::get('search/{keyword}/results', array( 'uses' => 'SearchController@getSearch'))
-        ->where('keyword', '[0-9a-z]+');
-    Route::get('search/{keyword}/results/{page}', array( 'uses' => 'SearchController@getSearch'))
-        ->where('keyword', '[0-9a-z]+');
-    Route::post('search', array( 'uses' => 'SearchController@processSearch', 'before' => 'csrf'));
+    //Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+    //    ->where('keyword', '[0-9a-z]+');
+
+    //Route::get('search/{keyword}/results', array( 'uses' => 'SearchController@getSearch'))
+    //    ->where('keyword', '[0-9a-z]+');
+
+    //Route::get('search/{keyword}/results/{page}', array( 'uses' => 'SearchController@getSearch'))
+    //    ->where('keyword', '[0-9a-z]+');
+
 });
 
 
@@ -173,14 +177,19 @@ Route::group(array('prefix' => 'shoppinglist'), function()
   {
 
     # Shopping list show the list of items
-    Route::get('/{cart_id}', 'ShoppingListController@getShow');
+    Route::get('list/{cart_id}', 'ShoppingListController@getShow');
 
    # Posted route
-    Route::post('/{cart_id}', 'ShoppingListController@postShow');
+    Route::post('list/{cart_id}', 'ShoppingListController@postShow');
 
-    Route::get('nesarbystores', 'ShoppingListController@getNearbystores');
+    # the nearbystores ajax
+    Route::get('nearbystores', array(
+        'as' => 'nearbystores',
+        'uses' => 'ShoppingListController@getNearbystores')
+    );
+
     # shoppinglist controller
-    Route::get('/', 'ShoppingListController@getIndex');
+    //Route::get('/', 'ShoppingListController@getIndex');
   } 
 );
 

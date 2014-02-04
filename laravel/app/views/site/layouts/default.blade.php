@@ -73,7 +73,6 @@
     </head>
     <body>
         <!-- Navigation -->
-          @include('site.shopping-cart')
         <!-- ./ navigation -->
 
         <!-- Navigation -->
@@ -90,7 +89,7 @@
         @yield('content')
         <!-- ./ content -->
 
-	@include('site.layouts.footer')
+  @include('site.layouts.footer')
         <!-- Javascripts
         ================================================== -->
         <!-- Dropdown menu -->

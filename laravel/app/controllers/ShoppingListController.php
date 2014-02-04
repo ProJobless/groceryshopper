@@ -25,10 +25,10 @@ class ShoppingListController extends BaseController {
     {
         parent::__construct();
         // Exit if not ajax.
-        //$this->beforeFilter('ajax', array('only' => 'shoppinglist'));
+        $this->beforeFilter('ajax', array('only' => 'shoppinglist'));
 
         // Exit if not a valid _token.
-        // $this->beforeFilter('csrf', array('only' => 'shoppinglist'));
+        $this->beforeFilter('csrf', array('only' => 'shoppinglist'));
         
     }
     /**
@@ -86,11 +86,14 @@ class ShoppingListController extends BaseController {
      *
      * @return Datatables JSON
      */
-    public function getNearbystores() {
-	print_r("Hello");die();      	
-return View::make('site/shoppinglist/index');
-   
-	 }
+   public function getNearbystores() {
+
+      var_dump(Input::get);
+      if ( Session::token() !== Input::get( '_token' ) ) {
+            return $this->_make_response( json_encode( array( 'msg' => 'Unauthorized attempt to create setting' ) ) );
+      }
+      return View::make('site/shoppinglist/nearbystores');
+    }
 
     /**
      * Show a list of all the search results formatted for Datatables.
@@ -99,6 +102,19 @@ return View::make('site/shoppinglist/index');
      */
     public function getData()
     {
+
+
+    }
+
+    /**
+     * Show a list of all the search results formatted for Datatables.
+     *
+     * @return Datatables JSON
+     */
+    protected function _make_response( $response_str, $type = 'application/json' ) {
+        $response = Response::make( $response_str );
+        $response->header( 'Content-Type', $type );
+        return $response;
     }
 
     public function getCheapestStore(){

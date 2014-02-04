@@ -33,7 +33,7 @@
            </div>
            <div class="modal-body">
               {{ Form::open( array( 
-                                'url' => '/shoppinglist/findstore',
+                                'url' => '',
                                 'method' => 'get',
                                 'role' => 'search', 
                                 'class' => 'form-inline widget-search'

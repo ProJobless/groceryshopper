@@ -26,11 +26,9 @@ class SearchController extends BaseController {
     public function __construct()
     {
         parent::__construct();
-        // Exit if not ajax.
-        $this->beforeFilter('ajax', array('only' => 'store'));
 
         // Exit if not a valid _token.
-        $this->beforeFilter('csrf', array('only' => 'store'));
+        //$this->beforeFilter('csrf', array('only' => 'products'));
     }
     /**
     * Search index
@@ -47,13 +45,14 @@ class SearchController extends BaseController {
 	 * Used by keyword searching
      *
      */
-	public function processSearch()
-    {
-        // Validate the inputs
-        // Declare the rules for the form validation
-        $rules = array(
-            'keyword' => 'required'
-        );
+  public function processSearch()
+  {
+     return View::make('site/book');
+     // Validate the inputs
+     // Declare the rules for the form validation
+     $rules = array(
+         'keyword' => 'required'
+     );
 
         // Validate the inputs
         $validator = Validator::make(Input::all(), $rules);
@@ -78,19 +77,19 @@ class SearchController extends BaseController {
             //Save the search results.
             foreach($results as $result) {
               //$this->saveDataToDb($result);
-              var_dump($result);
             }
-	    die();
 
-            return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
+           print_r("Hello");
+           //return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
+           return View::make('site/index');
 
         }
         // There was a problem deleting the store
         return Redirect::to('search')
-            ->with('error', Lang::get('admin/stores/messages.delete.error'));
+            ->with('error', Lang::get('site/messages.delete.error'));
     }
 
-    public function getSearch($keyword)
+    public function getSearch()
     {
     }
 
