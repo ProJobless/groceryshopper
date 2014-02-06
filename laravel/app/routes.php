@@ -154,22 +154,14 @@ Route::get('about',array('as' => 'about', function()
   return View::make('site/about');
 }));
 
-Route::get('search', 'SearchController@getSearch');
-Route::post('/search', array('before' => 'csrf', 'uses' => 'SearchController@processSearch'));
+
 
 # Search routes
-Route::group(array('prefix' => 'products'), function()
-{
-    //Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
-    //    ->where('keyword', '[0-9a-z]+');
+Route::get('search', 'SearchController@getSearch');
+Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+     ->where('keyword', '[0-9a-z]+');
 
-    //Route::get('search/{keyword}/results', array( 'uses' => 'SearchController@getSearch'))
-    //    ->where('keyword', '[0-9a-z]+');
-
-    //Route::get('search/{keyword}/results/{page}', array( 'uses' => 'SearchController@getSearch'))
-    //    ->where('keyword', '[0-9a-z]+');
-
-});
+Route::post('search', array('before' => 'csrf', 'uses' => 'SearchController@processSearch'));
 
 
 # Shopping list routes
@@ -177,10 +169,15 @@ Route::group(array('prefix' => 'shoppinglist'), function()
   {
 
     # Shopping list show the list of items
-    Route::get('list/{cart_id}', 'ShoppingListController@getShow');
-
+    Route::get('view/{cart_id}', 'ShoppingListController@getShow');
    # Posted route
-    Route::post('list/{cart_id}', 'ShoppingListController@postShow');
+    Route::post('view/{cart_id}', 'ShoppingListController@postShow');
+
+    # Compare stores
+    Route::get('compare', array(
+        'as' => 'comparestores',
+        'uses' => 'ShoppingListController@getComparestores')
+    );
 
     # the nearbystores ajax
     Route::get('nearbystores', array(

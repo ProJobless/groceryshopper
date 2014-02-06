@@ -58,8 +58,6 @@
                 @endif
 
                 <a data-toggle="modal" href="#shoppingcart"><i class="icon-shopping-cart"></i> <span class="simpleCart_quantity"></span> items - <span class="simpleCart_grandTotal"></span></a>
-
-                                                                              
               </div>
             </div>
         </div>

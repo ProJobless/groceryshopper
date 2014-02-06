@@ -47,7 +47,6 @@ class SearchController extends BaseController {
      */
   public function processSearch()
   {
-     return View::make('site/book');
      // Validate the inputs
      // Declare the rules for the form validation
      $rules = array(
@@ -79,9 +78,7 @@ class SearchController extends BaseController {
               //$this->saveDataToDb($result);
             }
 
-           print_r("Hello");
-           //return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
-           return View::make('site/index');
+           return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
 
         }
         // There was a problem deleting the store

@@ -85,27 +85,28 @@
 		   @foreach ($results as $result)
           <div class="searchitem  col-xs-6 col-md-3 col-sm-4 simpleCart_shelfItem">
               <div class="thumbnail">
-            <img class="group list-group-image img-responsive item_thumb" src="{{ $result['image_urls'][0] or 'http://ct.mywebgrocer.com/legacy/productimagesroot/DJ/0/864170.jpg' }}" alt="" />
-            <div class="caption">
-            <h4 class="group inner list-group-searchitem-heading item_name">
-              {{{ ($result['product_name'])  ? Str::words($result['product_name'], 4) :  "" }}}</h4>
-                <p class="group inner list-group-searchitem-text">
-                  {{ $result['brand'] or ""}} <br />
-                   {{ $result['category'] or  "uncategorized"}} <br />
-                   {{ $result['size'][0]  or "1 each"}}<br />
-                </p>
-                <input type="text" value="1" class="item_Quantity">
-                <hr />
-                <div class="row">
-              <div class="col-xs-12 col-md-6">
-                  <div class="item-price lead item_price">
-                        ${{ $result['avg_price'] or "N/A"}}</div>
-              </div>
-              <div class="col-xs-12 col-md-6">
-                  <a class="btn btn-danger btn-sm item_add" href="javascript:;">Add to list</a>
-              </div>
-                </div>
-            </div>
+                  <img class="group list-group-image img-responsive item_thumb" src="{{ $result['image_urls'][0] or 'http://ct.mywebgrocer.com/legacy/productimagesroot/DJ/0/864170.jpg' }}" alt="" />
+                  <div class="caption">
+                      <h4 class="group inner list-group-searchitem-heading item_name">
+                        {{{ ($result['product_name'])  ? Str::words($result['product_name'], 4) :  "" }}}</h4>
+                          <p class="group inner list-group-searchitem-text">
+                            {{ $result['brand'] or ""}} <br />
+                            {{ $result['category'] or  "uncategorized"}} <br />
+                            {{ $result['size'][0]  or "1 each"}}<br />
+                          </p>
+                          <input type="text" value="1" class="item_Quantity">
+                          <hr />
+                          <div class="row">
+                              <div class="col-xs-12 col-md-6">
+                                  <div class="item-price lead item_price">
+                                        ${{ $result['avg_price'] or "N/A"}}
+                                  </div>
+                              </div>
+                              <div class="col-xs-12 col-md-6">
+                                  <a class="btn btn-danger btn-sm item_add" href="javascript:;">Add to list</a>
+                              </div>
+                          </div>
+                  </div>
               </div>
           </div>
 		@endforeach

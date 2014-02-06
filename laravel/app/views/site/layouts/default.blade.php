@@ -73,6 +73,7 @@
     </head>
     <body>
         <!-- Navigation -->
+          @include('site.layouts.modal-checkout')
         <!-- ./ navigation -->
 
         <!-- Navigation -->
@@ -89,7 +90,7 @@
         @yield('content')
         <!-- ./ content -->
 
-  @include('site.layouts.footer')
+        @include('site.layouts.footer')
         <!-- Javascripts
         ================================================== -->
         <!-- Dropdown menu -->
@@ -170,7 +171,7 @@
 
        checkout: {
               type: "SendForm" , 
-              url: "http://dev.groceryshopper.ca/shoppinglist/{{ $cart_id }}",
+              url: "http://dev.groceryshopper.ca/shoppinglist/view/{{ Session::getToken() }}",
               // http method for form, "POST" or "GET", default is "POST"
               method: "POST" , 
 
@@ -188,7 +189,6 @@
             extra_data: 
             {
                  storename:"test-store",
-                 cartid: "{{ $cart_id }}",
                 _token: "{{ Session::getToken(); }}",
             }
 

@@ -193,9 +193,9 @@ class AdminStoresController extends AdminController {
             // province, country and city OR postal code
             if( isset($store->city) && isset($store->province_state) 
                     && isset($store->country) ){
-                            $coordinate = $this->fetchCoords($store);
-                            $store->latitude = $coordinate->getLatitude();
-                            $store->longitude = $coordinate->getlongitude();
+                          $coordinate = $this->fetchCoords($store);
+                          $store->latitude = $coordinate->getLatitude();
+                          $store->longitude = $coordinate->getlongitude();
 
             }
 
