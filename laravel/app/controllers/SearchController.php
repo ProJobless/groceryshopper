@@ -75,7 +75,13 @@ class SearchController extends BaseController {
 
             //Save the search results.
             foreach($results as $result) {
-              //$this->saveDataToDb($result);
+              // Check if the item already exists 
+              // in the database
+              $count = Groceryitem::where('factual_id', "=", $result['factual_id'])
+                ->count();
+              if ($count <= 0) {
+                  $this->saveDataToDb($result);
+              }
             }
 
            return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));

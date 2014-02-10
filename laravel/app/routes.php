@@ -170,14 +170,19 @@ Route::group(array('prefix' => 'shoppinglist'), function()
 
     # Shopping list show the list of items
     Route::get('view/{cart_id}', 'ShoppingListController@getShow');
-   # Posted route
+    # Posted route
     Route::post('view/{cart_id}', 'ShoppingListController@postShow');
 
     # Compare stores
     Route::get('compare', array(
-        'as' => 'comparestores',
-        'uses' => 'ShoppingListController@getComparestores')
+        'as' => 'compare',
+        'uses' => 'ShoppingListController@getCompare')
     );
+    Route::post('compare', array(
+        'as' => 'compare',
+        'uses' => 'ShoppingListController@postCompare')
+    );
+    Route::get('compare/results', array('before' => 'csrf', 'uses' => 'ShoppingListController@getCompareResults'));
 
     # the nearbystores ajax
     Route::get('nearbystores', array(

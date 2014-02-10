@@ -39,7 +39,6 @@
         {{ HTML::script('assets/js/bootstrap.min.js'); }}
         <!-- Bootstrap Paginator -->
         {{ HTML::script("assets/js/bootstrap-paginator.min.js"); }}
-        
 
        <!-- Styles -->
         <!-- Bootstrap CSS -->
@@ -125,12 +124,10 @@
         cartColumns: [
                 { view:'image' , attr:'thumb', label: false},
                 { attr: "name" , label: "Name" } ,
-                { attr: "price" , label: "Price", view: 'currency' } ,
                 { view: "decrement" , label: false , text: "-" } ,
                 { view:'input', attr:'quantity', label: "Quantity" },
                 { view: "increment" , label: false , text: "+" } ,
-                { attr: "total" , label: "SubTotal", view: 'currency' } ,
-                { view: "remove" , text: "Remove" , label: false }
+                { view: "remove" , text: "Remove" , label: "Action" }
        ],
        cartStyle: "table",
        // set the currency, see the currency 
@@ -204,6 +201,73 @@
        checkoutFail            : null,
        beforeCheckout          : null
     });
+    // basic callback example
+    simpleCart.bind( "afterAdd" , function( item ){
+       console.log(item);
+       console.log( item.get("name") + " was added to the cart!" );
+    });
+    // simple callback example
+    simpleCart.bind( 'beforeRemove' , function( item ){
+       console.log( item.get('name') + " was removed from the cart" ); 
+    });
+    simpleCart.bind( 'afterSave' , function(){
+      
+      $('.prod_item_system_id').remove();
+      $('.prod_item_quantity').remove();
+
+      simpleCart.each(function( item , x ){
+        console.log(item.get('systemid'));
+
+
+        $('<input>').attr({
+          type: 'hidden',
+          class: 'prod_item_system_id',
+              id: 'item_id_' + x,
+              name: 'item_id_' + x,
+              value: item.get('systemid')
+        }).appendTo('#comparestores');
+        $('<input>').attr({
+          type: 'hidden',
+          class: 'prod_item_quantity',
+          id: 'item_quantity_' + x,
+          name: 'item_quantity_' + x,
+          value: item.get('quantity')
+        }).appendTo('#comparestores');
+
+      });
+
+    });
+
+    simpleCart.bind( 'update' , function(){
+        console.log( "Whoa, the cart total is now at " + simpleCart.toCurrency( simpleCart.grandTotal() ) + "! Nice!" ); 
+    });
+    simpleCart.bind( 'load' , function(){
+      $('.prod_item_system_id').remove();
+      $('.prod_item_quantity').remove();
+
+      simpleCart.each(function( item , x ){
+        console.log(item.get('systemid'));
+
+
+        $('<input>').attr({
+          type: 'hidden',
+          class: 'prod_item_system_id',
+              id: 'item_id_' + x,
+              name: 'item_id_' + x,
+              value: item.get('systemid')
+        }).appendTo('#comparestores');
+        $('<input>').attr({
+          type: 'hidden',
+          class: 'prod_item_quantity',
+          id: 'item_quantity_' + x,
+          name: 'item_quantity_' + x,
+          value: item.get('quantity')
+        }).appendTo('#comparestores');
+
+      });
+        console.log( "simpleCart has loaded " + simpleCart.quantity() + " items from from localStorage" ); 
+    });
+    console.log(simpleCart.quantity());
   </script>
     <!-- local scripts -->
     @yield('scripts');

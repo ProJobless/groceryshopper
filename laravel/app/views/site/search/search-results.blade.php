@@ -82,7 +82,7 @@
 		     </div>
 	     <!-- End Pagination -->
 		  <div id="products" class="row list-group">
-		   @foreach ($results as $result)
+		   @foreach ($results as $key => $result)
           <div class="searchitem  col-xs-6 col-md-3 col-sm-4 simpleCart_shelfItem">
               <div class="thumbnail">
                   <img class="group list-group-image img-responsive item_thumb" src="{{ $result['image_urls'][0] or 'http://ct.mywebgrocer.com/legacy/productimagesroot/DJ/0/864170.jpg' }}" alt="" />
@@ -94,7 +94,8 @@
                             {{ $result['category'] or  "uncategorized"}} <br />
                             {{ $result['size'][0]  or "1 each"}}<br />
                           </p>
-                          <input type="text" value="1" class="item_Quantity">
+                          <input type="hidden" value="1" class="item_Quantity">
+                          <span name="{{ $key }}_item_id" id="{{ $key}}_item_id" class="item_Systemid">{{ $result['factual_id'] }}</span>
                           <hr />
                           <div class="row">
                               <div class="col-xs-12 col-md-6">

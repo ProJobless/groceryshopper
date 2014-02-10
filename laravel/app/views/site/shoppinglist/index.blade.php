@@ -16,11 +16,30 @@
      <div class="container center-block">
       <div class="row">
          <div class="col-md-10 col-md-offset-1">
+              <form action="/shoppinglist/compare" method="post" class="form-horizontal-well" id="comparestores">
+                <input id="mylongitude" value="" type="hidden" />
+                <input id="mylatitude" value="" type="hidden" />
+                
+                {{ Form::token() }}
               <div class="simpleCart_items"></div>
               <!-- grand total, including tax and shipping (ex. $28.49) -->
-              <div class="simpleCart_grandTotal"></div>
+              <h4> Compare prices at severel stores</h4>
               <div id="nearbystores_container" class="nearbystores">
+                  <p> Loading the closest stores nearby your location 
+                    <i class="fa fa-cog fa-spin fa-2x"></i>
+                  </p>
+                  <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+                          <div class="modal-header">
+                              <h1>Processing...</h1>
+                          </div>
+                          <div class="modal-body">
+                              <div class="progress progress-striped active">
+                                  <div class="bar" style="width: 100%;"></div>
+                              </div>
+                          </div>
+                  </div>
               </div>
+</form>
        </div>
     </div>
    </div>
@@ -31,7 +50,6 @@
 {{ HTML::script('assets/js/jquery.geolocation.js'); }}
 {{ HTML::script('assets/js/isotope/jquery.isotope.min.js'); }}
 {{ HTML::script('assets/js/jquery.compare/jquery.compare.min.js'); }}
-
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -60,8 +78,7 @@ $(document).ready(function(){
     request.done(function( msg ) {
       $( "#nearbystores_container" ).html( msg );
       // Load the compare plugin.
-      $('#stores').compare({myclass: '.storeitem', myid: '#itm', checkboxes: 'input',  active: '.selected', scrolltoTop: true});
-          
+      //$('#stores').compare({myclass: '.storeitem', myid: '#itm', checkboxes: 'input',  active: '.selected', scrolltoTop: true});
     });
 
     // silently fail.
@@ -113,15 +130,74 @@ $('#watchPositionButton').bind('click', function() {
   }
 
 
-  $.geolocation.get({win: saveMyLocation, fail: noLocation});
   if(navigator.geolocation) {
-    console.log("Location");
     navigator.geolocation.getCurrentPosition(saveMyLocation,showError);
     $.geolocation.get({win: saveMyLocation, fail: noLocation});
   }else {
     console.log("No location");
   }
+  $('.button-checkbox').each(function () {
+      // Settings
+      var $widget = $(this),
+          $button = $widget.find('button'),
+          $checkbox = $widget.find('input:checkbox'),
+          color = $button.data('color'),
+          settings = {
+              on: {
+                  icon: 'glyphicon glyphicon-check'
+              },
+              off: {
+                  icon: 'glyphicon glyphicon-unchecked'
+              }
+          };
 
+      // Event Handlers
+      $button.on('click', function () {
+          $checkbox.prop('checked', !$checkbox.is(':checked'));
+          $checkbox.triggerHandler('change');
+          updateDisplay();
+      });
+      $checkbox.on('change', function () {
+          updateDisplay();
+      });
+
+      // Actions
+      function updateDisplay() {
+          var isChecked = $checkbox.is(':checked');
+
+          // Set the button's state
+          $button.data('state', (isChecked) ? "on" : "off");
+
+          // Set the button's icon
+          $button.find('.state-icon')
+              .removeClass()
+              .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+          // Update the button's color
+          if (isChecked) {
+              $button
+                  .removeClass('btn-default')
+                  .addClass('btn-' + color + ' active');
+          }
+          else {
+              $button
+                  .removeClass('btn-' + color + ' active')
+                  .addClass('btn-default');
+          }
+      }
+
+      // Initialization
+      function init() {
+
+          updateDisplay();
+
+          // Inject the icon if applicable
+          if ($button.find('.state-icon').length == 0) {
+              $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+          }
+      }
+      init();
+      });
 });
 </script>
 @stop

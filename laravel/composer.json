@@ -24,7 +24,7 @@
         "solarium/solarium": "3.2.*",
         "anahkiasen/former": "dev-master",
         "toin0u/geotools-laravel": "~0.2",
-	"edvinaskrucas/notification": "2.*",
+        "edvinaskrucas/notification": "2.*",
         "cartalyst/cart": "1.*",
         "cartalyst/sentry": "2.0.*",
         "moltin/cart": "dev-master"
@@ -55,7 +55,10 @@
             "app/database/migrations",
             "app/database/seeds",
             "app/tests/library"
-        ]
+        ],
+        "psr-0" : {
+            "Groceryshopper": "app/library"
+        }
     },
     "scripts": {
         "post-install-cmd": [
