@@ -95,7 +95,7 @@
                             {{ $result['size'][0]  or "1 each"}}<br />
                           </p>
                           <input type="hidden" value="1" class="item_Quantity">
-                          <span name="{{ $key }}_item_id" id="{{ $key}}_item_id" class="item_Systemid">{{ $result['factual_id'] }}</span>
+                          <span name="item_{{ $key }}_id" id="item_{{ $key}}_id" class="item_systemid">{{ $result['factual_id'] }}</span>
                           <hr />
                           <div class="row">
                               <div class="col-xs-12 col-md-6">

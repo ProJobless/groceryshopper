@@ -17,8 +17,8 @@
       <div class="row">
          <div class="col-md-10 col-md-offset-1">
               <form action="/shoppinglist/compare" method="post" class="form-horizontal-well" id="comparestores">
-                <input id="mylongitude" value="" type="hidden" />
-                <input id="mylatitude" value="" type="hidden" />
+                <input id="mylongitude" name="mylongitude" value="" type="hidden" />
+                <input id="mylatitude" name="mylatitude" value="" type="hidden" />
                 
                 {{ Form::token() }}
               <div class="simpleCart_items"></div>

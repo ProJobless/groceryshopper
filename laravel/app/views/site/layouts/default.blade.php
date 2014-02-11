@@ -203,7 +203,6 @@
     });
     // basic callback example
     simpleCart.bind( "afterAdd" , function( item ){
-       console.log(item);
        console.log( item.get("name") + " was added to the cart!" );
     });
     // simple callback example
@@ -217,8 +216,6 @@
 
       simpleCart.each(function( item , x ){
         console.log(item.get('systemid'));
-
-
         $('<input>').attr({
           type: 'hidden',
           class: 'prod_item_system_id',
@@ -233,7 +230,6 @@
           name: 'item_quantity_' + x,
           value: item.get('quantity')
         }).appendTo('#comparestores');
-
       });
 
     });

@@ -60,6 +60,7 @@ class ShoppingListController extends BaseController {
       // Validate that there are stores selected
       // Get the passed values
       $input = $this->_getCompareValues(Input::all());
+
       $rules = array(
             'mylatitude'   => 'required',
             'mylongitude' => 'required',
@@ -68,9 +69,16 @@ class ShoppingListController extends BaseController {
       // Validate the inputs
       $validator = Validator::make(Input::all(), $rules);
 
+      var_dump(Input::all());
       // Check if latitud and longitude validates with success
       if ($validator->passes())
       {
+
+        $lat = Input::get('mylatitude');
+        $long = Input::get('mylongitude');
+        $lat = 45.507843;
+        $long = -73.801814;
+
         //Check that there are stores to compare
         if( count($input['stores']) >= 2) {
 
@@ -81,27 +89,28 @@ class ShoppingListController extends BaseController {
           foreach($input['stores'] as $store) {
 
             $pricefinder = new \Groceryshopper\PriceFinder\PriceFinder;
+            
+            // compute total cost of shopping basket
             $total_cost = $pricefinder->getTotalCost($input['products'], $store);
-            //$total_gas_cost = $pricefinder->getGasConsumption();
+            $store->total_cost = $total_cost;
 
+            // compute the gas cost.
+            $store->total_gas_cost = $pricefinder->getGasConsumption($store,
+                        $lat, $long);
           }
         }
 
+        // Now we need to store the results based on overall cost and also
+        // various sort options.
+
+
       }
       $token = Input::get('_token');
-      // No stores selected.
-      //return Redirect::to('shoppinglist/view/'.$token)
-      //        ->with('error',
-      //        Lang::get('site/shoppinglist/messages.compare.no_selected_stores'));
-
-        
-        
-        // Show results
-        //return View::make('site/shoppinglist/compare', compact('input'));
-        // Return results in new screen
-        //return Redirect::to('shoppinglist/compare/results')
-        //       ->with('success', 
-        //            Lang::get('site/shoppinglist/messages.compare.success'));
+      // Return results in new screen
+      return Redirect::to('shoppinglist/compare/results')
+             ->with('success', 
+                    Lang::get('site/shoppinglist/messages.compare.success')
+       );
       
 
     }
@@ -163,15 +172,17 @@ class ShoppingListController extends BaseController {
             return $this->_make_response( json_encode( array( 'msg' => 'Unauthorized attempt to fetch data for stores' ) ) );
      }
       // Fetch all the stores within 5KM of the users coords.
-     $latitude = Input::get('mylatitude');
-     $longitude = Input::get('mylongitude');
+     
+     $latitude = 45.507843;
+     $longitude = -73.801814;
+     //$latitude = Input::get('mylatitude');
+     //$longitude = Input::get('mylongitude');
 
      // If no latitide or long supplied, use the user's ip address
      // to get the latitude and longitude
      if(!isset($latitude) || !isset($longitude)) {
       // Use the ip address to determine the location
        $ip = Request::ip();
-       var_dump($ip);
      }
 
      // Using the latitude/long
