@@ -27,7 +27,22 @@
                 </div>
             </div>
             <!-- ./ store title -->
-
+            <div class="form-group {{{ $errors->has('chain') ? 'has-error' : '' }}}">
+              <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="chain">Store Chain</label>
+                <div class="col-sm-9 col-md-9 col-lg-10">
+                      <select multiple id="chains" name="chains[]" class="from-control" >
+                        @foreach ($chains as $chain)
+                          @if ($mode == 'create')
+                          <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+                          @else
+                          <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->name }}}</option>
+                          @endif
+                        @endforeach
+                      </select>
+                      {{ $errors->first('categories', '<span class="help-inline">:message</span>') }}
+              </div>
+            </div>
+            <!-- ./ chain id -->
 
 
             <!-- Address -->
@@ -38,7 +53,7 @@
                     {{ $errors->first('line_1', '<span class="help-inline">:message</span>') }}
                 </div>
             </div>
-                <!-- ./ store title -->
+            <!-- ./ store title -->
             <div class="controls controls-row">
                 <div class="form-group row {{{ $errors->has('city') ? 'error' : '' }}}">
                     <div class="col-lg-4">

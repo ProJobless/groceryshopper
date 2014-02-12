@@ -29,10 +29,10 @@
                 	@else
                         <li><a href="{{{ URL::to('user/login') }}}" >Your account</a>
                 	@endif
-                        <li><a href="#" rel="ddsubmenu1">Price Compare</a>
+                        <li><a href="#" rel="ddsubmenu1">Store finder</a>
                             <ul id="ddsubmenu1" class="ddsubmenustyle">
-                                <li><a href="404.html">Find local grocery stores</a></li>
-                                <li><a href="faq.html">Flyers</a></li>
+                                <li><a href="storefinder/flyers">Flyers</a></li>
+                                <li><a href="storefinder">Finder</a></li>
                             </ul>
                         </li>
                         <li><a href="{{{ URL::to('contact') }}}">Contact</a></li>
@@ -57,7 +57,7 @@
                  <a {{ (Request::is('user/register') ? ' class="active"' : '') }} href="{{{ URL::to('user/create') }}}">{{{ Lang::get('site.sign_up') }}}</a>
                 @endif
 
-                <a data-toggle="modal" href="#shoppingcart"><i class="icon-shopping-cart"></i> <span class="simpleCart_quantity"></span> items - <span class="simpleCart_grandTotal"></span></a>
+                <a data-toggle="modal" href="#shoppingcart"><i class="icon-shopping-cart"></i> <span class="simpleCart_quantity"></span> items</span></a>
               </div>
             </div>
         </div>

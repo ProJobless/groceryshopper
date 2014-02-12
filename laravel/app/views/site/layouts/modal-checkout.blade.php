@@ -12,7 +12,7 @@
               <!-- show the cart -->
               <div class="simpleCart_items"></div>
             <!-- grand total, including tax and shipping (ex. $28.49) -->
-            <div class="simpleCart_grandTotal"></div>
+            <!--<div class="simpleCart_grandTotal"></div>-->
            </div>
            <div class="modal-footer">
              <button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>

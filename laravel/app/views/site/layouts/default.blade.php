@@ -62,6 +62,9 @@
         <!-- shopping list -->
         {{ HTML::style('assets/css/shoppinglist.css'); }}
 
+
+        <!-- local css  -->
+        @yield('styles');
         <!-- Favicons
         ================================================== -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{{ asset('assets/ico/apple-touch-icon-144-precomposed.png') }}}">

@@ -69,7 +69,7 @@ class ShoppingListController extends BaseController {
       // Validate the inputs
       $validator = Validator::make(Input::all(), $rules);
 
-      var_dump(Input::all());
+      $token = Input::get('_token');
       // Check if latitud and longitude validates with success
       if ($validator->passes())
       {
@@ -86,32 +86,37 @@ class ShoppingListController extends BaseController {
           // forach store, find the total cost of
           // all items + compute the cost of gas for 
           // and average consumption of 9.0L/100KM.
+          $stores = array();
           foreach($input['stores'] as $store) {
 
             $pricefinder = new \Groceryshopper\PriceFinder\PriceFinder;
             
             // compute total cost of shopping basket
-            $total_cost = $pricefinder->getTotalCost($input['products'], $store);
-            $store->total_cost = $total_cost;
-
+            $item_costs = $pricefinder->getTotalCost($input['products'], $store);
+            $store->total_cost = $item_costs['total'];
+            $store->item_prices = $item_costs['itemcosts'];
             // compute the gas cost.
             $store->total_gas_cost = $pricefinder->getGasConsumption($store,
-                        $lat, $long);
+              $lat, $long);
+            
+            $stores[] = $store;
           }
+          return View::make('site/shoppinglist/compare-results', compact('stores', 'lat','long'));
         }
 
-        // Now we need to store the results based on overall cost and also
-        // various sort options.
-
+        // Return due to lack of enough stores to compare.
+        return Redirect::to('shoppinglist/view/'.$token)
+              ->with('error', 
+                      Lang::get('site/shoppinglist/messages.compare.no_selected_stores')
+        );
 
       }
-      $token = Input::get('_token');
+
       // Return results in new screen
-      return Redirect::to('shoppinglist/compare/results')
-             ->with('success', 
-                    Lang::get('site/shoppinglist/messages.compare.success')
-       );
-      
+      return Redirect::to('shoppinglist/view/'.$token)
+             ->with('error', 
+                    Lang::get('site/shoppinglist/messages.compare.missinglocation')
+      );
 
     }
 
@@ -126,8 +131,9 @@ class ShoppingListController extends BaseController {
       // Get the current token.
       return View::make('site/shoppinglist/index', compact('cart_id'));
     }
-
-    /**
+ 
+ 
+   /**
     * Search index
     *
     * Used by keyword searching.
@@ -157,8 +163,10 @@ class ShoppingListController extends BaseController {
       $cart_id = Input::get('cart_id');
       $token  = 'cart-'. bin2hex(openssl_random_pseudo_bytes(16));
       return View::make('site/shoppinglist/index', compact('cart_id'));
-    }
-    /**
+     }
+ 
+  
+   /**
      * Show a list of closest stores based on user provided lat and
      * longitude formatted in html.
      *
@@ -190,6 +198,7 @@ class ShoppingListController extends BaseController {
 
      return View::make('site/shoppinglist/nearbystores', compact('stores'));
     }
+ 
 
     /**
      * Show a list of all the search results formatted for Datatables.
@@ -216,8 +225,9 @@ class ShoppingListController extends BaseController {
       });
       return array_slice($closest_stores, 0 , $noofstores, TRUE);
     }
-
-    /**
+ 
+ 
+   /**
      * Show a list of all the search results formatted for Datatables.
      *
      * @return Datatables JSON
@@ -263,10 +273,11 @@ class ShoppingListController extends BaseController {
         return $response;
     }
 
-    public function getCheapestStore(){
-    }
+    
+    
 
-    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+ 
+   /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     /*::                                                                         :*/
     /*::  This routine calculates the distance between two points (given the     :*/
     /*::  latitude/longitude of those points). It is being used to calculate     :*/

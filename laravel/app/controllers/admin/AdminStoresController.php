@@ -2,6 +2,11 @@
 
 class AdminStoresController extends AdminController {
 
+    /**
+     * Chain Model
+     * @var Chain
+     */
+    protected $chain;
 
     /**
      * Store Model
@@ -13,10 +18,11 @@ class AdminStoresController extends AdminController {
      * Inject the models.
      * @param Post $store
      */
-    public function __construct(Store $store)
+    public function __construct(Store $store, Chain $chain)
     {
         parent::__construct();
         $this->store = $store;
+        $this->chain = $chain;
     }
 
     /**
@@ -31,6 +37,7 @@ class AdminStoresController extends AdminController {
 
         // Grab all the stores
         $stores = $this->store;
+
         // Show the page
         return View::make('admin/stores/index', compact('stores', 'title'));
     }
@@ -44,9 +51,17 @@ class AdminStoresController extends AdminController {
     {
         // Title
         $title = Lang::get('admin/stores/title.create_a_new_store');
+        
+        // All chains
+        $chains = $this->chain->all();
+        // Selected permissions
+        $selectedChains = Input::old('chains', array());
 
+        // Mode
+        $mode = 'create';
         // Show the page
-        return View::make('admin/stores/create_edit', compact('title'));
+        return View::make('admin/stores/create_edit', 
+            compact('mode', 'title', 'chains', 'selectedChains'));
     }
 
     /**
@@ -91,6 +106,7 @@ class AdminStoresController extends AdminController {
             $this->store->line_2 = Input::get('line_2');
             $this->store->line_1 = Input::get('line_1');
 
+            $this->store->chain_id = Input::get('chain_id');
             // We need the latitude and longitude based on the 
             // province, country and city OR postal code
             if( isset($this->store->city) && isset($this->store->province_state) 
