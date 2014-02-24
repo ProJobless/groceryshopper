@@ -5,7 +5,7 @@
  * Allows you to search tags, users, and by keywords
  *
  * @license     http://www.opensource.org/licenses/mit MIT License
- * @link        http://bundles.laravel.com
+ * @link       http://bundles.laravel.com
  * @package     Laravel-Bundles
  * @subpackage  Controllers
  * @filesource
@@ -21,6 +21,7 @@ class ShoppingListController extends BaseController {
     */
     public $restful = true;
 
+    
     public function __construct()
     {
       parent::__construct();
@@ -30,6 +31,7 @@ class ShoppingListController extends BaseController {
       // Exit if not a valid _token.
       $this->beforeFilter('csrf', array('only' => 'shoppinglist'));
     }
+    
     /**
     * Search index
     *
@@ -40,6 +42,7 @@ class ShoppingListController extends BaseController {
       return View::make('site/index');
     }
 
+    
 
     /**
     * Search index
@@ -47,9 +50,10 @@ class ShoppingListController extends BaseController {
     * Used by keyword searching.
     */
     public function getCompare() {
-    
-    
+
+
     }
+
     /**
     * Search index
     *
@@ -84,13 +88,13 @@ class ShoppingListController extends BaseController {
 
           //Now we begin the processing
           // forach store, find the total cost of
-          // all items + compute the cost of gas for 
+          // all items + compute the cost of gas for
           // and average consumption of 9.0L/100KM.
           $stores = array();
           foreach($input['stores'] as $store) {
 
             $pricefinder = new \Groceryshopper\PriceFinder\PriceFinder;
-            
+
             // compute total cost of shopping basket
             $item_costs = $pricefinder->getTotalCost($input['products'], $store);
             $store->total_cost = $item_costs['total'];
@@ -98,7 +102,7 @@ class ShoppingListController extends BaseController {
             // compute the gas cost.
             $store->total_gas_cost = $pricefinder->getGasConsumption($store,
               $lat, $long);
-            
+
             $stores[] = $store;
           }
           return View::make('site/shoppinglist/compare-results', compact('stores', 'lat','long'));
@@ -106,15 +110,15 @@ class ShoppingListController extends BaseController {
 
         // Return due to lack of enough stores to compare.
         return Redirect::to('shoppinglist/view/'.$token)
-              ->with('error', 
-                      Lang::get('site/shoppinglist/messages.compare.no_selected_stores')
+              ->with('error',
+                   Lang::get('site/shoppinglist/messages.compare.no_selected_stores')
         );
 
       }
 
       // Return results in new screen
       return Redirect::to('shoppinglist/view/'.$token)
-             ->with('error', 
+             ->with('error',
                     Lang::get('site/shoppinglist/messages.compare.missinglocation')
       );
 
@@ -125,14 +129,16 @@ class ShoppingListController extends BaseController {
     *
     * Used by keyword searching.
     */
-    public function getShow() 
+    public function getShow()
     {
       // Show the page.
       // Get the current token.
       return View::make('site/shoppinglist/index', compact('cart_id'));
     }
- 
- 
+    public function getDistance() {
+    
+    }
+
    /**
     * Search index
     *
@@ -142,7 +148,7 @@ class ShoppingListController extends BaseController {
     {
 
       // We need to do a location detection,
-      // so we can find out where the user is 
+      // so we can find out where the user is
       // from.
       $geocoder = new \Geocoder\Geocoder();
       $adapter = new \Geocoder\HttpAdapter\CurlHttpAdapter;
@@ -153,7 +159,8 @@ class ShoppingListController extends BaseController {
       ));
       $geocoder->registerProvider($chain);
       try {
-        $geocode = $geocoder->geocode('82 4e av sud, roxboro, qc, canada');
+          $geocode = $geocoder->geocode('');
+          
         // $result is an instance of ResultInterface
         $formatter = new \Geocoder\Formatter\Formatter($geocode);
       } catch (Exception $e) {
@@ -164,8 +171,6 @@ class ShoppingListController extends BaseController {
       $token  = 'cart-'. bin2hex(openssl_random_pseudo_bytes(16));
       return View::make('site/shoppinglist/index', compact('cart_id'));
      }
- 
-  
    /**
      * Show a list of closest stores based on user provided lat and
      * longitude formatted in html.
@@ -177,10 +182,10 @@ class ShoppingListController extends BaseController {
      if (is_null($token)) { $token = Input::get('_token'); }
 
      if ( Session::token() !== $token) {
-            return $this->_make_response( json_encode( array( 'msg' => 'Unauthorized attempt to fetch data for stores' ) ) );
+         return $this->_make_response( json_encode( array(
+             'msg' => 'Unauthorized attempt to fetch data for stores' ) ) );
      }
-      // Fetch all the stores within 5KM of the users coords.
-     
+     // Fetch all the stores within 5KM of the users coords.
      $latitude = 45.507843;
      $longitude = -73.801814;
      //$latitude = Input::get('mylatitude');
@@ -198,7 +203,7 @@ class ShoppingListController extends BaseController {
 
      return View::make('site/shoppinglist/nearbystores', compact('stores'));
     }
- 
+
 
     /**
      * Show a list of all the search results formatted for Datatables.
@@ -225,8 +230,8 @@ class ShoppingListController extends BaseController {
       });
       return array_slice($closest_stores, 0 , $noofstores, TRUE);
     }
- 
- 
+
+
    /**
      * Show a list of all the search results formatted for Datatables.
      *
@@ -273,10 +278,6 @@ class ShoppingListController extends BaseController {
         return $response;
     }
 
-    
-    
-
- 
    /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     /*::                                                                         :*/
     /*::  This routine calculates the distance between two points (given the     :*/
@@ -303,9 +304,10 @@ class ShoppingListController extends BaseController {
     /*::         GeoDataSource.com (C) All Rights Reserved 2014              :*/
     /*::                                                                         :*/
     /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    private function distance($lat1, $lon1, $lat2, $lon2, $unit = 'K') { 
+    private function distance($lat1, $lon1, $lat2, $lon2, $unit = 'K') {
         $theta = $lon1 - $lon2;
-        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +
+            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
         $miles = $dist * 60 * 1.1515;
@@ -318,6 +320,5 @@ class ShoppingListController extends BaseController {
            return $miles;
         }
     }
-
-
+    
 }

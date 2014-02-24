@@ -13,20 +13,17 @@
         "laravel/framework": "4.1.*",
         "twbs/bootstrap": "dev-master",
         "codesleeve/asset-pipeline": "dev-master",
-        "zizaco/confide": "3.1.x",
+        "zizaco/confide": "3.2.x",
         "zizaco/entrust": "dev-master",
         "robclancy/presenter": "1.0.*",
         "j20/php-uuid": "dev-master",
         "bllim/datatables": "*",
-        "monarobase/country-list": "dev-master",
         "willdurand/geocoder": "@stable",
         "league/geotools": "@stable",
         "solarium/solarium": "3.2.*",
         "anahkiasen/former": "dev-master",
         "toin0u/geotools-laravel": "~0.2",
         "edvinaskrucas/notification": "2.*",
-        "cartalyst/cart": "1.*",
-        "cartalyst/sentry": "2.0.*",
         "moltin/cart": "dev-master"
     },
     "repositories": [
@@ -73,9 +70,11 @@
         "post-create-project-cmd": [
             "php artisan key:generate"
         ]
+
     },
     "config": {
         "preferred-install": "dist"
     },
+
     "minimum-stability": "dev"
     }
