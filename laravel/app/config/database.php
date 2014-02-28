@@ -53,12 +53,12 @@ return array(
 		),
 
 		'mysql' => array(
-			'driver'    => 'mysqli',
+			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'groceryshopper',
 			//'username'  => 'groceryshopper',
 			//'password'  => 'rzNmLv5Beac9jRUw',
-			'username'  => 'root',
+			'username'  => 'groceryshopper',
 			'password'  => 'R66z5R4u',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',

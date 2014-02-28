@@ -35,7 +35,7 @@ class CreateUseraddressTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('useraddress');
+		Schema::drop('useraddresses');
 	}
 
 }

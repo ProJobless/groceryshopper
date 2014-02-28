@@ -13,7 +13,7 @@ class RemoveChainIdFromStoresTable extends Migration {
 	public function up()
 	{
 		Schema::table('stores', function(Blueprint $table) {
-			$table->dropColumn('chain_id');	
+			//$table->dropColumn('chain_id');	
 		});
 	}
 

@@ -21,7 +21,6 @@ class ShoppingListController extends BaseController {
     */
     public $restful = true;
 
-    
     public function __construct()
     {
       parent::__construct();
@@ -31,112 +30,122 @@ class ShoppingListController extends BaseController {
       // Exit if not a valid _token.
       $this->beforeFilter('csrf', array('only' => 'shoppinglist'));
     }
-    
-    /**
-    * Search index
-    *
-    * Used by keyword searching.
-    */
-    public function getIndex()
-    {
-      return View::make('site/index');
-    }
-
-    
-
-    /**
-    * Search index
-    *
-    * Used by keyword searching.
-    */
-    public function getCompare() {
+/**
+* Search index
+*
+* Used by keyword searching.
+*/
+public function getIndex()
+{
+  return View::make('site/index');
+}
 
 
-    }
+/**
+* Search index
+*
+* Used by keyword searching.
+*/
+public function getCompare() {
 
-    /**
-    * Search index
-    *
-    * Used by keyword searching.
-    */
-    public function postCompare() {
 
-      // Validate that there are stores selected
-      // Get the passed values
-      $input = $this->_getCompareValues(Input::all());
+}
 
-      $rules = array(
-            'mylatitude'   => 'required',
-            'mylongitude' => 'required',
-      );
 
-      // Validate the inputs
-      $validator = Validator::make(Input::all(), $rules);
+/**
+* Search index
+*
+* Used by keyword searching.
+*/
+public function postCompare() {
 
-      $token = Input::get('_token');
-      // Check if latitud and longitude validates with success
-      if ($validator->passes())
-      {
+  // Validate that there are stores selected
+  // Get the passed values
+  $input = $this->_getCompareValues(Input::all());
 
-        $lat = Input::get('mylatitude');
-        $long = Input::get('mylongitude');
-        $lat = 45.507843;
-        $long = -73.801814;
+  $rules = array(
+        'mylatitude'   => 'required',
+        'mylongitude' => 'required',
+  );
 
-        //Check that there are stores to compare
-        if( count($input['stores']) >= 2) {
+  // Validate the inputs
+  $validator = Validator::make(Input::all(), $rules);
 
-          //Now we begin the processing
-          // forach store, find the total cost of
-          // all items + compute the cost of gas for
-          // and average consumption of 9.0L/100KM.
-          $stores = array();
-          foreach($input['stores'] as $store) {
+  $token = Input::get('_token');
+  // Check if latitud and longitude validates with success
+  if ($validator->passes())
+  {
 
-            $pricefinder = new \Groceryshopper\PriceFinder\PriceFinder;
+    $lat = Input::get('mylatitude');
+    $long = Input::get('mylongitude');
+    //$lat = 45.507843;
+    //$long = -73.801814;
 
-            // compute total cost of shopping basket
-            $item_costs = $pricefinder->getTotalCost($input['products'], $store);
-            $store->total_cost = $item_costs['total'];
-            $store->item_prices = $item_costs['itemcosts'];
-            // compute the gas cost.
-            $store->total_gas_cost = $pricefinder->getGasConsumption($store,
-              $lat, $long);
+    //Check that there are stores to compare
+    if( count($input['stores']) >= 2) {
 
-            $stores[] = $store;
-          }
-          return View::make('site/shoppinglist/compare-results', compact('stores', 'lat','long'));
-        }
+      //Now we begin the processing
+      // forach store, find the total cost of
+      // all items + compute the cost of gas for
+      // and average consumption of 9.0L/100KM.
+      $stores = array();
+      foreach($input['stores'] as $store) {
 
-        // Return due to lack of enough stores to compare.
-        return Redirect::to('shoppinglist/view/'.$token)
-              ->with('error',
-                   Lang::get('site/shoppinglist/messages.compare.no_selected_stores')
-        );
+        $pricefinder = new \Groceryshopper\PriceFinder\PriceFinder;
 
+        // compute total cost of shopping basket
+        $item_costs = $pricefinder->getTotalCost($input['products'], $store);
+        $store->total_cost = $item_costs['total'];
+        $store->item_prices = $item_costs['itemcosts'];
+        // compute the gas cost.
+        $store->total_gas_cost = $pricefinder->getGasConsumption($store,
+          $lat, $long);
+
+        $stores[] = $store;
       }
-
-      // Return results in new screen
-      return Redirect::to('shoppinglist/view/'.$token)
-             ->with('error',
-                    Lang::get('site/shoppinglist/messages.compare.missinglocation')
-      );
-
+      return View::make('site/shoppinglist/compare-results',
+          compact('stores', 'lat','long'));
     }
+
+    // Return due to lack of enough stores to compare.
+    return Redirect::to('shoppinglist/view/'.$token)
+          ->with('error',
+              Lang::get('site/shoppinglist/messages.compare.no_selected_stores')
+    );
+
+  }
+
+    // Return results in new screen
+    return Redirect::to('shoppinglist/view/'.$token)
+         ->with('error',
+                Lang::get('site/shoppinglist/messages.compare.missinglocation')
+    );
+
+}
+
+/**
+* Search index
+*
+* Used by keyword searching.
+*/
+public function getShow()
+{
+  // Show the page.
+  // Get the current token.
+  return View::make('site/shoppinglist/index', compact('cart_id'));
+}
 
     /**
     * Search index
     *
-    * Used by keyword searching.
+    * Fetch the distance.
     */
-    public function getShow()
-    {
-      // Show the page.
-      // Get the current token.
-      return View::make('site/shoppinglist/index', compact('cart_id'));
-    }
     public function getDistance() {
-    
+
+    }
+
+    public function getNewDistance($start, $stop) {
+
     }
 
    /**
@@ -160,9 +169,8 @@ class ShoppingListController extends BaseController {
       $geocoder->registerProvider($chain);
       try {
           $geocode = $geocoder->geocode('');
-          
-        // $result is an instance of ResultInterface
-        $formatter = new \Geocoder\Formatter\Formatter($geocode);
+          // $result is an instance of ResultInterface
+          $formatter = new \Geocoder\Formatter\Formatter($geocode);
       } catch (Exception $e) {
           echo $e->getMessage();
       }
@@ -171,7 +179,7 @@ class ShoppingListController extends BaseController {
       $token  = 'cart-'. bin2hex(openssl_random_pseudo_bytes(16));
       return View::make('site/shoppinglist/index', compact('cart_id'));
      }
-   /**
+     /**
      * Show a list of closest stores based on user provided lat and
      * longitude formatted in html.
      *
@@ -210,11 +218,13 @@ class ShoppingListController extends BaseController {
      *
      * @return Datatables JSON
      */
-    public function fetchStoresNearby($latitude, $longitude, $noofstores, $within = 5)
+    public function fetchStoresNearby($latitude, $longitude,
+        $noofstores, $within = 5)
     {
       //Fetch all stores in chucks of 200.
       $closest_stores = array();
-      Store::chunk(200, function($stores) use( &$latitude, &$longitude, &$closest_stores, &$within)
+      Store::chunk(200, function($stores)
+          use( &$latitude, &$longitude, &$closest_stores, &$within)
       {
         foreach ($stores as $store)
         {
@@ -320,5 +330,4 @@ class ShoppingListController extends BaseController {
            return $miles;
         }
     }
-    
 }

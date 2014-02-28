@@ -15,7 +15,6 @@ class AddChainIdColumnToStoresTable extends Migration {
     Schema::table('stores', function(Blueprint $table) {
 		    $table->integer('chain_id')->unsigned()->index();
 		    $table->foreign('chain_id')->references('id')->on('chains');
-      
     });
   }
 
@@ -27,7 +26,6 @@ class AddChainIdColumnToStoresTable extends Migration {
 	public function down()
 	{
 		Schema::table('stores', function(Blueprint $table) {
-			
 		});
 	}
 
