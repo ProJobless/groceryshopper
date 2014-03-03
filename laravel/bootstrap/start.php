@@ -28,7 +28,9 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-    'local' => array('tugsnet-dev', '127.0.0.1', '*.local', '*.mcgill.ca'), // Change this to your local machine hostname.
+    // Change this to your local machine hostname.
+    'local' => array('tugsnet-dev', '127.0.0.1', '*.local', '*.mcgill.ca'),
+    'staging' => array('Mustard'),
     'production' => array('tugsnet-web'),
 
 ));
