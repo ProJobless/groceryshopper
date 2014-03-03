@@ -4,11 +4,11 @@ class RolesTableSeeder extends Seeder {
 
     public function run()
     {
-		    // Uncomment the below to wipe the table clean before populating
-		    //DB::table('roles')->truncate();
-        //DB::table('roles')->delete();
+		// Uncomment the below to wipe the table clean before populating
+		DB::table('roles')->truncate();
+        DB::table('roles')->delete();
 
-        /*$adminRole = new Role;
+        $adminRole = new Role;
         $adminRole->name = 'admin';
         $adminRole->save();
 
@@ -20,9 +20,9 @@ class RolesTableSeeder extends Seeder {
         $user->attachRole( $adminRole );
 
         $user = User::where('username','=','user')->first();
-        $user->attachRole( $commentRole );*/
-		    // Uncomment the below to run the seeder
-		    //DB::table('roles')->insert($units);
+        $user->attachRole( $commentRole );
+		// Uncomment the below to run the seeder
+        //DB::table('roles')->insert($units);*/
     }
 
 }
