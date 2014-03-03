@@ -42,42 +42,12 @@ class PermissionsTableSeeder extends Seeder {
 
         DB::table('permission_role')->delete();
 
-        $permissions = array(
-            array(
-                'role_id'      => 3,
-                'permission_id' => 1
-            ),
-            array(
-                'role_id'      => 3,
-                'permission_id' => 2
-            ),
-            array(
-                'role_id'      => 3,
-                'permission_id' => 3
-            ),
-            array(
-                'role_id'      => 3,
-                'permission_id' => 4
-            ),
-            array(
-                'role_id'      => 3,
-                'permission_id' => 5
-            ),
-            array(
-                'role_id'      => 3,
-                'permission_id' => 6
-            ),
-            array(
-                'role_id'      => 4,
-                'permission_id' => 6
-            ),
-            array(
-                'role_id'      => 4,
-                'permission_id' => 7
-            ),
-        );
         $role = Role::where('name', '=', 'admin')->first();
-        $role->attachPermission();
+        foreach ($permissions as $key => $permission) {
+            $permission = Permission::where('name', '=', $permission['name'])->first();
+            $role->attachPermission($permission);
+                
+        }
 
         //DB::table('permission_role')->insert( $permissions );
     }
