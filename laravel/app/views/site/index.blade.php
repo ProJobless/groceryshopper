@@ -1,7 +1,6 @@
 @extends('site.layouts.default')
 @section('content')
 
-
       <!-- Hero starts -->
 
       <div class="hero">
