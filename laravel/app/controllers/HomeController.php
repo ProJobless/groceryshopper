@@ -1,7 +1,17 @@
 <?php
+/**
+ * Search controller
+ *
+ * Allows you to search tags, users, and by keywords
+ *
+ * @license     http://www.opensource.org/licenses/mit MIT License
+ * @link       http://bundles.laravel.com
+ * @package     Laravel-Bundles
+ * @subpackage  Controllers
+ * @filesource
+ */
 
 class HomeController extends BaseController {
-        
     /**
      * User Model
      * @var User
