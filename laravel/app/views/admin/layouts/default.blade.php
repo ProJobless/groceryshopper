@@ -76,183 +76,210 @@
 
     </script> -->
 			
-	</head>	
-	<body data-color="grey" class="flat">
-		<div id="wrapper">
-			<div id="header">
-				<h1><a href="{{ URL::to('/admin') }}">Grocery Shopper admin</a></h1>	
-				<a id="menu-trigger" href="#"><i class="fa fa-bars"></i></a>	
-			</div><!-- header -->
-			<div id="user-nav">
-			    <ul class="btn-group">
-				<li class="btn" ><a title="" href="{{{ URL::to('/') }}}"><i class="fa fa-th"></i> <span class="text">View Homepage</span></a></li>
-				<li class="btn" ><a title="" href="{{{ URL::to('/user/settings') }}}"><i class="fa fa-user"></i> <span class="text">{{{ Auth::user()->username }}}</span></a></li>
-				<li class="btn dropdown" id="menu-messages">
-			            <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="fa fa-envelope"></i> <span class="text">Messages</span> <span class="label label-danger">0</span> <b class="caret"></b></a>
-				    <ul class="dropdown-menu messages-menu">
-					<li class="title"><i class="fa fa-envelope-alt"></i>Messages<a class="title-btn" href="#" title="Write new message"><i class="fa fa-share"></i></a></li>
-					<li class="message-item">
-						<a href="#">
-						    <img alt="User Icon" src="img/demo/av1.jpg" />
-						    <div class="message-content">
-							<span class="message-time">
-								3 mins ago
-							    </span>
-							<span class="message-sender">
-							    Nunc Cenenatis
-							</span>
-							<span class="message">
-							    Hi, can you meet me at the office tomorrow morning?
-							</span>
-						    </div>
-						</a>
-					</li>
-				    </ul>
-				</li>
-				<!--<li class="btn"><a title="" href="{{ URL::to('/user/settings') }}"><i class="fa fa-cog"></i> <span class="text">Settings</span></a></li> -->
-				<li class="btn"><a title="" href="{{ URL::to('/user/logout') }}"><i class="fa fa-share"></i> <span class="text">Logout</span></a></li>
-			    </ul>
-	        	</div> <!-- end user-nav -->
-		       <div id="switcher">
-			    <div id="switcher-inner">
-				<h3>Theme Options</h3>
-				<h4>Colors</h4>
-				<p id="color-style">
-				    <a data-color="orange" title="Orange" class="button-square orange-switcher" href="#"></a>
-				    <a data-color="turquoise" title="Turquoise" class="button-square turquoise-switcher" href="#"></a>
-				    <a data-color="blue" title="Blue" class="button-square blue-switcher" href="#"></a>
-				    <a data-color="green" title="Green" class="button-square green-switcher" href="#"></a>
-				    <a data-color="red" title="Red" class="button-square red-switcher" href="#"></a>
-				    <a data-color="purple" title="Purple" class="button-square purple-switcher" href="#"></a>
-				    <a href="#" data-color="grey" title="Grey" class="button-square grey-switcher"></a>
-				</p>
-				<!--<h4>Background Patterns</h4>
-				<h5>for boxed version</h5>
-				<p id="pattern-switch">
-				    <a data-pattern="pattern1" style="background-image:url('assets/img/patterns/pattern1.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern2" style="background-image:url('assets/img/patterns/pattern2.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern3" style="background-image:url('assets/img/patterns/pattern3.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern4" style="background-image:url('assets/img/patterns/pattern4.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern5" style="background-image:url('assets/img/patterns/pattern5.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern6" style="background-image:url('assets/img/patterns/pattern6.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern7" style="background-image:url('assets/img/patterns/pattern7.png');" class="button-square" href="#"></a>
-				    <a data-pattern="pattern8" style="background-image:url('assets/img/patterns/pattern8.png');" class="button-square" href="#"></a>
-				</p>-->
-				<h4 class="visible-lg">Layout Type</h4>
-				<p id="layout-type">
-					<a data-option="flat" class="button" href="#">Flat</a>
-				    <a data-option="old" class="button" href="#">Old</a>                    
-				</p>
-			    </div>
-			    <div id="switcher-button">
-				<i class="fa fa-cogs"></i>
-			    </div>
-			</div><!-- switcher -->
-			<div id="sidebar">
-				<div id="search">
-					<input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="fa fa-search"></i></button>
-				</div>	
-				<ul>
-                        		<li{{ (Request::is('admin') ? ' class="active"' : '') }}>
-						<a href="{{{ URL::to('admin') }}}"><i class="fa fa-home"></i> <span>Dashboard</span></a>
-					</li>
-                        		<li{{ (Request::is('admin/groceryitems') ? ' class="active submenu open"' : ' class="submenu"') }}>
-						<a href="{{{ URL::to('admin/groceryitems') }}}"><i class="fa fa-flask"></i> <span>Grocery items</span> <i class="arrow fa fa-chevron-right"></i></a>
-						<ul>
-							<li><a href="{{{ URL::to('admin/groceryitems') }}}">List </a></li>
-							<li><a href="{{{ URL::to('admin/groceryitems/add') }}}">Add </a></li>
-							<li><a href="{{{ URL::to('admin/groceryitems/add') }}}">Categories</a></li>
-						</ul>
-					</li>
-                        		<li {{ ( ( Request::is('admin/roles') || Request::is('admin/users') || Request::is('admin/permissions') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
-						<a href="#"><i class="glyphicon glyphicon-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
-						<ul>
-                                			<li{{ (Request::is('admin/users*') ? ' class="active"' : '') }}>
-							 	<a href="{{{ URL::to('admin/users') }}}">List </a>
-							</li>
-							<li{{ (Request::is('admin/roles*') ? ' class="active"' : '') }}>
-								<a href="{{{ URL::to('admin/roles') }}}"><span class="glyphicon glyphicon-user"></span> Roles</a>
-							</li>
-							<li{{ (Request::is('admin/permissions*') ? ' class="active"' : '') }}>
-								<a href="{{{ URL::to('admin/permissions') }}}"><span class="glyphicon glyphicon-user"></span> Permissions</a>
-							</li>
-						</ul>
-					</li>
-                        		<li {{ ( ( Request::is('admin/stores')) ? ' class="submenu active open"' : ' class="submenu"') }}>
-						<a href="#"><i class="fa fa-th"></i> <span>Stores</span> <i class="arrow fa fa-chevron-right"></i></a>
-						<ul>
-                                			<li{{ (Request::is('admin/stores*') ? ' class="active"' : '') }}>
-							 	<a href="{{{ URL::to('admin/stores') }}}">List </a>
-							</li>
-							<li{{ (Request::is('admin/stores/add') ? ' class="active"' : '') }}>
-								<a href="{{{ URL::to('admin/stores/add') }}}"><span class="glyphicon glyphicon-user"></span>Add </a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			
-			</div><!-- end sidebar -->
+  </head>	
+  <body data-color="grey" class="flat">
+    <div id="wrapper">
+      <div id="header">
+        <h1><a href="{{ URL::to('/admin') }}">Grocery Shopper admin</a></h1>	
+        <a id="menu-trigger" href="#"><i class="fa fa-bars"></i></a>	
+      </div><!-- header -->
+      <div id="user-nav">
+          <ul class="btn-group">
+        <li class="btn" ><a title="" href="{{{ URL::to('/') }}}"><i class="fa fa-th"></i> <span class="text">View Homepage</span></a></li>
+        <li class="btn" ><a title="" href="{{{ URL::to('/user/settings') }}}"><i class="fa fa-user"></i> <span class="text">{{{ Auth::user()->username }}}</span></a></li>
+        <li class="btn dropdown" id="menu-messages">
+                  <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="fa fa-envelope"></i> <span class="text">Messages</span> <span class="label label-danger">0</span> <b class="caret"></b></a>
+            <ul class="dropdown-menu messages-menu">
+          <li class="title"><i class="fa fa-envelope-alt"></i>Messages<a class="title-btn" href="#" title="Write new message"><i class="fa fa-share"></i></a></li>
+          <li class="message-item">
+            <a href="#">
+                <img alt="User Icon" src="img/demo/av1.jpg" />
+                <div class="message-content">
+              <span class="message-time">
+                3 mins ago
+                  </span>
+              <span class="message-sender">
+                  Nunc Cenenatis
+              </span>
+              <span class="message">
+                  Hi, can you meet me at the office tomorrow morning?
+              </span>
+                </div>
+            </a>
+          </li>
+            </ul>
+        </li>
+        <!--<li class="btn"><a title="" href="{{ URL::to('/user/settings') }}"><i class="fa fa-cog"></i> <span class="text">Settings</span></a></li> -->
+        <li class="btn"><a title="" href="{{ URL::to('/user/logout') }}"><i class="fa fa-share"></i> <span class="text">Logout</span></a></li>
+          </ul>
+            </div> <!-- end user-nav -->
+           <div id="switcher">
+          <div id="switcher-inner">
+        <h3>Theme Options</h3>
+        <h4>Colors</h4>
+        <p id="color-style">
+            <a data-color="orange" title="Orange" class="button-square orange-switcher" href="#"></a>
+            <a data-color="turquoise" title="Turquoise" class="button-square turquoise-switcher" href="#"></a>
+            <a data-color="blue" title="Blue" class="button-square blue-switcher" href="#"></a>
+            <a data-color="green" title="Green" class="button-square green-switcher" href="#"></a>
+            <a data-color="red" title="Red" class="button-square red-switcher" href="#"></a>
+            <a data-color="purple" title="Purple" class="button-square purple-switcher" href="#"></a>
+            <a href="#" data-color="grey" title="Grey" class="button-square grey-switcher"></a>
+        </p>
+        <!--<h4>Background Patterns</h4>
+        <h5>for boxed version</h5>
+        <p id="pattern-switch">
+            <a data-pattern="pattern1" style="background-image:url('assets/img/patterns/pattern1.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern2" style="background-image:url('assets/img/patterns/pattern2.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern3" style="background-image:url('assets/img/patterns/pattern3.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern4" style="background-image:url('assets/img/patterns/pattern4.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern5" style="background-image:url('assets/img/patterns/pattern5.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern6" style="background-image:url('assets/img/patterns/pattern6.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern7" style="background-image:url('assets/img/patterns/pattern7.png');" class="button-square" href="#"></a>
+            <a data-pattern="pattern8" style="background-image:url('assets/img/patterns/pattern8.png');" class="button-square" href="#"></a>
+        </p>-->
+        <h4 class="visible-lg">Layout Type</h4>
+        <p id="layout-type">
+          <a data-option="flat" class="button" href="#">Flat</a>
+            <a data-option="old" class="button" href="#">Old</a>                    
+        </p>
+          </div>
+          <div id="switcher-button">
+        <i class="fa fa-cogs"></i>
+          </div>
+      </div><!-- switcher -->
+      <div id="sidebar">
+        <div id="search">
+          <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="fa fa-search"></i></button>
+        </div>	
+        <ul>
+          <li{{ (Request::is('admin') ? ' class="active"' : '') }}>
+            <a href="{{{ URL::to('admin') }}}"><i class="fa fa-home"></i> <span>Dashboard</span></a>
+          </li>
+          <li {{ ( ( Request::is('admin/groceryitems') || Request::is('admin/categories') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
+            <a href="{{{ URL::to('admin/groceryitems') }}}"><i class="fa fa-flask"></i> <span>Grocery items</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+              <li{{ (Request::is('admin/groceryitems*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/groceryitems') }}}">List</a>
+              </li>
+              <li{{ (Request::is('admin/groceryitems/create') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/groceryitems/create') }}}"><span class="glyphicon glyphicon-user"></span>Add</a>
+              </li>
+              <li{{ (Request::is('admin/categories') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/categories') }}}">Categories</a>
+              </li>
+            </ul>
+          </li>
+          <li {{ ( ( Request::is('admin/units')) ? ' class="submenu active open"' : ' class="submenu"') }}>
+            <a href="#"><i class="fa fa-th"></i> <span>Units</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+              <li{{ (Request::is('admin/units*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/units') }}}">List </a>
+              </li>
+              <li{{ (Request::is('admin/units/add') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/units/add') }}}"><span class="glyphicon glyphicon-user"></span> Add </a>
+              </li>
+            </ul>
+          </li>
+          <li {{ ( ( Request::is('admin/roles') || Request::is('admin/users') || Request::is('admin/permissions') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
+            <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+              <li{{ (Request::is('admin/users*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/users') }}}">List </a>
+              </li>
+              <li{{ (Request::is('admin/roles*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/roles') }}}"><span class="glyphicon glyphicon-user"></span> Roles</a>
+              </li>
+              <li{{ (Request::is('admin/permissions*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/permissions') }}}"><span class="glyphicon glyphicon-user"></span> Permissions</a>
+              </li>
+            </ul>
+          </li>
+          <li {{ ( ( Request::is('admin/stores')) ? ' class="submenu active open"' : ' class="submenu"') }}>
+              <a href="#"><i class="fa fa-th"></i> <span>Stores</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+              <li{{ (Request::is('admin/stores*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/stores') }}}">List </a>
+              </li>
+              <li{{ (Request::is('admin/stores/add') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/stores/add') }}}"><span class="glyphicon glyphicon-user"></span> Add </a>
+              </li>
+            </ul>
+          </li>
+          <li {{ ( ( Request::is('admin/chains')) ? ' class="submenu active open"' : ' class="submenu"') }}>
+              <a href="#"><i class="fa fa-th"></i> <span>Chains</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+              <li{{ (Request::is('admin/chains*') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/chains') }}}">List </a>
+              </li>
+              <li{{ (Request::is('admin/chains/add') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/chains/add') }}}"><span class="glyphicon glyphicon-user"></span> Add </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- end sidebar -->
 
-			<!-- Content -->
-			<div id="content">
-				<div id="content-header">
-					<h1>
-						@section('pagetitle')
-						@show
-					</h1>
-					<div class="btn-group">
-						<a class="btn" title="Manage Grocery items"><i class="fa fa-file"></i></a>
-						<a class="btn" title="Manage Users" href="{{{ URL::to('admin/users') }}}"><i class="fa fa-user"></i></a>
-						<a class="btn" title="Manage Comments"><i class="fa fa-comment"></i><span class="label label-danger">5</span></a>
-						<a class="btn" title="Manage Orders"><i class="fa fa-shopping-cart"></i></a>
-					</div>
-				</div>
-				<div id="breadcrumb">
-					@section('breadcrumb')
-					<a href="{{{ URL::to('admin/') }}}" title="Go to Home" class="tip-bottom">
-						<i class="fa fa-home"></i> Home
-					</a>
-					@show
-				</div>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-xs-12 center" style="text-align: center;">					
-							<ul class="quick-actions">
-								<li>
-									<a href="{{{ URL::to('admin/groceryitems') }}}">
-										<i class="icon-shopping-bag"></i>
-										Manage Grocery Items
-									</a>
-								</li>
-								<li>
-									<a href="{{{ URL::to('admin/stores') }}}">
-										<i class="icon-database"></i>
-										Manage Stores
-									</a>
-								</li>
-								<li>
-									<a href="{{{ URL::to('admin/users') }}}">
-										<i class="icon-people"></i>
-										Manage Users
-									</a>
-								</li>
-							</ul>
-						</div>	
-					</div>
-					<br />
-					@yield('content')
-				</div>
-			<!-- ./ Footer -->
-			 </div>
-			<!-- ./ content -->
-				<div class="row">
-			<div id="footer" class="col-xs-12">
-			    	@yield('footer')
-				2013 - 2014 © groceryshopper.ca.
-			</div>
-			</div>
-		</div><!-- wrapper -->
-		
+      <!-- Content -->
+      <div id="content">
+        <div id="content-header">
+          <h1>
+            @section('pagetitle')
+            @show
+          </h1>
+          <div class="btn-group">
+            <a class="btn" title="Manage Grocery items"><i class="fa fa-file"></i></a>
+            <a class="btn" title="Manage Users" href="{{{ URL::to('admin/users') }}}"><i class="fa fa-user"></i></a>
+            <a class="btn" title="Manage Comments"><i class="fa fa-comment"></i><span class="label label-danger">5</span></a>
+            <a class="btn" title="Manage Orders"><i class="fa fa-shopping-cart"></i></a>
+          </div>
+        </div>
+        <div id="breadcrumb">
+          @section('breadcrumb')
+          <a href="{{{ URL::to('admin/') }}}" title="Go to Home" class="tip-bottom">
+            <i class="fa fa-home"></i> Home
+          </a>
+          @show
+        </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12 center" style="text-align: center;">					
+              <ul class="quick-actions">
+                <li>
+                  <a href="{{{ URL::to('admin/groceryitems') }}}">
+                    <i class="icon-shopping-bag"></i>
+                    Manage Grocery Items
+                  </a>
+                </li>
+                <li>
+                  <a href="{{{ URL::to('admin/stores') }}}">
+                    <i class="icon-database"></i>
+                    Manage Stores
+                  </a>
+                </li>
+                <li>
+                  <a href="{{{ URL::to('admin/users') }}}">
+                    <i class="icon-people"></i>
+                    Manage Users
+                  </a>
+                </li>
+              </ul>
+            </div>	
+          </div>
+          <br />
+          @yield('content')
+        </div>
+      <!-- ./ Footer -->
+       </div>
+      <!-- ./ content -->
+        <div class="row">
+      <div id="footer" class="col-xs-12">
+            @yield('footer')
+        2013 - 2014 © groceryshopper.ca.
+      </div>
+      </div>
+    </div><!-- wrapper -->
+    
         <!-- Javascripts
         ================================================== -->
         <!-- jQuery -->
@@ -279,8 +306,8 @@
        {{ HTML::script("assets/js/unicorn.dashboard.js"); }}
 
         
-	<!-- local scripts -->
-	@yield('scripts');
+  <!-- local scripts -->
+  @yield('scripts');
 
-	</body>
-</html>
+  </body>
+  </html>
