@@ -21,6 +21,7 @@ Route::model('store', 'Store');
 Route::model('permission', 'Permission');
 Route::model('groceryitem', 'Groceryitem');
 Route::model('unit', 'Unit');
+Route::model('category', 'Category');
 
 /** ------------------------------------------
  *  Admin Routes
@@ -94,6 +95,20 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::post('units/{unit}/delete', 'AdminUnitsController@postDelete')
         ->where('unit', '[0-9]+');
     Route::controller('units', 'AdminUnitsController');
+
+    # Category Management
+    Route::get('categories/{category}/show', 'AdminCategoriesController@getShow')
+        ->where('category', '[0-9]+');
+    Route::get('categories/{category}/show', 'AdminCategoriesController@getEdit')
+        ->where('category', '[0-9]+');
+    Route::get('categories/{category}/show', 'AdminCategoriesController@postEdit')
+        ->where('category', '[0-9]+');
+    Route::get('categories/{category}/show', 'AdminCategoriesController@getDelete')
+        ->where('category', '[0-9]+');
+    Route::get('categories/{category}/show', 'AdminCategoriesController@postDelete')
+        ->where('category', '[0-9]+');
+    Route::controller('categories', 'AdminCategoriesController');
+
 
     # Permission Management
     Route::get('permissions/{permission}/show', 'AdminPermissionsController@getShow')
