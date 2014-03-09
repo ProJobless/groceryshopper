@@ -83,7 +83,6 @@ class AdminGroceryitemsController extends AdminController {
         // Selected units
         $selectedUnits = Input::old('units', array());
 
-        
         // Mode
         $mode = 'create';
         return View::make('admin/groceryitems/create_edit', compact('units', 'categories', 'stores', 'selectedStores', 'selectedUnits', 'selectedCategories', 'title', 'mode'));
@@ -111,9 +110,11 @@ class AdminGroceryitemsController extends AdminController {
         // Check if the form validates with success
         if ($validator->passes())
         {
-            // Create a new store
+            // Create a new user
             $user = Auth::user();
 
+          // Get the inputs, with some exceptions
+          $inputs = Input::except('csrf_token');
             // Update the groceryitem post data
             $this->groceryitem->title  = Input::get('product_name');
             $this->groceryitem->factual_id  = 'xxxx-local-xxx';

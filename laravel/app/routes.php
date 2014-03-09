@@ -99,13 +99,13 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     # Category Management
     Route::get('categories/{category}/show', 'AdminCategoriesController@getShow')
         ->where('category', '[0-9]+');
-    Route::get('categories/{category}/show', 'AdminCategoriesController@getEdit')
+    Route::get('categories/{category}/edit', 'AdminCategoriesController@getEdit')
         ->where('category', '[0-9]+');
-    Route::get('categories/{category}/show', 'AdminCategoriesController@postEdit')
+    Route::post('categories/{category}/edit', 'AdminCategoriesController@postEdit')
         ->where('category', '[0-9]+');
-    Route::get('categories/{category}/show', 'AdminCategoriesController@getDelete')
+    Route::get('categories/{category}/delete', 'AdminCategoriesController@getDelete')
         ->where('category', '[0-9]+');
-    Route::get('categories/{category}/show', 'AdminCategoriesController@postDelete')
+    Route::post('categories/{category}/delete', 'AdminCategoriesController@postDelete')
         ->where('category', '[0-9]+');
     Route::controller('categories', 'AdminCategoriesController');
 
@@ -213,8 +213,6 @@ Route::group(array('prefix' => 'shoppinglist'), function()
 Route::resource('stores', 'StoresController');
 
 Route::resource('groceryitems', 'GroceryitemsController');
-
-Route::resource('categories', 'CategoriesController');
 
 Route::resource('units', 'UnitsController');
 

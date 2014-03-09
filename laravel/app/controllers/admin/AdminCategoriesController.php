@@ -57,11 +57,13 @@ class AdminCategoriesController extends AdminController {
   public function getCreate()
   {
 
-      // Title
-      $title = Lang::get('admin/categories/title.create_a_new_category');
+    // Title
+    $title = Lang::get('admin/categories/title.create_a_new_category');
 
-      // Show the page
-      return View::make('admin/categories/create', compact('title'));
+    // Mode
+    $mode = 'create';
+    // Show the page
+    return View::make('admin/categories/create_edit', compact('title', 'mode'));
   }
 
   /**
@@ -74,7 +76,8 @@ class AdminCategoriesController extends AdminController {
 
       // Declare the rules for the form validation
       $rules = array(
-          'name' => 'required'
+          'title' => 'required',
+          'rank' => 'required'
       );
 
       // Validate the inputs
@@ -85,21 +88,24 @@ class AdminCategoriesController extends AdminController {
           // Get the inputs, with some exceptions
           $inputs = Input::except('csrf_token');
 
-          $this->role->name = $inputs['name'];
-          $this->role->save();
+          $this->category->title = $inputs['title'];
+          $this->category->slug  = Str::slug(Input::get('title'));
+          $this->category->meta_title = $inputs['meta_title'];
+          $this->category->rank = $inputs['rank'];
+          $this->category->save();
 
 
           // Was the role created?
-          if ($this->role->id)
+          if ($this->category->id)
           {
-              // Redirect to the new role page
-              return Redirect::to('admin/categories/' . $this->role->id . '/edit')->with('success', Lang::get('admin/categories/messages.create.success'));
+              // Redirect to the new category page
+              return Redirect::to('admin/categories/' . $this->category->id . '/edit')->with('success', Lang::get('admin/categories/messages.create.success'));
           }
 
-          // Redirect to the new role page
+          // Redirect to the new category page
           return Redirect::to('admin/categories/create')->with('error', Lang::get('admin/categories/messages.create.error'));
 
-          // Redirect to the role create page
+          // Redirect to the  category create page
           return Redirect::to('admin/categories/create')->withInput()->with('error', Lang::get('admin/categories/messages.' . $error));
       }
 
@@ -126,21 +132,12 @@ class AdminCategoriesController extends AdminController {
    */
   public function getEdit($category)
   {
-      if(! empty($category))
-      {
-          $permissions = $this->permission->preparePermissionsForDisplay($category->perms()->get());
-      }
-      else
-      {
-          // Redirect to the categories management page
-          return Redirect::to('admin/categories')->with('error', Lang::get('admin/categories/messages.does_not_exist'));
-      }
-
-      // Title
-      $title = Lang::get('admin/categories/title.role_update');
-
-      // Show the page
-      return View::make('admin/categories/edit', compact('role', 'permissions', 'title'));
+    // Title
+    $title = Lang::get('admin/categories/title.category_update');
+    // Mode
+    $mode = 'edit';
+    // Show the page
+    return View::make('admin/categories/create_edit', compact('category', 'mode', 'title'));
   }
 
   /**
@@ -153,7 +150,8 @@ class AdminCategoriesController extends AdminController {
   {
       // Declare the rules for the form validation
       $rules = array(
-          'name' => 'required'
+          'title' => 'required',
+          'rank' => 'required'
       );
 
       // Validate the inputs
@@ -162,15 +160,19 @@ class AdminCategoriesController extends AdminController {
       // Check if the form validates with success
       if ($validator->passes())
       {
-          // Update the role data
-          $category->name        = Input::get('name');
-          $category->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
+          // Get the inputs, with some exceptions
+          $inputs = Input::except('csrf_token');
+
+          $category->title = $inputs['title'];
+          $category->slug  = Str::slug(Input::get('title'));
+          $category->meta_title = $inputs['meta_title'];
+          $category->rank = $inputs['rank'];
 
           // Was the role updated?
           if ($category->save())
           {
-              // Redirect to the role page
-              return Redirect::to('admin/categories/' . $category->id . '/edit')->with('success', Lang::get('admin/categories/messages.update.success'));
+            // Redirect to the category management page
+            return Redirect::to('admin/categories')->with('success', Lang::get('admin/categories/messages.update.success'));
           }
           else
           {
@@ -196,7 +198,7 @@ class AdminCategoriesController extends AdminController {
       $title = Lang::get('admin/categories/title.role_delete');
 
       // Show the page
-      return View::make('admin/categories/delete', compact('role', 'title'));
+      return View::make('admin/categories/delete', compact('category', 'title'));
   }
 
   /**
@@ -208,14 +210,14 @@ class AdminCategoriesController extends AdminController {
    */
   public function postDelete($category)
   {
-          // Was the role deleted?
-          if($category->delete()) {
-              // Redirect to the role management page
-              return Redirect::to('admin/categories')->with('success', Lang::get('admin/categories/messages.delete.success'));
-          }
+    // Was the role deleted?
+    if($category->delete()) {
+        // Redirect to the role management page
+        return Redirect::to('admin/categories')->with('success', Lang::get('admin/categories/messages.delete.success'));
+    }
 
-          // There was a problem deleting the role
-          return Redirect::to('admin/categories')->with('error', Lang::get('admin/categories/messages.delete.error'));
+    // There was a problem deleting the role
+    return Redirect::to('admin/categories')->with('error', Lang::get('admin/categories/messages.delete.error'));
   }
 
   /**

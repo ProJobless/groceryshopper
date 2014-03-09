@@ -2,7 +2,7 @@
 
 @section('main')
 
-<h1>Create Category</h1>
+<h1>Create a category</h1>
 
 {{ Form::open(array('route' => 'categories.store')) }}
 	<ul>

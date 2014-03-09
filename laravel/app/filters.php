@@ -81,6 +81,9 @@ Entrust::routeNeedsPermission( 'admin/users*', 'manage_users', Redirect::to('/ad
 Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/permissions*', 'manage_roles', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/stores*', 'manage_stores', Redirect::to('/admin') );
+Entrust::routeNeedsPermission( 'admin/groceryitems*', 'manage_stores', Redirect::to('/admin') );
+Entrust::routeNeedsPermission( 'admin/units*', 'manage_stores', Redirect::to('/admin') );
+Entrust::routeNeedsPermission( 'admin/categories*', 'manage_stores', Redirect::to('/admin') );
 
 /*
 |--------------------------------------------------------------------------
@@ -94,7 +97,11 @@ Entrust::routeNeedsPermission( 'admin/stores*', 'manage_stores', Redirect::to('/
 */
 
 Route::filter('csrf', function()
-{
+  {
+    var_dump(Input::get('csrf_token'));
+    var_dump(Input::get('_token'));
+    var_dump(Input::all());
+    var_dump(Session::getToken());
     if (Session::getToken() != Input::get('csrf_token') &&
          Session::getToken() != Input::get('_token')) {
         throw new Illuminate\Session\TokenMismatchException;

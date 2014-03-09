@@ -44,7 +44,6 @@
         <!-- Bootstrap CSS -->
         {{ HTML::style('assets/css/bootstrap.min.css'); }}
         {{ HTML::style('assets/css/jquery-ui.css'); }}
-        {{ HTML::style('assets/css/bootbox.min.css'); }}
         <!-- Animate css -->
         {{ HTML::style('assets/css/font-awesome.min.css'); }}
         <!-- Dropdown menu -->
@@ -141,8 +140,8 @@
         <h4 class="visible-lg">Layout Type</h4>
         <p id="layout-type">
           <a data-option="flat" class="button" href="#">Flat</a>
-            <a data-option="old" class="button" href="#">Old</a>                    
-        </p>
+          <a data-option="old" class="button" href="#">Old</a> 
+      </p>
           </div>
           <div id="switcher-button">
         <i class="fa fa-cogs"></i>
@@ -156,7 +155,7 @@
           <li{{ (Request::is('admin') ? ' class="active"' : '') }}>
             <a href="{{{ URL::to('admin') }}}"><i class="fa fa-home"></i> <span>Dashboard</span></a>
           </li>
-          <li {{ ( ( Request::is('admin/groceryitems') || Request::is('admin/categories') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
+          <li {{ ( ( Request::is('admin/groceryitems*') || Request::is('admin/categories*') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
             <a href="{{{ URL::to('admin/groceryitems') }}}"><i class="fa fa-flask"></i> <span>Grocery items</span> <i class="arrow fa fa-chevron-right"></i></a>
             <ul>
               <li{{ (Request::is('admin/groceryitems*') ? ' class="active"' : '') }}>

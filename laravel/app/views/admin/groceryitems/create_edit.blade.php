@@ -183,7 +183,7 @@
 
 		<!-- Form Actions -->
 			<div class="form-actions">
-				    <button type="submit" class="btn btn-primary">Save changes</button>
+				    <button type="submit" class="btn btn-success">Save changes</button>
 				    <button type="button" class="btn">Cancel</button>
 				    <button type="reset" class="btn btn-default">Reset</button>
 			</div>
@@ -191,7 +191,6 @@
     <!-- ./ form actions -->
 @stop
 @section('scripts')
-
   <script type="text/javascript">
   $(document).ready(function(){
     $('input[type=checkbox],input[type=radio]').iCheck({
@@ -359,10 +358,6 @@ $(function () {
     $('#btnDel').attr('disabled', true);
 
 });
-
-
-
-
 </script>
 
 @stop

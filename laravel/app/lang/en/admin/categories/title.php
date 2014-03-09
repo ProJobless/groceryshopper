@@ -2,9 +2,9 @@
 
 return array(
 
-	'category_management'    => 'Category Management',
-	'category_update'        => 'Update a Category',
-	'category_delete'        => 'Delete a Category',
-	'create_a_new_caategory'  => 'Create a New Category',
+	'category_management'    => 'Category management',
+	'category_update'        => 'Update a category',
+	'category_delete'        => 'Delete a category',
+	'create_a_new_category'  => 'Create a new category',
 
 );
