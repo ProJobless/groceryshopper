@@ -162,7 +162,7 @@
                 <a href="{{{ URL::to('admin/groceryitems') }}}">List</a>
               </li>
               <li{{ (Request::is('admin/groceryitems/create') ? ' class="active"' : '') }}>
-                <a href="{{{ URL::to('admin/groceryitems/create') }}}"><span class="glyphicon glyphicon-user"></span>Add</a>
+                <a href="{{{ URL::to('admin/groceryitems/create') }}}"><span class="glyphicon glyphicon-plus-sign"></span> Add</a>
               </li>
               <li{{ (Request::is('admin/categories') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/categories') }}}">Categories</a>
@@ -176,7 +176,7 @@
                 <a href="{{{ URL::to('admin/units') }}}">List </a>
               </li>
               <li{{ (Request::is('admin/units/add') ? ' class="active"' : '') }}>
-                <a href="{{{ URL::to('admin/units/add') }}}"><span class="glyphicon glyphicon-user"></span> Add </a>
+                <a href="{{{ URL::to('admin/units/add') }}}"><span class="glyphicon glyphicon-plus-sign"></span> Add </a>
               </li>
             </ul>
           </li>
@@ -212,7 +212,7 @@
                 <a href="{{{ URL::to('admin/chains') }}}">List </a>
               </li>
               <li{{ (Request::is('admin/chains/add') ? ' class="active"' : '') }}>
-                <a href="{{{ URL::to('admin/chains/add') }}}"><span class="glyphicon glyphicon-user"></span> Add </a>
+                <a href="{{{ URL::to('admin/chains/add') }}}"><span class="glyphicon glyphicon-plus-sign"></span> Add </a>
               </li>
             </ul>
           </li>

@@ -10,10 +10,10 @@ class AdminUnitsController extends AdminController {
     protected $user;
 
     /**
-     * Role Model
-     * @var Role
+     * unit Model
+     * @var unit
      */
-    protected $role;
+    protected $unit;
 
     /**
      * Permission Model
@@ -24,15 +24,13 @@ class AdminUnitsController extends AdminController {
     /**
      * Inject the models.
      * @param User $user
-     * @param Role $role
-     * @param Permission $permission
+     * @param unit $unit
      */
-    public function __construct(User $user, Role $role, Permission $permission)
+    public function __construct(User $user, Unit $unit)
     {
         parent::__construct();
         $this->user = $user;
-        $this->role = $role;
-        $this->permission = $permission;
+        $this->unit = $unit;
     }
 
     /**
@@ -43,13 +41,13 @@ class AdminUnitsController extends AdminController {
     public function getIndex()
     {
         // Title
-        $title = Lang::get('admin/roles/title.role_management');
+        $title = Lang::get('admin/units/title.unit_management');
 
         // Grab all the groups
-        $roles = $this->role;
+        $units = $this->unit;
 
         // Show the page
-        return View::make('admin/roles/index', compact('roles', 'title'));
+        return View::make('admin/units/index', compact('units', 'title'));
     }
 
     /**
@@ -66,10 +64,10 @@ class AdminUnitsController extends AdminController {
         $selectedPermissions = Input::old('permissions', array());
 
         // Title
-        $title = Lang::get('admin/roles/title.create_a_new_role');
+        $title = Lang::get('admin/units/title.create_a_new_unit');
 
         // Show the page
-        return View::make('admin/roles/create', compact('permissions', 'selectedPermissions', 'title'));
+        return View::make('admin/units/create', compact('permissions', 'selectedPermissions', 'title'));
     }
 
     /**
@@ -93,28 +91,28 @@ class AdminUnitsController extends AdminController {
             // Get the inputs, with some exceptions
             $inputs = Input::except('csrf_token');
 
-            $this->role->name = $inputs['name'];
-            $this->role->save();
+            $this->unit->name = $inputs['name'];
+            $this->unit->save();
 
             // Save permissions
-            $this->role->perms()->sync($this->permission->preparePermissionsForSave($inputs['permissions']));
+            $this->unit->perms()->sync($this->permission->preparePermissionsForSave($inputs['permissions']));
 
-            // Was the role created?
-            if ($this->role->id)
+            // Was the unit created?
+            if ($this->unit->id)
             {
-                // Redirect to the new role page
-                return Redirect::to('admin/roles/' . $this->role->id . '/edit')->with('success', Lang::get('admin/roles/messages.create.success'));
+                // Redirect to the new unit page
+                return Redirect::to('admin/units/' . $this->unit->id . '/edit')->with('success', Lang::get('admin/units/messages.create.success'));
             }
 
-            // Redirect to the new role page
-            return Redirect::to('admin/roles/create')->with('error', Lang::get('admin/roles/messages.create.error'));
+            // Redirect to the new unit page
+            return Redirect::to('admin/units/create')->with('error', Lang::get('admin/units/messages.create.error'));
 
-            // Redirect to the role create page
-            return Redirect::to('admin/roles/create')->withInput()->with('error', Lang::get('admin/roles/messages.' . $error));
+            // Redirect to the unit create page
+            return Redirect::to('admin/units/create')->withInput()->with('error', Lang::get('admin/units/messages.' . $error));
         }
 
         // Form validation failed
-        return Redirect::to('admin/roles/create')->withInput()->withErrors($validator);
+        return Redirect::to('admin/units/create')->withInput()->withErrors($validator);
     }
 
     /**
@@ -131,35 +129,35 @@ class AdminUnitsController extends AdminController {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $role
+     * @param $unit
      * @return Response
      */
-    public function getEdit($role)
+    public function getEdit($unit)
     {
-        if(! empty($role))
+        if(! empty($unit))
         {
-            $permissions = $this->permission->preparePermissionsForDisplay($role->perms()->get());
+            $permissions = $this->permission->preparePermissionsForDisplay($unit->perms()->get());
         }
         else
         {
-            // Redirect to the roles management page
-            return Redirect::to('admin/roles')->with('error', Lang::get('admin/roles/messages.does_not_exist'));
+            // Redirect to the units management page
+            return Redirect::to('admin/units')->with('error', Lang::get('admin/units/messages.does_not_exist'));
         }
 
         // Title
-        $title = Lang::get('admin/roles/title.role_update');
+        $title = Lang::get('admin/units/title.unit_update');
 
         // Show the page
-        return View::make('admin/roles/edit', compact('role', 'permissions', 'title'));
+        return View::make('admin/units/edit', compact('unit', 'permissions', 'title'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param $role
+     * @param $unit
      * @return Response
      */
-    public function postEdit($role)
+    public function postEdit($unit)
     {
         // Declare the rules for the form validation
         $rules = array(
@@ -172,82 +170,78 @@ class AdminUnitsController extends AdminController {
         // Check if the form validates with success
         if ($validator->passes())
         {
-            // Update the role data
-            $role->name        = Input::get('name');
-            $role->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
+            // Update the unit data
+            $unit->name        = Input::get('name');
+            $unit->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
 
-            // Was the role updated?
-            if ($role->save())
+            // Was the unit updated?
+            if ($unit->save())
             {
-                // Redirect to the role page
-                return Redirect::to('admin/roles/' . $role->id . '/edit')->with('success', Lang::get('admin/roles/messages.update.success'));
+                // Redirect to the unit page
+                return Redirect::to('admin/units/' . $unit->id . '/edit')->with('success', Lang::get('admin/units/messages.update.success'));
             }
             else
             {
-                // Redirect to the role page
-                return Redirect::to('admin/roles/' . $role->id . '/edit')->with('error', Lang::get('admin/roles/messages.update.error'));
+                // Redirect to the unit page
+                return Redirect::to('admin/units/' . $unit->id . '/edit')->with('error', Lang::get('admin/units/messages.update.error'));
             }
         }
 
         // Form validation failed
-        return Redirect::to('admin/roles/' . $role->id . '/edit')->withInput()->withErrors($validator);
+        return Redirect::to('admin/units/' . $unit->id . '/edit')->withInput()->withErrors($validator);
     }
 
 
     /**
      * Remove user page.
      *
-     * @param $role
+     * @param $unit
      * @return Response
      */
-    public function getDelete($role)
+    public function getDelete($unit)
     {
         // Title
-        $title = Lang::get('admin/roles/title.role_delete');
+        $title = Lang::get('admin/units/title.unit_delete');
 
         // Show the page
-        return View::make('admin/roles/delete', compact('role', 'title'));
+        return View::make('admin/units/delete', compact('unit', 'title'));
     }
 
     /**
      * Remove the specified user from storage.
      *
-     * @param $role
+     * @param $unit
      * @internal param $id
      * @return Response
      */
-    public function postDelete($role)
+    public function postDelete($unit)
     {
-            // Was the role deleted?
-            if($role->delete()) {
-                // Redirect to the role management page
-                return Redirect::to('admin/roles')->with('success', Lang::get('admin/roles/messages.delete.success'));
+            // Was the unit deleted?
+            if($unit->delete()) {
+                // Redirect to the unit management page
+                return Redirect::to('admin/units')->with('success', Lang::get('admin/units/messages.delete.success'));
             }
 
-            // There was a problem deleting the role
-            return Redirect::to('admin/roles')->with('error', Lang::get('admin/roles/messages.delete.error'));
+            // There was a problem deleting the unit
+            return Redirect::to('admin/units')->with('error', Lang::get('admin/units/messages.delete.error'));
     }
 
     /**
-     * Show a list of all the roles formatted for Datatables.
+     * Show a list of all the units formatted for Datatables.
      *
      * @return Datatables JSON
      */
     public function getData()
     {
-        $roles = Role::select(array('roles.id',  'roles.name', 'roles.id as users', 'roles.created_at'));
+       $units = unit::select(array('units.id',  'units.name', 'units.title', 'units.symbol','units.created_at', 'units.updated_at'));
 
-        return Datatables::of($roles)
-        //->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromFormat(\'Y-m-d H\', $id)) }}}')
-        ->edit_column('users', '{{{ DB::table(\'assigned_roles\')->where(\'role_id\', \'=\', $id)->count()  }}}')
-
-
-        ->add_column('actions', '<a href="{{{ URL::to(\'admin/roles/\' . $id . \'/edit\' ) }}}" class="btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
-                                <a href="{{{ URL::to(\'admin/roles/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
-                    ')
-
-        ->remove_column('id')
-
+       return Datatables::of($units)
+        ->edit_column('updated_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromTimestamp(strtotime($updated_at))) }}}')
+        ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromTimestamp(strtotime($created_at))) }}}')
+        ->add_column('actions', '<a href="{{{ URL::to(\'admin/units/\' . $id . \'/edit\' ) }}}" class="btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
+                <a href="{{{ URL::to(\'admin/units/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
+        ')
+        ->remove_column('name')
         ->make();
     }
 
