@@ -47,10 +47,10 @@
           <table class="table table-bordered table-striped table-hover data-table">
             <thead>
               <tr>
-                <th class="col-md-6">{{{ Lang::get('admin/units/table.title') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/units/table.slug') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/units/table.meta_title') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/units/table.rank') }}}</th>
+                <th class="col-md-1">{{{ Lang::get('admin/units/table.unit_id') }}}</th>
+                <th class="col-md-2">{{{ Lang::get('admin/units/table.title') }}}</th>
+                <th class="col-md-1">{{{ Lang::get('admin/units/table.symbol') }}}</th>
+                <th class="col-md-2">{{{ Lang::get('admin/units/table.created_at') }}}</th>
                 <th class="col-md-2">{{{ Lang::get('admin/units/table.updated_at') }}}</th>
                 <th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
               </tr>

@@ -2,14 +2,11 @@
 
 return array(
 
-    'title'      => 'Store name',
-    'slug'   => 'URL',
-    'address'   => 'Address',
-    'province'   => 'Province',
-    'city'   => 'City',
-    'phone_1' => 'Phone number',
+    'title'      => 'Unit name',
+    'unit_id'   => 'Unit id',
+    'symbol'   => 'Symbol',
+    'name'   => 'System name',
     'created_at' => 'Created at',
     'updated_at' => 'Last updated on',
-    'store_id' => 'Store Id',
 
 );

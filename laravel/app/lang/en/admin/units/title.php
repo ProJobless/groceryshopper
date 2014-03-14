@@ -2,9 +2,8 @@
 
 return array(
 
-  'store_management'    => 'Store Management',
-  'store_update'        => 'Update a store',
-  'store_delete'        => 'Delete a store',
-  'create_a_new_store'  => 'Create a New store',
-
+  'unit_management'    => 'Unit Management',
+  'unit_update'        => 'Update a unit',
+  'unit_delete'        => 'Delete a unit',
+  'create_a_new_unit'  => 'Create a new unit',
 );

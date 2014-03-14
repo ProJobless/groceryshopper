@@ -55,20 +55,17 @@ class AdminUnitsController extends AdminController {
      *
      * @return Response
      */
-    public function getCreate()
-    {
-        // Get all the available permissions
-        $permissions = $this->permission->all();
+  public function getCreate()
+  {
 
-        // Selected permissions
-        $selectedPermissions = Input::old('permissions', array());
+    // Title
+    $title = Lang::get('admin/units/title.create_a_new_unit');
+    // Mode
+    $mode = 'create';
 
-        // Title
-        $title = Lang::get('admin/units/title.create_a_new_unit');
-
-        // Show the page
-        return View::make('admin/units/create', compact('permissions', 'selectedPermissions', 'title'));
-    }
+    // Show the page
+    return View::make('admin/units/create_edit', compact('title', 'mode'));
+  }
 
     /**
      * Store a newly created resource in storage.
@@ -80,7 +77,8 @@ class AdminUnitsController extends AdminController {
 
         // Declare the rules for the form validation
         $rules = array(
-            'name' => 'required'
+            'title' => 'required',
+            'symbol' => 'required'
         );
 
         // Validate the inputs
@@ -91,11 +89,11 @@ class AdminUnitsController extends AdminController {
             // Get the inputs, with some exceptions
             $inputs = Input::except('csrf_token');
 
-            $this->unit->name = $inputs['name'];
+            $this->unit->name = Str::slug($inputs['name']);
+            $this->unit->symbol = $inputs['symbol'];
+            $this->unit->title = $inputs['title'];
             $this->unit->save();
 
-            // Save permissions
-            $this->unit->perms()->sync($this->permission->preparePermissionsForSave($inputs['permissions']));
 
             // Was the unit created?
             if ($this->unit->id)
@@ -103,9 +101,6 @@ class AdminUnitsController extends AdminController {
                 // Redirect to the new unit page
                 return Redirect::to('admin/units/' . $this->unit->id . '/edit')->with('success', Lang::get('admin/units/messages.create.success'));
             }
-
-            // Redirect to the new unit page
-            return Redirect::to('admin/units/create')->with('error', Lang::get('admin/units/messages.create.error'));
 
             // Redirect to the unit create page
             return Redirect::to('admin/units/create')->withInput()->with('error', Lang::get('admin/units/messages.' . $error));
@@ -126,30 +121,28 @@ class AdminUnitsController extends AdminController {
         // redirect to the frontend
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param $unit
-     * @return Response
-     */
-    public function getEdit($unit)
-    {
-        if(! empty($unit))
-        {
-            $permissions = $this->permission->preparePermissionsForDisplay($unit->perms()->get());
-        }
-        else
-        {
-            // Redirect to the units management page
-            return Redirect::to('admin/units')->with('error', Lang::get('admin/units/messages.does_not_exist'));
-        }
-
-        // Title
-        $title = Lang::get('admin/units/title.unit_update');
-
-        // Show the page
-        return View::make('admin/units/edit', compact('unit', 'permissions', 'title'));
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param $unit
+   * @return Response
+   */
+  public function getEdit($unit)
+  {
+    if(empty($unit)) {
+      // Redirect to the units management page
+      return Redirect::to('admin/units')->with('error', Lang::get('admin/units/messages.does_not_exist'));
     }
+
+    // Title
+    $title = Lang::get('admin/units/title.unit_update');
+    // Mode
+    $mode = 'create';
+
+
+    // Show the page
+    return View::make('admin/units/create_edit', compact('unit', 'mode', 'title'));
+  }
 
     /**
      * Update the specified resource in storage.

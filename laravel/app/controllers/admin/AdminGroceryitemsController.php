@@ -73,7 +73,7 @@ class AdminGroceryitemsController extends AdminController {
 
         // All the units
         $units = $this->unit->all();
-        
+
         // Selected groups
         $selectedStores = Input::old('stores', array());
 
