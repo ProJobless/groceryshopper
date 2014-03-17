@@ -89,7 +89,7 @@ class AdminUnitsController extends AdminController {
             // Get the inputs, with some exceptions
             $inputs = Input::except('csrf_token');
 
-            $this->unit->name = Str::slug($inputs['name']);
+            $this->unit->name = Str::slug($inputs['title']);
             $this->unit->symbol = $inputs['symbol'];
             $this->unit->title = $inputs['title'];
             $this->unit->save();
@@ -99,7 +99,7 @@ class AdminUnitsController extends AdminController {
             if ($this->unit->id)
             {
                 // Redirect to the new unit page
-                return Redirect::to('admin/units/' . $this->unit->id . '/edit')->with('success', Lang::get('admin/units/messages.create.success'));
+                return Redirect::to('admin/units/')->with('success', Lang::get('admin/units/messages.create.success'));
             }
 
             // Redirect to the unit create page
@@ -144,45 +144,49 @@ class AdminUnitsController extends AdminController {
     return View::make('admin/units/create_edit', compact('unit', 'mode', 'title'));
   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param $unit
-     * @return Response
-     */
-    public function postEdit($unit)
-    {
-        // Declare the rules for the form validation
-        $rules = array(
-            'name' => 'required'
-        );
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param $unit
+   * @return Response
+   */
+  public function postEdit($unit)
+  {
+      // Declare the rules for the form validation
+      $rules = array(
+          'name' => 'required',
+          'title' => 'required',
+          'symbol' => 'required',
+      );
 
-        // Validate the inputs
-        $validator = Validator::make(Input::all(), $rules);
+      // Validate the inputs
+      $validator = Validator::make(Input::all(), $rules);
 
-        // Check if the form validates with success
-        if ($validator->passes())
-        {
-            // Update the unit data
-            $unit->name        = Input::get('name');
-            $unit->perms()->sync($this->permission->preparePermissionsForSave(Input::get('permissions')));
+      // Check if the form validates with success
+      if ($validator->passes())
+      {
+        // Update the unit data
+        $name = Input::get('name');
+          $unit->name        = isset($name) ? strtolower($name) : Str::slug(Input::get('title'));
+          $unit->title        = Input::get('title');
+          $unit->symbol       = Input::get('symbol');
 
-            // Was the unit updated?
-            if ($unit->save())
-            {
-                // Redirect to the unit page
-                return Redirect::to('admin/units/' . $unit->id . '/edit')->with('success', Lang::get('admin/units/messages.update.success'));
-            }
-            else
-            {
-                // Redirect to the unit page
-                return Redirect::to('admin/units/' . $unit->id . '/edit')->with('error', Lang::get('admin/units/messages.update.error'));
-            }
-        }
+          // Was the unit updated?
+          if ($unit->save())
+          {
+              // Redirect to the unit page
+              return Redirect::to('admin/units/')->with('success', Lang::get('admin/units/messages.update.success'));
+          }
+          else
+          {
+              // Redirect to the unit page
+              return Redirect::to('admin/units/' . $unit->id . '/edit')->with('error', Lang::get('admin/units/messages.update.error'));
+          }
+      }
 
-        // Form validation failed
-        return Redirect::to('admin/units/' . $unit->id . '/edit')->withInput()->withErrors($validator);
-    }
+      // Form validation failed
+      return Redirect::to('admin/units/' . $unit->id . '/edit')->withInput()->withErrors($validator);
+  }
 
 
     /**
