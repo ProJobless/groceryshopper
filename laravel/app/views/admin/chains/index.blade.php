@@ -17,8 +17,8 @@
 {{-- Breadcrumbs --}}
 @section('breadcrumb')
    @parent
-   <a href="{{{ URL::to('admin/units') }}}" title="Manage units" class="tip-bottom">
-      <i class="fa fa-user"></i> units
+   <a href="{{{ URL::to('admin/chains') }}}" title="Manage chains" class="tip-bottom">
+      <i class="fa fa-user"></i> chains
    </a>
 @stop
 
@@ -27,7 +27,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="pull-right">
-        <a href="{{{ URL::to('admin/units/create') }}}" class="btn btn-small btn-info iframe">
+        <a href="{{{ URL::to('admin/chains/create') }}}" class="btn btn-small btn-info iframe">
           <span class="glyphicon glyphicon-plus-sign"></span> Create
         </a>
       </div>
@@ -41,16 +41,16 @@
       <div class="widget-box">
         <div class="widget-title">
           <span class="icon"><i class="fa fa-signal"></i></span>
-          <h5>List of units</h5>
+          <h5>List of chains</h5>
         </div>
         <div class="widget-content nopadding">
           <table class="table table-bordered table-striped table-hover data-table">
             <thead>
               <tr>
-                <th >{{{ Lang::get('admin/units/table.unit_id') }}}</th>
-                <th >{{{ Lang::get('admin/units/table.title') }}}</th>
-                <th >{{{ Lang::get('admin/units/table.symbol') }}}</th>
-                <th >{{{ Lang::get('admin/units/table.updated_at') }}}</th>
+                <th >{{{ Lang::get('admin/chains/table.chain_name') }}}</th>
+                <th >{{{ Lang::get('admin/chains/table.url') }}}</th>
+                <th >{{{ Lang::get('admin/chains/table.alternate_name') }}}</th>
+                <th >{{{ Lang::get('admin/chains/table.updated_at') }}}</th>
                 <th >{{{ Lang::get('table.actions') }}}</th>
               </tr>
             </thead>
@@ -74,24 +74,12 @@
         "sPaginationType": "full_numbers",
         "sDom": '<""l>t<"F"fp>',
         "oLanguage": {
-          "sLengthMenu": "_MENU_ units per page"
+          "sLengthMenu": "_MENU_ chains per page"
         },
-        "sAjaxSource": "{{ URL::to('admin/units/data') }}",
+        "bServerSide": true,
+        "sAjaxSource": "{{ URL::to('admin/chains/data') }}",
       });
       $('select').select2();
-      oTable = $('#users').dataTable( {
-        "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
-        "sPaginationType": "bootstrap",
-        "oLanguage": {
-          "sLengthMenu": "_MENU_ records per page"
-        },
-        "bProcessing": true,
-        "bServerSide": true,
-        "sAjaxSource": "{{ URL::to('admin/units/data') }}",
-        "fnDrawCallback": function ( oSettings ) {
-          $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-        }
-      });
     });
   </script>
 @stop

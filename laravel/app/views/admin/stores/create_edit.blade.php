@@ -31,18 +31,18 @@ asdasd
   </div>
   <!-- ./ store title -->
   <div class="form-group {{{ $errors->has('chain') ? 'has-error' : '' }}}">
-    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="chain">Store Chain</label>
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="chain">Store chain</label>
       <div class="col-sm-9 col-md-9 col-lg-10">
             <select multiple id="chains" name="chains[]" class="from-control" >
               @foreach ($chains as $chain)
                 @if ($mode == 'create')
                 <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
                 @else
-                <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->name }}}</option>
+                <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
                 @endif
               @endforeach
             </select>
-            {{ $errors->first('categories', '<span class="help-inline">:message</span>') }}
+            {{ $errors->first('chains', '<span class="help-inline">:message</span>') }}
     </div>
   </div>
   <!-- ./ chain id -->
@@ -56,7 +56,6 @@ asdasd
           {{ $errors->first('line_1', '<span class="help-inline">:message</span>') }}
       </div>
   </div>
-            <!-- ./ store title -->
   <div class="controls controls-row">
       <div class="form-group row {{{ $errors->has('city') ? 'error' : '' }}}">
           <div class="col-lg-4">
@@ -101,15 +100,15 @@ asdasd
       <div class="form-group {{{ $errors->has('line_1') ? 'error' : '' }}}">
       </div>
   </div>
-  <!-- Phone -->
-  <div class="form-group {{{ $errors->has('phone_1') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="phone_1">Phone number</label>
-          <input class="form-control" type="text" name="phone_1" id="phone_1" value="{{{ Input::old('phone_1', isset($store) ? $store->phone_1 : null) }}}" />
-          {{ $errors->first('phone_1', '<span class="help-inline">:message</span>') }}
-      </div>
+  <!-- phone -->
+  <div class="form-group {{{ $errors->has('phone_1') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="phone_1">Phone</label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
+      <input class="form-control" type="text" name="phone_1" id="phone" value="{{{ Input::old('phone', isset($groceryitem) ? $groceryitem->phone : null) }}}" />
+      {{ $errors->first('phone_1', '<span class="help-inline">:message</span>') }}
+    </div>
   </div>
-  <!-- ./ store phone -->
+  <!-- ./ manufacturer -->
   <div class="form-group {{{ $errors->has('fax') ? 'error' : '' }}}">
       <div class="col-md-12">
           <label class="control-label" for="fax">Fax</label>

@@ -23,43 +23,43 @@
 
 {{-- Content --}}
 @section('content')
-				<div class="row">
-					<div class="col-xs-12">
-						<div class="pull-right">
-							<a href="{{{ URL::to('admin/stores/create') }}}" class="btn btn-small btn-info iframe"><span class="glyphicon glyphicon-plus-sign"></span> Create</a>
-						</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<!-- Notifications -->
-						@include('notifications')
-						<!-- ./ notifications -->
-						<div class="widget-box">
-							<div class="widget-title">
-								<span class="icon"><i class="fa fa-signal"></i></span>
-								<h5>List of Stores</h5>
-							</div>
-							<div class="widget-content nopadding">
-								<table class="table table-bordered table-striped table-hover data-table">
-									<thead>
-										<tr>
-											<th class="col-md-4">{{{ Lang::get('admin/stores/table.title') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('admin/stores/table.slug') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('admin/stores/table.phone_1') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('admin/stores/table.city') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('admin/stores/table.province') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('admin/stores/table.updated_at') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
-											<th class="col-md-2">{{{ Lang::get('admin/stores/table.address') }}}</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>
-						</div>					
-					</div>
-				</div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="pull-right">
+        <a href="{{{ URL::to('admin/stores/create') }}}" class="btn btn-small btn-info iframe"><span class="glyphicon glyphicon-plus-sign"></span> Create</a>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- Notifications -->
+      @include('notifications')
+      <!-- ./ notifications -->
+      <div class="widget-box">
+        <div class="widget-title">
+          <span class="icon"><i class="fa fa-signal"></i></span>
+          <h5>List of Stores</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <table class="table table-bordered table-striped table-hover data-table">
+            <thead>
+              <tr>
+                <th >{{{ Lang::get('admin/stores/table.title') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.slug') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.phone_1') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.city') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.province') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.updated_at') }}}</th>
+                <th >{{{ Lang::get('table.actions') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.address') }}}</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>					
+    </div>
+  </div>
 
 @stop
 

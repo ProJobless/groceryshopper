@@ -1,4 +1,4 @@
-  <?php
+<?php
 
   return array(
 
@@ -19,4 +19,4 @@
     'success' => 'The store was deleted successfully.'
   )
 
-  );
+);

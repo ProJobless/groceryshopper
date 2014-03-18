@@ -169,10 +169,10 @@
               </li>
             </ul>
           </li>
-          <li {{ ( ( Request::is('admin/units')) ? ' class="submenu active open"' : ' class="submenu"') }}>
+          <li {{ ( ( Request::is('admin/units*')) ? ' class="submenu active open"' : ' class="submenu"') }}>
             <a href="#"><i class="fa fa-th"></i> <span>Units</span> <i class="arrow fa fa-chevron-right"></i></a>
             <ul>
-              <li{{ (Request::is('admin/units*') ? ' class="active"' : '') }}>
+              <li{{ (Request::is('admin/units') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/units') }}}">List </a>
               </li>
               <li{{ (Request::is('admin/units/create') ? ' class="active"' : '') }}>
@@ -180,27 +180,27 @@
               </li>
             </ul>
           </li>
-          <li {{ ( ( Request::is('admin/roles') || Request::is('admin/users') || Request::is('admin/permissions') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
+          <li {{ ( ( Request::is('admin/roles*') || Request::is('admin/users*') || Request::is('admin/permissions*') ) ? ' class="submenu active open"' : ' class="submenu"') }}>
             <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
             <ul>
-              <li{{ (Request::is('admin/users*') ? ' class="active"' : '') }}>
+              <li{{ (Request::is('admin/users') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/users') }}}">List </a>
               </li>
               <li{{ (Request::is('admin/users/create') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/users/create') }}}"><span class="glyphicon glyphicon-plus-sign"></span> Add </a>
               </li>
-              <li{{ (Request::is('admin/roles*') ? ' class="active"' : '') }}>
+              <li{{ (Request::is('admin/roles') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/roles') }}}"><span class="glyphicon glyphicon-user"></span> Roles</a>
               </li>
-              <li{{ (Request::is('admin/permissions*') ? ' class="active"' : '') }}>
+              <li{{ (Request::is('admin/permissions') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/permissions') }}}"><span class="glyphicon glyphicon-user"></span> Permissions</a>
               </li>
             </ul>
           </li>
-          <li {{ ( ( Request::is('admin/stores')) ? ' class="submenu active open"' : ' class="submenu"') }}>
+          <li {{ ( ( Request::is('admin/stores*')) ? ' class="submenu active open"' : ' class="submenu"') }}>
               <a href="#"><i class="fa fa-th"></i> <span>Stores</span> <i class="arrow fa fa-chevron-right"></i></a>
             <ul>
-              <li{{ (Request::is('admin/stores*') ? ' class="active"' : '') }}>
+              <li{{ (Request::is('admin/stores') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/stores') }}}">List </a>
               </li>
               <li{{ (Request::is('admin/stores/create') ? ' class="active"' : '') }}>
@@ -208,11 +208,11 @@
               </li>
             </ul>
           </li>
-          <li {{ ( ( Request::is('admin/chains')) ? ' class="submenu active open"' : ' class="submenu"') }}>
-              <a href="#"><i class="fa fa-th"></i> <span>Chains</span> <i class="arrow fa fa-chevron-right"></i></a>
+          <li {{ ( ( Request::is('admin/chains*')) ? ' class="submenu active open"' : ' class="submenu"') }}>
+              <a href="#"><i class="fa fa-th"></i> <span>Store chains</span> <i class="arrow fa fa-chevron-right"></i></a>
             <ul>
-              <li{{ (Request::is('admin/chains*') ? ' class="active"' : '') }}>
-                <a href="{{{ URL::to('admin/chains') }}}">List </a>
+              <li{{ (Request::is('admin/chains') ? ' class="active"' : '') }}>
+                <a href="{{{ URL::to('admin/chains') }}}">List</a>
               </li>
               <li{{ (Request::is('admin/chains/create') ? ' class="active"' : '') }}>
                 <a href="{{{ URL::to('admin/chains/create') }}}"><span class="glyphicon glyphicon-plus-sign"></span> Add </a>

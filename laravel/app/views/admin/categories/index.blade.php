@@ -47,12 +47,12 @@
           <table class="table table-bordered table-striped table-hover data-table">
             <thead>
               <tr>
-                <th class="col-md-6">{{{ Lang::get('admin/categories/table.title') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/categories/table.slug') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/categories/table.meta_title') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/categories/table.rank') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('admin/categories/table.updated_at') }}}</th>
-                <th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
+                <th >{{{ Lang::get('admin/categories/table.title') }}}</th>
+                <th >{{{ Lang::get('admin/categories/table.slug') }}}</th>
+                <th >{{{ Lang::get('admin/categories/table.meta_title') }}}</th>
+                <th >{{{ Lang::get('admin/categories/table.rank') }}}</th>
+                <th >{{{ Lang::get('admin/categories/table.updated_at') }}}</th>
+                <th >{{{ Lang::get('table.actions') }}}</th>
               </tr>
             </thead>
             <tbody>

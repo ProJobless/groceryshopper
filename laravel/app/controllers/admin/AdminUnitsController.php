@@ -230,11 +230,10 @@ class AdminUnitsController extends AdminController {
      */
     public function getData()
     {
-       $units = unit::select(array('units.id',  'units.name', 'units.title', 'units.symbol','units.created_at', 'units.updated_at'));
+       $units = unit::select(array('units.id',  'units.name', 'units.title', 'units.symbol', 'units.updated_at'));
 
        return Datatables::of($units)
         ->edit_column('updated_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromTimestamp(strtotime($updated_at))) }}}')
-        ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromTimestamp(strtotime($created_at))) }}}')
         ->add_column('actions', '<a href="{{{ URL::to(\'admin/units/\' . $id . \'/edit\' ) }}}" class="btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
                 <a href="{{{ URL::to(\'admin/units/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
         ')
