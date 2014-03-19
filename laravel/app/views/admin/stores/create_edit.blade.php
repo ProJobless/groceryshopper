@@ -33,7 +33,7 @@ asdasd
   <div class="form-group {{{ $errors->has('chain') ? 'has-error' : '' }}}">
     <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="chain">Store chain</label>
       <div class="col-sm-9 col-md-9 col-lg-10">
-            <select multiple id="chains" name="chains[]" class="from-control" >
+            <select id="chains" name="chains[]" class="from-control" >
               @foreach ($chains as $chain)
                 @if ($mode == 'create')
                 <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
@@ -50,56 +50,62 @@ asdasd
 
   <!-- Address -->
   <div class="form-group {{{ $errors->has('line_1') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="line_1">Street</label>
-          <input class="form-control" type="text" name="line_1" id="line_1" value="{{{ Input::old('line_1', isset($store) ? $store->line_1 : null) }}}" />
-          {{ $errors->first('line_1', '<span class="help-inline">:message</span>') }}
+    <label for="store_id" class="label_ttl col-sm-3 col-md-3 col-lg-2 control-label">Address</label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
+      <div class="row">
+        <input class="form-control" type="text" name="line_1" placeholder="Street" id="line_1" value="{{{ Input::old('line_1', isset($store) ? $store->line_1 : null) }}}" />
+        {{ $errors->first('line_1', '<span class="help-inline">:message</span>') }}
       </div>
+      <div class="row">
+        <!-- city -->
+        <div class="col-md-4">
+          <input class="form-control" type="text" name="city" placeholder="City"id="city" value="{{{ Input::old('city', isset($store) ? $store->city : null) }}}" />
+          {{ $errors->first('city', '<span class="help-inline">:message</span>') }}
+        </div>
+        <!-- ./city  -->
+
+        <!-- province -->
+        <div class="col-md-4">
+          <select placeholder=" Province or state" id="province_state" name="province_state" class="rm-control" >
+            @foreach ($chains as $chain)
+              @if ($mode == 'create')
+              <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              @else
+              <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              @endif
+            @endforeach
+          </select>
+          {{ $errors->first('province_state', '<span class="help-inline">:message</span>') }}
+        </div>
+        <!-- ./province  -->
+
+        <!-- country -->
+        <div class="col-md-4">
+          <select id="country" name="country" class="rm-control" >
+            @foreach ($chains as $chain)
+              @if ($mode == 'create')
+              <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              @else
+              <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              @endif
+            @endforeach
+          </select>
+          {{ $errors->first('country', '<span class="help-inline">:message</span>') }}
+        </div>
+        <!-- ./country  -->
+      </div>
+      <div class="row">
+        <!-- postal_zip -->
+        <div class="col-md-3">
+          <input class="form-control" placeholder=" Postal code" type="text" name="city" id="city" value="{{{ Input::old('city', isset($store) ? $store->city : null) }}}" />
+          {{ $errors->first('city', '<span class="help-inline">:message</span>') }}
+        </div>
+        <!-- ./country  -->
+      </div>
+    </div>
   </div>
-  <div class="controls controls-row">
-      <div class="form-group row {{{ $errors->has('city') ? 'error' : '' }}}">
-          <div class="col-lg-4">
-              <label class="control-label" for="store">City</label>
-              <input class="form-control" type="text" name="city" id="city" value="{{{ Input::old('city', isset($store) ? $store->city : null) }}}" />
-              {{ $errors->first('city', '<span class="help-inline">:message</span>') }}
-          </div>
-          <div class="col-lg-3">
-              <label class="control-label" for="province_state">Province</label>
-              {{ Form::select('province_state',
-                                       array('QC' => 'Quebec', 'ON' => 'Ontario'),
-                                       Input::old('province_state', isset($store) ? $store->province_state : null),
-                                       array (
-                                              'class' => 'form-control',
-                                              'name' => 'province_state',
-                                              'id'    => 'province_state'
-                                       )
-                             )
-               }}
-              {{ $errors->first('province_state', '<span class="help-inline">:message</span>') }}
-          </div>
-          <div class="col-lg-3">
-              <label class="control-label" for="country">Country</label>
-              {{ Form::select('country',
-                                       array('CA' => 'Canada', 'USA' => 'USA'),
-                                       Input::old('country', isset($store) ? $store->country : null),
-                                       array (
-                                              'class' => 'form-control',
-                                              'name' => 'country',
-                                              'id'    => 'country'
-                                       )
-                             )
-               }}
-              {{ $errors->first('country', '<span class="help-inline">:message</span>') }}
-          </div>
-          <div class="col-lg-2">
-              <label class="control-label" for="postal_zip">Postal Code</label>
-              <input class="form-control" type="text" name="postal_zip" id="postal_zip" value="{{{ Input::old('postal_zip', isset($store) ? $store->postal_zip : null) }}}" />
-              {{ $errors->first('postal_zip', '<span class="help-inline">:message</span>') }}
-          </div>
-      </div>
-      <div class="form-group {{{ $errors->has('line_1') ? 'error' : '' }}}">
-      </div>
-  </div>
+  <!-- /address -->
+
   <!-- phone -->
   <div class="form-group {{{ $errors->has('phone_1') ? 'has-error' : '' }}}">
     <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="phone_1">Phone</label>
@@ -108,69 +114,83 @@ asdasd
       {{ $errors->first('phone_1', '<span class="help-inline">:message</span>') }}
     </div>
   </div>
-  <!-- ./ manufacturer -->
-  <div class="form-group {{{ $errors->has('fax') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="fax">Fax</label>
-          <input class="form-control" type="text" name="fax" id="fax" value="{{{ Input::old('line_1', isset($store) ? $store->fax : null) }}}" />
-          {{ $errors->first('fax', '<span class="help-inline">:message</span>') }}
-      </div>
+  <!-- ./ phone_1 -->
+
+  <!-- fax -->
+  <div class="form-group {{{ $errors->has('fax') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="fax">Fax</label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
+      <input class="form-control" type="text" name="fax" id="fax" value="{{{ Input::old('fax', isset($groceryitem) ? $groceryitem->fax : null) }}}" />
+      {{ $errors->first('fax', '<span class="help-inline">:message</span>') }}
+    </div>
   </div>
-  <!-- URL friendly slug -->
-  <div class="form-group {{{ $errors->has('slug') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="slug">URL friendly name</label>
-          <input class="form-control" type="text" name="slug" id="slug" value="{{{ Input::old('slug', isset($store) ? $store->slug : null) }}}" />
-          {{ $errors->first('slug', '<span class="help-inline">:message</span>') }}
-      </div>
+  <!-- ./ fax  -->
+
+  <!-- slug -->
+  <div class="form-group {{{ $errors->has('slug') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="slug">Url friendly name</label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
+      <input class="form-control" type="text" name="slug" id="slug" value="{{{ Input::old('slug', isset($groceryitem) ? $groceryitem->slug : null) }}}" />
+      {{ $errors->first('slug', '<span class="help-inline">:message</span>') }}
+    </div>
   </div>
-  <!-- ./ slug -->
+  <!-- ./ slug  -->
 
   <!-- Website -->
-  <div class="form-group {{{ $errors->has('url') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="url">Website </label>
-          <input class="form-control" type="text" name="url" id="url" value="{{{ Input::old('url', isset($store) ? $store->url : null) }}}" />
-          {{ $errors->first('url', '<span class="help-inline">:message</span>') }}
-      </div>
+  <div class="form-group {{{ $errors->has('url') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="url">Url friendly name</label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
+      <input class="form-control" type="text" name="url" id="url" value="{{{ Input::old('url', isset($groceryitem) ? $groceryitem->url : null) }}}" />
+      {{ $errors->first('url', '<span class="help-inline">:message</span>') }}
+    </div>
   </div>
   <!-- ./ Url -->
 
 
   <!-- Notes -->
-  <div class="form-group {{{ $errors->has('notes') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="content">Notes</label>
+  <div class="form-group {{{ $errors->has('notes') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="notes">Notes</label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
           <textarea class="form-control full-width" name="notes" value="notes" rows="4">{{ Input::old('notes', isset($store) ? $store->notes : null) }}</textarea>
           {{ $errors->first('notes', '<span class="help-inline">:message</span>') }}
-      </div>
+    </div>
   </div>
+  <!-- /Notes -->
+
+
+
   <!-- searchable -->
   <?php $checked = (isset($store) && $store->searchable == 1) ? 'checked' : ""; ?>
-  <div class="form-group {{{ $errors->has('searchable') ? 'error' : '' }}}">
-      <div class="col-md-12">
-          <label class="control-label" for="content">Can this store be searched?
-                  <input type="checkbox" name="searchable" {{{ Input::old('searchable', isset($store) ? $checked : NULL ) }}}
-                          value="{{{ Input::old('searchable', isset($store) ? $store->searchable : 0 ) }}}" id="searchable">
-          </label>
+  <div class="form-group {{{ $errors->has('manufacturer') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="manufacturer"></label>
+    <div class="col-sm-9 col-md-9 col-lg-10">
+          <input type="checkbox" name="searchable" {{{ Input::old('searchable', isset($store) ? $checked : NULL ) }}}
+                  value="{{{ Input::old('searchable', isset($store) ? $store->searchable : 0 ) }}}" id="searchable">
+          <label class="" for="manufacturer">Can this store be searchable?</label>
           {{ $errors->first('searchable', '<span class="help-inline">:message</span>') }}
-      </div>
+    </div>
   </div>
   <!-- ./ content -->
+
   <!-- Form Actions -->
-  <div class="form-group">
-      <div class="col-md-12">
-          <button type="submit" class="btn btn-success">Submit</button>
-          <button type="reset" class="btn btn-default">Reset</button>
-          <element class="btn-cancel close_popup">Cancel</element>
-      </div>
+  <div class="form-actions">
+        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+        <button type="reset" class="btn btn-default">Reset</button>
   </div>
-  <!-- ./ form actions -->
+
 </form>
 @stop
 @section('scripts')
   <script type="text/javascript">
   $(document).ready(function(){
+    $('input[type=checkbox],input[type=radio]').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+    $("#chains").select2();
+    $("#province_state").select2();
+    $("#country").select2();
 
     // Form Validation
     $("#basic_validate").validate({

@@ -181,13 +181,13 @@
       <!-- ./ stores -->
 
 
-		<!-- Form Actions -->
-			<div class="form-actions">
-				    <button type="submit" class="btn btn-success">Save changes</button>
-				    <button type="button" class="btn">Cancel</button>
-				    <button type="reset" class="btn btn-default">Reset</button>
-			</div>
-	</form>
+  <!-- Form Actions -->
+  <div class="form-actions">
+        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+  </div>
+</form>
     <!-- ./ form actions -->
 @stop
 @section('scripts')
@@ -333,7 +333,6 @@ $(function () {
         $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
     });
     var num  = $('.clonedInput').length; // Checks to see how many "duplicatable" input fields we currently have
-    console.log(num);
     //$('#ID' + newNum + '_store_id').select2();
 
     $('#btnDel').click(function () {
