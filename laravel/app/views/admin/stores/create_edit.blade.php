@@ -30,15 +30,15 @@ asdasd
     </div>
   </div>
   <!-- ./ store title -->
-  <div class="form-group {{{ $errors->has('chain') ? 'has-error' : '' }}}">
-    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="chain">Store chain</label>
+  <div class="form-group {{{ $errors->has('chain_id') ? 'has-error' : '' }}}">
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="chain_id">Store chain</label>
       <div class="col-sm-9 col-md-9 col-lg-10">
-            <select id="chains" name="chains[]" class="from-control" >
+            <select id="chains" name="chain_id" class="from-control" >
               @foreach ($chains as $chain)
                 @if ($mode == 'create')
                 <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
                 @else
-                <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+                <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $store->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
                 @endif
               @endforeach
             </select>
@@ -67,11 +67,15 @@ asdasd
         <!-- province -->
         <div class="col-md-4">
           <select placeholder=" Province or state" id="province_state" name="province_state" class="rm-control" >
-            @foreach ($chains as $chain)
+            @foreach ($provinces as $province_id => $province_name)
               @if ($mode == 'create')
-              <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              <option value="{{{ $province_id }}}"{{{ ( in_array($province_id, $selectedProvinces) ? ' selected="selected"' : '') }}}>
+                {{{ $province_name }}}
+              </option>
               @else
-              <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              <option value="{{{ $province_id }}}"{{{ (array_key_exists($province_id)  ? ' selected="selected"' : '') }}}>
+                {{{ $province_name }}}
+              </option>
               @endif
             @endforeach
           </select>
@@ -82,11 +86,15 @@ asdasd
         <!-- country -->
         <div class="col-md-4">
           <select id="country" name="country" class="rm-control" >
-            @foreach ($chains as $chain)
+            @foreach ($countries as $country_id => $country_name)
               @if ($mode == 'create')
-              <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              <option value="{{{ $country_id }}}"{{{ ( in_array($country_id, $selectedCountries) ? ' selected="selected"' : '') }}}>
+                {{{ $country_name }}}
+              </option>
               @else
-              <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $groceryitem->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+              <option value="{{{ $country_id }}}"{{{ (array_key_exists($country_id, $selectedCountries)  ? ' selected="selected"' : '') }}}>
+                {{{ $country_name }}}
+              </option>
               @endif
             @endforeach
           </select>
@@ -97,10 +105,10 @@ asdasd
       <div class="row">
         <!-- postal_zip -->
         <div class="col-md-3">
-          <input class="form-control" placeholder=" Postal code" type="text" name="city" id="city" value="{{{ Input::old('city', isset($store) ? $store->city : null) }}}" />
-          {{ $errors->first('city', '<span class="help-inline">:message</span>') }}
+          <input class="form-control" placeholder=" Postal code" type="text" name="postal_zip" id="postal_zip" value="{{{ Input::old('postal_zip', isset($store) ? $store->postal_zip : null) }}}" />
+          {{ $errors->first('postal_zip', '<span class="help-inline">:message</span>') }}
         </div>
-        <!-- ./country  -->
+        <!-- ./postal_zip  -->
       </div>
     </div>
   </div>
@@ -110,7 +118,7 @@ asdasd
   <div class="form-group {{{ $errors->has('phone_1') ? 'has-error' : '' }}}">
     <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="phone_1">Phone</label>
     <div class="col-sm-9 col-md-9 col-lg-10">
-      <input class="form-control" type="text" name="phone_1" id="phone" value="{{{ Input::old('phone', isset($groceryitem) ? $groceryitem->phone : null) }}}" />
+      <input class="form-control" type="text" name="phone_1" id="phone" value="{{{ Input::old('phone', isset($store) ? $store->phone : null) }}}" />
       {{ $errors->first('phone_1', '<span class="help-inline">:message</span>') }}
     </div>
   </div>
@@ -120,7 +128,7 @@ asdasd
   <div class="form-group {{{ $errors->has('fax') ? 'has-error' : '' }}}">
     <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="fax">Fax</label>
     <div class="col-sm-9 col-md-9 col-lg-10">
-      <input class="form-control" type="text" name="fax" id="fax" value="{{{ Input::old('fax', isset($groceryitem) ? $groceryitem->fax : null) }}}" />
+      <input class="form-control" type="text" name="fax" id="fax" value="{{{ Input::old('fax', isset($store) ? $store->fax : null) }}}" />
       {{ $errors->first('fax', '<span class="help-inline">:message</span>') }}
     </div>
   </div>
@@ -130,7 +138,7 @@ asdasd
   <div class="form-group {{{ $errors->has('slug') ? 'has-error' : '' }}}">
     <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="slug">Url friendly name</label>
     <div class="col-sm-9 col-md-9 col-lg-10">
-      <input class="form-control" type="text" name="slug" id="slug" value="{{{ Input::old('slug', isset($groceryitem) ? $groceryitem->slug : null) }}}" />
+      <input class="form-control" type="text" name="slug" id="slug" value="{{{ Input::old('slug', isset($store) ? $store->slug : null) }}}" />
       {{ $errors->first('slug', '<span class="help-inline">:message</span>') }}
     </div>
   </div>
@@ -138,9 +146,9 @@ asdasd
 
   <!-- Website -->
   <div class="form-group {{{ $errors->has('url') ? 'has-error' : '' }}}">
-    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="url">Url friendly name</label>
+    <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="url">Website</label>
     <div class="col-sm-9 col-md-9 col-lg-10">
-      <input class="form-control" type="text" name="url" id="url" value="{{{ Input::old('url', isset($groceryitem) ? $groceryitem->url : null) }}}" />
+      <input class="form-control" type="text" name="url" id="url" value="{{{ Input::old('url', isset($store) ? $store->url : null) }}}" />
       {{ $errors->first('url', '<span class="help-inline">:message</span>') }}
     </div>
   </div>
@@ -201,7 +209,22 @@ asdasd
         name:{
            required:false,
         },
-        symbol:{
+        line_1:{
+           required:true,
+        },
+        phone_1:{
+           required:true,
+        },
+        city:{
+           required:true,
+        },
+        province_state:{
+           required:true,
+        },
+        country:{
+           required:true,
+        },
+        chain_id:{
            required:true,
         },
       },

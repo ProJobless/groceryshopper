@@ -47,22 +47,37 @@ class AdminStoresController extends AdminController {
      *
      * @return Response
      */
-    public function getCreate()
-    {
-        // Title
-        $title = Lang::get('admin/stores/title.create_a_new_store');
-        
-        // All chains
-        $chains = $this->chain->all();
-        // Selected permissions
-        $selectedChains = Input::old('chains', array());
+  public function getCreate() {
+    // Title
+    $title = Lang::get('admin/stores/title.create_a_new_store');
 
-        // Mode
-        $mode = 'create';
-        // Show the page
-        return View::make('admin/stores/create_edit', 
-            compact('mode', 'title', 'chains', 'selectedChains'));
-    }
+    // All chains
+    $chains = $this->chain->all();
+
+    // Selected chains
+    $selectedChains = Input::old('chains', array());
+
+    // Selected provinces
+    $selectedProvinces = Input::old('province_state', array());
+
+    // Selected countries
+    $selectedCountries = Input::old('country', array());
+
+    //  province_state
+    $provinces =  $this->getProvinces();
+      //  countries
+    $countries  =  $this->getCountries();
+
+    // Mode
+    $mode = 'create';
+
+    // Show the page
+    return View::make('admin/stores/create_edit',
+      compact('mode', 'title', 'chains', 'selectedChains',
+      'selectedProvinces', 'provinces', 'countries', 'selectedCountries'
+      )
+    );
+  }
 
     /**
      * Store a newly created resource in storage.
@@ -117,7 +132,6 @@ class AdminStoresController extends AdminController {
 
             }
 
-
             // Was the store created?
             if($this->store->save())
             {
@@ -152,13 +166,38 @@ class AdminStoresController extends AdminController {
      * @param $store
      * @return Response
      */
-	public function getEdit($store){
-        // Title
-        $title = Lang::get('admin/stores/title.store_update');
+  public function getEdit($store){
+    // Title
+    $title = Lang::get('admin/stores/title.store_update');
 
-        // Show the page
-        return View::make('admin/stores/create_edit', compact('store', 'title'));
-	}
+    // All chains
+    $chains = $this->chain->all();
+  foreach($chains as $chain) {
+    var_dump($chain->name);
+  }
+    // Selected chains
+    $selectedChains = Input::old('chains', array());
+    var_dump($selectedChains);
+
+    // Selected provinces
+    $selectedProvinces = Input::old('province_state', array());
+
+    // Selected countries
+    $selectedCountries = Input::old('country', array());
+
+    $provinces = $this->getProvinces();
+
+    $countries = $this->getCountries();
+    // Mode
+    $mode = 'edit';
+
+    // Show the page
+    return View::make('admin/stores/create_edit',
+      compact('mode', 'title', 'chains', 'selectedChains',
+      'selectedProvinces', 'provinces', 'countries', 'selectedCountries'
+      )
+    );
+  }
 
     /**
      * Update the specified resource in storage.
@@ -314,19 +353,33 @@ class AdminStoresController extends AdminController {
 		return "Store address";
    }
 
-    private function fetchCoords($store) {
+  private function fetchCoords($store) {
 
-            $geocoder = new \Geocoder\Geocoder();
-            $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-            $chain    = new \Geocoder\Provider\ChainProvider(array(
-                        new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
-            ));
-            $geocoder->registerProvider($chain);
-            //Fetch the address from google maps.
-            $address = $store->line_1." ".$store->line_2." ".$store->city.", ".
-                        $store->province_state.", ".$store->country.", ".$store->postal_zip;
-            return $geocoder->geocode($address);
+    $geocoder = new \Geocoder\Geocoder();
+    $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+    $chain    = new \Geocoder\Provider\ChainProvider(array(
+                new \Geocoder\Provider\GoogleMapsProvider($adapter, 'ca_EN', 'Canada', true),
+    ));
 
-    }
+    $geocoder->registerProvider($chain);
+    //Fetch the address from google maps.
+    $address = $store->line_1." ".$store->line_2." ".$store->city.", ".
+      $store->province_state.", ".$store->country.", ".$store->postal_zip;
+    return $geocoder->geocode($address);
+
+  }
+
+  private function getCountries() {
+    return array(
+      "CA" => "Canada",
+      "USA" => "USA"
+    );
+  }
+  private function getProvinces(){
+    return array (
+      "QC" => "Quebec",
+      "ON" => "Ontario"
+    );
+  }
 
 }
