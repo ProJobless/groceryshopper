@@ -38,7 +38,9 @@ asdasd
                 @if ($mode == 'create')
                 <option value="{{{ $chain->id }}}"{{{ ( in_array($chain->id, $selectedChains) ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
                 @else
-                <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $store->currentChainIds()) !== false && array_search($chain->id, $store->currentcategoryIds()) >= 0 ? ' selected="selected"' : '') }}}>{{{ $chain->chain_name }}}</option>
+                <option value="{{{ $chain->id }}}"{{{ ( array_search($chain->id, $selectedChains) !== false && array_search($chain->id, $selectedChains) >= 0 ? ' selected="selected"' : '') }}}>
+                  {{{ $chain->chain_name }}}
+                </option>
                 @endif
               @endforeach
             </select>
@@ -73,7 +75,9 @@ asdasd
                 {{{ $province_name }}}
               </option>
               @else
-              <option value="{{{ $province_id }}}"{{{ (array_key_exists($province_id)  ? ' selected="selected"' : '') }}}>
+                <text>{{ $province_id }} </text>
+                <text>{{ $province_state = Input::old('province_state', isset($store) ? $store->province_state : null); }}</text>
+              <option value="{{{ $province_id }}}"{{{ ($province_id === $province_state)  ? ' selected="selected"' : '' }}}>
                 {{{ $province_name }}}
               </option>
               @endif
@@ -92,7 +96,8 @@ asdasd
                 {{{ $country_name }}}
               </option>
               @else
-              <option value="{{{ $country_id }}}"{{{ (array_key_exists($country_id, $selectedCountries)  ? ' selected="selected"' : '') }}}>
+                <text>{{ $country = Input::old('country', isset($store) ? $store->country : null); }}</text>
+              <option value="{{{ $country_id }}}"{{{ ($country_id === $country)  ? ' selected="selected"' : '' }}}>
                 {{{ $country_name }}}
               </option>
               @endif
@@ -118,7 +123,7 @@ asdasd
   <div class="form-group {{{ $errors->has('phone_1') ? 'has-error' : '' }}}">
     <label class="col-sm-3 col-md-3 col-lg-2 control-label" for="phone_1">Phone</label>
     <div class="col-sm-9 col-md-9 col-lg-10">
-      <input class="form-control" type="text" name="phone_1" id="phone" value="{{{ Input::old('phone', isset($store) ? $store->phone : null) }}}" />
+      <input class="form-control" type="text" name="phone_1" id="phone_1" value="{{{ Input::old('phone_1', isset($store) ? $store->phone_1 : null) }}}" />
       {{ $errors->first('phone_1', '<span class="help-inline">:message</span>') }}
     </div>
   </div>

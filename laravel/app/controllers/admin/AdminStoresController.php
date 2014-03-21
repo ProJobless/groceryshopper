@@ -193,7 +193,7 @@ class AdminStoresController extends AdminController {
 
     // Show the page
     return View::make('admin/stores/create_edit',
-      compact('mode', 'title', 'chains', 'selectedChains',
+      compact( 'store', 'mode', 'title', 'chains', 'selectedChains',
       'selectedProvinces', 'provinces', 'countries', 'selectedCountries'
       )
     );
@@ -232,7 +232,6 @@ class AdminStoresController extends AdminController {
                 $store->slug = Str::slug(Input::get('title'));
             }
             $store->phone_1          = Input::get('phone_1');
-            $store->phone_2          = Input::get('phone_2');
             $store->fax              = Input::get('fax');
             $store->url              = Input::get('url');
             $store->notes            = Input::get('notes');
@@ -241,7 +240,6 @@ class AdminStoresController extends AdminController {
             $store->province_state = Input::get('province_state');
             $store->postal_zip = Input::get('postal_zip');
             $store->country = Input::get('country');
-            $store->line_2 = Input::get('line_2');
             $store->line_1 = Input::get('line_1');
 
             // We need the latitude and longitude based on the 
@@ -264,7 +262,7 @@ class AdminStoresController extends AdminController {
 
             }
             // Redirect to the store management page
-            return Redirect::to('admin/stores/' . $store->id . '/edit')
+            return Redirect::to('admin/stores/')
                     ->with('error', Lang::get('admin/stores/messages.update.error'));
         }
         // Form validation failed
