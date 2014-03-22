@@ -25,16 +25,8 @@ class Store extends Eloquent implements PresentableInterface {
 
     public function delete()
     {
-        // Delete the address
-        $this->addresses()->delete();
-
         //Delete the store
         return parent::delete();
-    }
-
-    public function addresses()
-    {
-        return $this->hasMany('Store_address');
     }
 
     /**

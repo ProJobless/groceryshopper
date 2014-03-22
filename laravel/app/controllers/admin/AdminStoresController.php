@@ -137,8 +137,8 @@ class AdminStoresController extends AdminController {
             {
 
                 // Redirect to the new store page
-                return Redirect::to('admin/stores/' . $this->store->id . '/edit')
-                        ->with('success', Lang::get('admin/stores/messages.create.success'));
+                return Redirect::to('admin/stores/')
+                  ->with('success', Lang::get('admin/stores/messages.create.success'));
             }
 
             // Redirect to the blog post create page
@@ -172,12 +172,8 @@ class AdminStoresController extends AdminController {
 
     // All chains
     $chains = $this->chain->all();
-  foreach($chains as $chain) {
-    var_dump($chain->name);
-  }
     // Selected chains
     $selectedChains = Input::old('chains', array());
-    var_dump($selectedChains);
 
     // Selected provinces
     $selectedProvinces = Input::old('province_state', array());
@@ -245,10 +241,10 @@ class AdminStoresController extends AdminController {
             // We need the latitude and longitude based on the 
             // province, country and city OR postal code
             if( isset($store->city) && isset($store->province_state) 
-                    && isset($store->country) ){
-                          $coordinate = $this->fetchCoords($store);
-                          $store->latitude = $coordinate->getLatitude();
-                          $store->longitude = $coordinate->getlongitude();
+              && isset($store->country) ){
+                $coordinate = $this->fetchCoords($store);
+                $store->latitude = $coordinate->getLatitude();
+                $store->longitude = $coordinate->getlongitude();
 
             }
 
@@ -256,14 +252,10 @@ class AdminStoresController extends AdminController {
             if($store->save())
             {
                 $store_id = $store->id;
-                // Redirect to the new store page
-                return Redirect::to('admin/stores/' . $store->id . '/edit')
-                        ->with('success', Lang::get('admin/stores/messages.update.success'));
-
             }
             // Redirect to the store management page
             return Redirect::to('admin/stores/')
-                    ->with('error', Lang::get('admin/stores/messages.update.error'));
+              ->with('error', Lang::get('admin/stores/messages.update.error'));
         }
         // Form validation failed
         return Redirect::to('admin/stores/' . $store->id . '/edit')
@@ -305,47 +297,48 @@ class AdminStoresController extends AdminController {
         // Check if the form validates with success
         if ($validator->passes())
         {
-            $id = $store->id;
-            $store->delete();
+          $id = $store->id;
+          $store->delete();
 
-            //Delete the associated addresses
+          //Delete the associated addresses
 
-            // Was the store deleted?
-            $store = Store::find($id);
-            if(empty($store))
-            {
-                // Redirect to the store  management page
-                return Redirect::to('admin/stores')
-                    ->with('success', Lang::get('admin/stores/messages.delete.success'));
-            }
+          // Was the store deleted?
+          $store = Store::find($id);
+          if(empty($store))
+          {
+              // Redirect to the store  management page
+              return Redirect::to('admin/stores')
+                  ->with('success', Lang::get('admin/stores/messages.delete.success'));
+          }
         }
         // There was a problem deleting the store
         return Redirect::to('admin/stores')
             ->with('error', Lang::get('admin/stores/messages.delete.error'));
     }
 
-    /**
-     * Show a list of all the stores formatted for Datatables.
-     *
-     * @return Datatables JSON
-     */
-    public function getData()
-    {
-        $stores = Store::select(array('stores.id', 'stores.title', 'stores.slug',
-                         'stores.phone_1', 'stores.line_1','stores.province_state', 'stores.city', 'stores.country', 'stores.postal_zip', 'stores.province_state as address', 'stores.updated_at'));
-        return Datatables::of($stores)
-            ->edit_column('address', '{{ join("<br />", array($line_1, $city, $province_state." ".$country, $postal_zip)) }}' )
-
-            ->add_column('actions', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
-                <a href="{{{ URL::to(\'admin/stores/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
-            ')
-            ->remove_column('id')
-            ->remove_column('city')
-            ->remove_column('province_state')
-            ->remove_column('country')
-            ->make();
-
-    }
+  /**
+   * Show a list of all the stores formatted for Datatables.
+   *
+   * @return Datatables JSON
+   */
+  public function getData()
+  {
+    $stores = Store::select(array('stores.id', 'stores.title', 'stores.chain_id',
+      'stores.city', 'stores.province_state', 'stores.phone_1',
+      'stores.line_1', 'stores.slug', 'stores.country', 'stores.postal_zip', 'stores.province_state as address', 'stores.updated_at'));
+    return Datatables::of($stores)
+      ->edit_column('address', '{{ join("<br />", array($line_1, $city, $province_state." ".$country, $postal_zip)) }}' )
+      ->edit_column('updated_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromTimestamp(strtotime($updated_at))) }}}')
+      ->add_column('actions', '<a href="{{{ URL::to(\'admin/stores/\' . $id . \'/edit\' ) }}}" class="btn btn-default btn-xs iframe" >{{{ Lang::get(\'button.edit\') }}}</a>
+            <a href="{{{ URL::to(\'admin/stores/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe">{{{ Lang::get(\'button.delete\') }}}</a>
+      ')
+      ->remove_column('line_1')
+      ->remove_column('country')
+      ->remove_column('slug')
+      ->remove_column('postal_zip')
+      ->remove_column('id')
+      ->make();
+  }
 	
     function _build_address($stores) {
 		return "Store address";

@@ -44,13 +44,13 @@
             <thead>
               <tr>
                 <th >{{{ Lang::get('admin/stores/table.title') }}}</th>
-                <th >{{{ Lang::get('admin/stores/table.slug') }}}</th>
-                <th >{{{ Lang::get('admin/stores/table.phone_1') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.chain_id') }}}</th>
                 <th >{{{ Lang::get('admin/stores/table.city') }}}</th>
-                <th >{{{ Lang::get('admin/stores/table.province') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.province_state') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.phone_1') }}}</th>
+                <th >{{{ Lang::get('admin/stores/table.address') }}}</th>
                 <th >{{{ Lang::get('admin/stores/table.updated_at') }}}</th>
                 <th >{{{ Lang::get('table.actions') }}}</th>
-                <th >{{{ Lang::get('admin/stores/table.address') }}}</th>
               </tr>
             </thead>
             <tbody>
@@ -65,20 +65,21 @@
 
 {{-- Scripts --}}
 @section('scripts')
-	<script type="text/javascript">
-		var oTable;
-		$(document).ready(function(){
-			
-			$('.data-table').dataTable({
-				"bJQueryUI": true,
-				"sPaginationType": "full_numbers",
-				"sDom": '<""l>t<"F"fp>',
-				"oLanguage": {
-					"sLengthMenu": "_MENU_ stores per page"
-				},
-        			"sAjaxSource": "{{ URL::to('admin/stores/data') }}",
-			});
-			$('select').select2();
-		});
-	</script>
+  <script type="text/javascript">
+    var oTable;
+    $(document).ready(function(){
+      
+      $('.data-table').dataTable({
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+        "sDom": '<""l>t<"F"fp>',
+        "oLanguage": {
+          "sLengthMenu": "_MENU_ stores per page"
+        },
+        "bServerSide": true,
+        "sAjaxSource": "{{ URL::to('admin/stores/data') }}",
+      });
+      $('select').select2();
+    });
+  </script>
 @stop
