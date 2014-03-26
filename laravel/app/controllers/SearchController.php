@@ -64,7 +64,7 @@ class SearchController extends BaseController {
             // Get the count and the data
             $offset = ($page * 20) - 20;
 
-            $data = $this->_perform_search($keyword, $offset);
+            $datagt = $this->_perform_search($keyword, $offset);
             $results  = $data['data'];
             $rowcount = $data['rowcount'];
             $total_pages = ceil($rowcount / 20);
@@ -84,7 +84,7 @@ class SearchController extends BaseController {
               }
             }
 
-           return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page'));
+            return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page', 'keyword'));
 
         }
         // There was a problem deleting the store
@@ -182,7 +182,7 @@ class SearchController extends BaseController {
       }
       $units = array();
       foreach($values as $value){
-        $unit = Unit::where('symbol', '=', $value['unit'])->first();
+        $unit = Unit::where('', '=', $value['unit'])->first();
         if (is_null($unit)) {
             $unit = new Unit();
             $unit->title = $value['unit'];

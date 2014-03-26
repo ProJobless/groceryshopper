@@ -187,11 +187,23 @@ Route::get('about',array('as' => 'about', function()
 
 
 # Search routes
-Route::get('search', 'SearchController@getSearch');
-Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+Route::group(array('prefix' => 'search'), function()
+    {
+    
+    Route::get('search/{keyword}', array( 'uses' => 'SearchController@getSearch'))
      ->where('keyword', '[0-9a-z]+');
+    
+    
+    # Shopping list show the list of items
+    Route::get('results/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+     ->where('keyword', '[0-9a-z]+');
+    
+    # search controller
+    Route::get('/', 'SearchController@getSearch');
+    Route::post('/', array('before' => 'csrf', 'uses' => 'SearchController@processSearch'));
 
-Route::post('search', array('before' => 'csrf', 'uses' => 'SearchController@processSearch'));
+    }
+);
 
 
 # Shopping list routes

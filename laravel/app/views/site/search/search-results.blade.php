@@ -3,13 +3,12 @@
 
 
       <!-- Hero starts -->
-
       <div class="hero">
          <div class="container">
             <div class="row">
                <div class="col-md-12">
                   <!-- Catchy title -->
-                  <h3>Find your groceries.  Fast!!<span class="color"></span></h3>
+                  <h3>Find your groceries.Fast!!<span class="color"></span></h3>
                </div>
             </div>
          </div>
@@ -22,12 +21,12 @@
 					{{ Form::open(array( 'action' => array('SearchController@processSearch'), 'role' => 'search', 'class' => 'form-inline widget-search')) }}
 							<div class="form-group">
 								 <div class="input-group custom-search-form">
-									  {{ Former::text('')->class('form-control')->placeholder('Search')->require()->name('keyword') }}
+                                      <input class="form-control" type="text" name="keyword" id="keyword" value="{{{ Input::old('keyword', $keyword) }}}" placeholder="Search"   required maxlength="20" pattern="[a-zA-Z]+" />
+                                      {{ $errors->first('keyword', '<span class="help-inline">:message</span>') }}
 									  <span class="input-group-btn">
-									  <button class="btn btn-info" type="submit">
-									  <span class="glyphicon glyphicon-search"></span>  Search
-
-									 </button>
+                                          <button class="btn btn-info" type="submit">
+                                              <span class="glyphicon glyphicon-search"></span>  Search
+                                         </button>
 									 </span>
 									 </div><!-- /input-group -->
 								</div>
@@ -67,11 +66,11 @@
 					}
 				    },
 				    bootstrapTooltipOptions: {
-					html: true,
-					placement: 'bottom'
+                        html: true,
+                        placement: 'bottom'
 				    },
 				    pageUrl: function(type, page, current){
-						return "{{ URL::to('products/search') }}"+keyword+"/results/page"+"/"+page;
+                        return "{{ URL::to('search/results') }}"+"/{{ $keyword }}"+"/page"+"/"+page;
 				    }
 				}
 
