@@ -64,7 +64,7 @@ class SearchController extends BaseController {
             // Get the count and the data
             $offset = ($page * 20) - 20;
 
-            $datagt = $this->_perform_search($keyword, $offset);
+            $data = $this->_perform_search($keyword, $offset);
             $results  = $data['data'];
             $rowcount = $data['rowcount'];
             $total_pages = ceil($rowcount / 20);
@@ -92,8 +92,36 @@ class SearchController extends BaseController {
             ->with('error', Lang::get('site/messages.delete.error'));
     }
 
-    public function getSearch()
+    public function getSearch($keyword)
     {
+        print "hello";
+    }
+    public function getSearchWithPagination($keyword, $page) {
+    
+        // Get the count and the data
+        $offset = ($page * 20) - 20;
+        $data = $this->_perform_search($keyword, $offset);
+        $results  = $data['data'];
+        $rowcount = $data['rowcount'];
+        $total_pages = ceil($rowcount / 20);
+        var_dump($total_pages);
+        if ($page > $total_pages or $page < 1)
+        {
+            $page = 1;
+        }
+
+        //Save the search results.
+        foreach($results as $result) {
+          // Check if the item already exists 
+          // in the database
+          $count = Groceryitem::where('factual_id', "=", $result['factual_id'])
+            ->count();
+          if ($count <= 0) {
+              $this->saveDataToDb($result);
+          }
+        }
+
+        return View::make('site/search/search-results', compact('results', 'rowcount', 'total_pages', 'page', 'keyword'));
     }
 
     private function saveDataToDb($result) {
@@ -182,7 +210,7 @@ class SearchController extends BaseController {
       }
       $units = array();
       foreach($values as $value){
-        $unit = Unit::where('', '=', $value['unit'])->first();
+        $unit = Unit::where('symbol', '=', $value['unit'])->first();
         if (is_null($unit)) {
             $unit = new Unit();
             $unit->title = $value['unit'];

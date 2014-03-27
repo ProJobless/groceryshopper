@@ -194,9 +194,12 @@ Route::group(array('prefix' => 'search'), function()
      ->where('keyword', '[0-9a-z]+');
     
     
-    # Shopping list show the list of items
-    Route::get('results/{keyword}', array( 'uses' => 'SearchController@getSearch'))
+    # Shopping list show results
+   Route::get('results/{keyword}', array( 'uses' => 'SearchController@getSearch'))
      ->where('keyword', '[0-9a-z]+');
+   Route::get('results/{keyword}/page/{page}', array( 'uses' => 'SearchController@getSearchWithPagination'))
+     ->where('keyword', '[0-9a-z]+')
+     ->where('page', '[0-9]+');
     
     # search controller
     Route::get('/', 'SearchController@getSearch');
